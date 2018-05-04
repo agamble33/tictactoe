@@ -1,0 +1,16 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : May 4, 2018, 2:08:31 PM
+    Author     : Gam Fam
+*/
+
+.buttton{
+    -fx-pref-width:150px;
+    -fx-pref-height:150px;
+    -fx-color: #CE7B00;
+    -fx-background-color: #CCFF99;
+}
