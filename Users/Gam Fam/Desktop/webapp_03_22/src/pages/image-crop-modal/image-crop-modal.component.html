@@ -1,0 +1,20 @@
+<div class="modal-header modalHeaderPaddding">
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+   </button>
+ </div>
+ <div class="modal-body modalBodyPaddding">
+ 	<h4>Profile Photo</h4>
+ 	
+     <img-cropper #cropper [hidden]="!isfileOpen" [image]="data" [settings]="cropperSettings"></img-cropper> 
+       <br>
+       <div class="file-upload"  *ngIf="!isfileOpen">
+         <input id="custom-input" accept="image/*" class="textCenter" type="file" (change)="fileChangeListener($event)">
+       </div>
+    <!--   <span class="result rounded" *ngIf="data.image" >
+           <img [src]="data.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+       </span> -->
+ </div>
+ <div class="modal-footer">
+	   <button type="button" class="btn commonBtn" *ngIf="secondButton" [disabled]="!isfileOpen" (click)="ok(data.image)">{{secondButton}}</button>
+ </div>

@@ -1,0 +1,126 @@
+<div class="tabStructure">
+		<div id="page-content-wrapper">
+		  
+			 <div class="page-content inset pageContentBg">
+			 <!------------- top right corner buttons ------------>
+				 
+				<!------------------ tabs structure -------------->
+				<div class="panelBodyCls">
+					  <div class="panelHeading">
+							 <h4 class="panelTitle">Controller Manufacturer </h4>
+					  </div>
+					  <div class="panelBody">
+						 <div class="row noMargin clearfix" *ngIf="!isLoading">
+							<div id="desktopView" class="col-sm-12 col-md-12 col-lg-12 flexCls" [style.minHeight]="pageHeight + 'px'">
+							
+								 <div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 tabs-heading flexFirstItem">
+									 <ul class="nav nav-tabs tabs-left">
+										 <li *ngFor="let controller of controllerSeriesData; let controllerListIndex = index" [ngClass]="{'commingSoon': controller.id>3}" [class.active]="selectedController == controller.name" (click)="onControllerManufacturerSelect(controller)">
+											 <a href="#{{controller.id}}_{{controller.name}}" data-toggle="tab">
+												<span>
+													<img src="{{images[controllerListIndex]}}" alt="" />
+													<img src="assets/images/default_manufacturer_logo.png" *ngIf="!controller.url" alt="" />
+												</span>							           
+											 </a>							         
+										 </li>						         
+									 </ul>
+								 </div> <!----------- end of tabs-heading ------->
+								 
+								 <div *ngIf="selectedControllerVo" class="col-xs-12 col-sm-7 col-md-8 col-lg-9 tabs-details flexSecondItem">
+										 <!--------- Tab panes --------->
+										 <div class="tab-content">
+											<div class="tab-pane clearfix" id="{{selectedControllerVo.id}}" [class.active]="selectedControllerVo.id">
+												<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+													<div class="btnContainer">                	  
+														  <button type="submit" class="btn secondaryBtn commonBtn" [disabled]="!selectedControllerVo.selectedSeriesId" (click)="onNext()">Next </button>
+													</div>
+													
+													<ul class="listView" *ngIf="selectedControllerVo">										       
+														<li *ngFor="let series of selectedControllerVo.ControllerSeries | orderby : 'id': false; index as i">
+															<p>
+																<label class="radioContainer">
+																	<input type="radio" name="selectedControllerVo.id" class="radioControl" value="{{series.id}}" [(ngModel)]="selectedControllerVo.selectedSeriesId" (click)="onSeriesSelect(series)">
+																	<span></span>															
+																	{{series.name}}
+																</label>
+															</p>
+														</li>
+														<li *ngIf="selectedControllerVo && selectedControllerVo.ControllerSeries && selectedControllerVo.ControllerSeries.length == 0">
+															<p class="noDataText">No series available for selected controller manufacturer.</p>
+														</li>
+													</ul>
+												 </div>	
+											 </div><!--------- end of home tab --------->
+										 </div>	<!-------------- end of tab-content  ------------->
+									</div>   <!-------------- end of  tabs-details  ------------->	
+									<div *ngIf="controllerSeriesData && controllerSeriesData.length == 0" class="noData"> No manufacturer list available.</div>				     						     
+								   <div class="clearfix"></div>
+							 </div> <!-------------- end of col ------------->
+							 
+				<!--******************************** Mobile view ********************************************-->			 
+							<div id="mobileView" class="col-sm-12 col-md-12 col-lg-12 mobileListView">												    						    	
+									 
+									 <ul *ngIf="controllerSeriesData">
+										
+											<li class="active" *ngFor="let controller of controllerSeriesData; let index = index" (click)="accordion && accordion.current && (accordion.current = controller.name)">  <!-- accordion.current = isSeriesSelected -->
+												<label class="labelWrapper" [class.active]="selectedController == controller.name">
+													<p (click)="onControllerManufacturerSelect(controller)"> 
+														<label class="radioContainer">
+															<input type="radio" name="outerGroup" class="checkboxControl" [value]="controller.name" [attr.checked]="selectedController == controller.name" [(ngModel)]="selectedController">
+															
+															<span></span>
+															 {{controller.name}}
+														 </label>
+													 
+														  <span class="accordian-arrow accordianImg">
+															  <img src="{{controller.url}}" *ngIf="controller.url" alt="" />
+															  <img src="assets/images/default_manufacturer_logo.png" *ngIf="!controller.url" alt="" />
+														</span> 
+													</p>
+													<!-- <p *ngIf="controller.id>2">						                
+														<label class="radioContainer">
+															<span class="radioControl"></span>
+															<span></span>											
+															 {{controller.name}}
+														 </label>						                 
+														  <span class="accordian-arrow accordianImg">
+															  <img src="{{controller.url}}" *ngIf="controller.url" alt="" />
+															  <img src="assets/images/default_manufacturer_logo.png" *ngIf="!controller.url" alt="" />
+														</span>						                
+													</p> -->
+												</label>
+													<ul *ngIf="accordion && accordion.current && (accordion.current == controller.name)">										        
+															<li *ngFor="let series of selectedControllerVo.ControllerSeries;let index = index">
+																<label class="labelWrapper">
+																	<p>
+																		<label class="radioContainer mobileViewSubOptions">
+																			<!-- <input type="radio" name="InnerGroup" class="radioControl" value="{{series.name}}" [checked]="(selectedSeriesId!='' && selectedSeriesId == series.id) ? 'checked' : null" (click)="onSeriesSelect(series)"> -->
+																			<input type="radio" name="{{selectedControllerVo.id}}" class="radioControl" value="{{series.id}}" [(ngModel)]="selectedControllerVo.selectedSeriesId" (click)="onSeriesSelect(series)">
+																			<span></span>															
+																			{{series.name}}
+																		</label>
+																	</p>
+																</label>
+															</li>
+															<li *ngIf="controller && controller.ControllerSeries && controller.ControllerSeries.length == 0"><p class="noDataText">No series available for selected controller manufacturer.</p></li>										             									        
+													</ul>										    
+											</li>
+																											
+									</ul>	
+									<div *ngIf="controllerSeriesData && controllerSeriesData.length == 0" class="noData"> No manufacturer list available.</div>				    		
+							</div>
+						
+					 </div> <!-------------- end of row ------------->
+				 </div>
+				 
+				  <div class="btnGroupCls">
+					<button type="button" class="btn secondaryBtn commonBtn" [disabled]="selectedControllerVo && !selectedControllerVo.selectedSeriesId" (click)="onNext()">Next
+						<img src="../../assets/images/icn_enter.png" class="btnArrowIcon">
+					</button>
+				 </div>
+				 
+			 </div>
+					
+			 </div> <!-------------- end of page-content ------------->
+		 </div> <!-------------- end of page-content-wrapper ------------->
+		</div>

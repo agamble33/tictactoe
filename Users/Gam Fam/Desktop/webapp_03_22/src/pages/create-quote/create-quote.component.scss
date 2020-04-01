@@ -1,0 +1,100 @@
+@import '~theme/common';
+
+app-create-quote {
+
+	.formDetails{
+		.pageTitle{
+			font-size: 16px;
+			line-height: 1.4;
+		}
+	}
+
+	form{
+		input{
+			border-radius:0px !important;
+		}
+	}
+
+	 input:-webkit-autofill,
+	 input:-webkit-autofill:hover,
+	 input:-webkit-autofill:focus,
+	 input:-webkit-autofill:active {
+	    -webkit-box-shadow: 0 0 0 30px $light-color inset !important;
+	    border: 1px solid $light-color !important;
+	}//chrome default styling changed
+
+	.btnDefault {
+	    background-color: transparent;
+        border-color: transparent !important;
+	}
+	.navHeaderCls {
+		background-color: $light-color;
+    	border-color: $stroke-color;
+    	line-height: 69px;
+    	height: 60px;
+	}
+	.quoteType{
+		border: none;
+		box-shadow: none;
+		color:  #555;
+		-webkit-box-shadow: none;
+		-moz-box-shadow: none;
+		-ms-box-shadow: none;
+		border-bottom: 1px solid #dedede !important;
+		background-color: transparent;
+		font-family: 'Roboto-Regular', arial, sans-serif;
+		font-weight: normal;
+		font-style: normal;
+		padding: 0;
+		outline: none;
+		box-shadow: none !important;
+		border-radius: 0px;
+		background: url('../../assets/images/dropdown.png')no-repeat;
+		background-position: 100%;
+	}
+	.pageContentBg {
+		width: auto;
+		height: auto;
+	    background-color: $content-bg-color;
+	    padding: 0;
+        position: absolute;
+    	top: 68px;
+    	bottom: 0;
+    	right: 0;
+    	left: 250px;
+    	transition: left 0.4s ease 0s;
+    	overflow-y: auto;
+    	
+    	@media (max-width:768px) {    	
+			left: 0;
+			top: 55px;   	
+    	 }		
+		.btnWithArrow {
+	    	position: relative;
+	    	display: inline-block;
+	    	margin-top: 30px !important;
+	    	.commonBtn {
+	    		margin: 0;
+	    	}
+	    	.btnArrowIcon {
+	    		position: absolute;
+	    		top: 50%;
+	    		right: 16px;
+	    		left: initial;
+	    		bottom: 0;
+	    		@include commonTransform(translateY(-50%));
+	    		margin: 0;
+	    	}
+		}
+	}
+}
+
+select{
+	-moz-appearance:none; /* Firefox */
+	-webkit-appearance:none; /* Safari and Chrome */
+	appearance:none;
+	outline: none;
+	&::-ms-expand {
+		display: none;
+	}
+}

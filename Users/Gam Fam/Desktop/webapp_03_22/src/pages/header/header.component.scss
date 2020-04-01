@@ -1,0 +1,328 @@
+@import '~theme/common';
+
+app-header {
+	.content-header{
+		 @media (max-width:768px) {   
+			height:auto; 
+		}
+	}
+	
+	.headerBarCls {
+		background-color: $light-color;
+		border-bottom: 1px solid $stroke-color;
+		margin: 0 0 0 250px;
+	    line-height: normal;
+		    @media (max-width:768px) {    	
+				line-height: normal;
+				margin: 0;	
+	    	 }
+	    h3 {
+	    	color: $title-color;
+	    	@include Roboto-Light;
+	    	font-weight:normal;
+	    	margin: 0;
+			padding: 20px;
+			font-size: 21px;
+			 @media (max-width:768px) {    	
+				text-align: center;
+				font-size: 18px;
+   				white-space: nowrap;
+    			text-overflow: ellipsis;
+    			overflow: hidden;   
+    			padding: 17px 20px 17px 45px;	
+	    	 }
+	    	.btnDefault {
+	    		i {
+	    			font-size: 24px;
+	    			color: $secondary-color;
+	    		}
+	    	}
+	    }
+	    .headerWebView {
+	    	display: block;
+			@media (max-width: 768px) {
+				display: none;
+			}
+			@media screen and (min-width: 769px) and (max-width: 890px){
+				width: 82%;
+			}
+	    }
+	    .headerMobileView {
+	    	display: none;
+			@media (max-width: 768px) {
+				display: block;
+			    padding: 0;
+			}
+	    }
+	    .headerContent {
+			height: 100%;
+			padding-right: 0px;
+	    	.headerInfoCls {
+	    		margin: 0;
+	    	//	display: inline-block;
+	    		 @media (max-width:768px) {    	
+					    background-color: $sub-header-color;
+    					width: 100%;
+    					height: 50px;
+					//    display: -webkit-box;
+						border-top: 1px solid $stroke-color;
+						vertical-align: top;
+						clear: left;
+		    	 }
+	    		.editBtnCls {
+					display: inline-block;
+					text-align: left;
+					padding-top: 10px;
+					text-align:center;
+				    padding-left: 0px;
+				    padding-right:0px !important;
+					 @media (max-width:768px) {    	
+					    padding: 5px 0 0 8px;
+    					text-align: center;
+					    width: auto;
+		    	 	 }
+					
+					.editBtn {
+						padding-top: 5px;
+						padding-left:0px !important;
+						padding-right:0px !important;
+						
+						&:active, &:hover, &:focus{
+				    		box-shadow: none !important;
+						}
+					
+						span {
+							background:url('../../assets/images/icn_customer.png') no-repeat;
+						}
+					}
+				}
+		    	.headerInfo {
+		    		margin: 0;
+					display: inline-block;
+					padding-right: 0px;
+		    		li {
+	    			    display: inline-block;
+	    				padding: 5px 16px;
+	    				border-right: 1px solid $stroke-color;
+	    				vertical-align: middle;
+	    				line-height: 20px;
+					    margin: 10px 0 7px 0;
+					    color: $title-color;
+					    font-size: 13px;
+					    @include Roboto-Medium;
+					    white-space: nowrap;
+					    
+					    @media (max-width:768px) {    	
+							margin: 0;
+							font-size: 12px;
+    						line-height: 17px;	
+	    					padding: 7px 16px;
+				    	 }
+	    				
+	    				&:last-child {
+	    					border-right: 0;
+						}
+						p{
+							margin:0px;
+						}
+						span, p {
+				    	    text-overflow: ellipsis;
+    						overflow: hidden; 
+    						white-space: nowrap;
+						}
+	    				span{
+	    					display: block;
+	    					line-height: 20px;
+	    					color: $table-head-title-color;
+					    	font-size: 14px;
+					    	@include Roboto-Bold;
+					    	font-weight: $font-weight-bold;
+    						min-height: 15px;
+    						@media (max-width:768px) {    	
+								font-size: 13px;
+								line-height: normal;
+					    	 }
+	    				}
+					}
+					.quoteInfo {
+						//min-width: 143px;
+					//	max-width: 200px;
+
+						@media screen and (min-width: 768px) and (max-width: 890px){
+						//	max-width: 150px;
+						}
+					}
+				} //end headerInfo
+				.desktopHeader {
+					float: none;
+					vertical-align: top;
+				}
+		    } //end headerInfoCls
+	    	.headerForm {
+	    		padding: 10px;
+	    		.formGroup {
+				    margin-bottom: 0;
+				    margin: 0;
+				
+		    		.editBtn {
+		    		}
+		    		.editFormCls {
+		    			.leftItem {
+		    				border-right: 1px solid $stroke-color;
+		    			}
+		    			.editFormLabel {
+		    				color: $title-color;
+					    	font-size: 13px;
+					    	@include Roboto-Medium;
+					    	margin-bottom: 0;
+		    			}
+		    			.editFormInput {
+		    				color: $header-bg-color;
+					    	font-size: 14px;
+					    	@include Roboto-Regular;
+					    	padding: 4px 10px 4px 0;
+						    border: 0;
+						    height: auto;
+						    background-color: transparent;
+						    box-shadow: none;
+						    -webkit-box-shadow: none;
+						    -moz-box-shadow: none;
+						    -ms-box-shadow: none;
+					        text-overflow: ellipsis;
+    						overflow: hidden;
+		    			}
+		    		}
+	    		}
+	    	}
+	    } //end headerContent
+		.headerCls {
+			margin: 0;
+		    line-height: normal;
+	        float: left;
+		}
+		.headerRight {
+			background-color: $header-bg-color;
+			border-left: 1px solid $stroke-color;
+			float: right;
+			padding: 0 10px;
+			height: 100%;
+			@media (max-width:768px) {    	
+				display: none;
+	    	 }
+			.dropdown {	
+				line-height: normal;
+				text-align: center;
+				padding-top: 12px;			
+				.dropdown-toggle {
+					color: $primary-color;
+					text-decoration: none;
+					@include Roboto-Bold;
+				    font-size: 13px;
+					
+					.avatarImg {
+						width: 32px;
+						height: 32px;					
+					}
+				
+					.profileName {
+						position: relative;
+						padding-right: 15px;
+						max-width: 100px;
+					    overflow: hidden;
+					    text-overflow: ellipsis;
+					    white-space: nowrap;
+						
+						.caret {
+							position: absolute;
+						    top: 7px;
+						    right: 0;
+						}
+					}
+				}
+				.dropdown-menu {
+					right: -15px;
+				    left: auto;
+				    top: 100%;
+				    margin: 15px 0 0 0;
+				    padding: 0;
+				    border: 0;
+				    -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,.175);
+    				box-shadow: 0 0 6px 2px rgba(0,0,0,.175);
+    				border-radius: 0;
+				    
+				    ul {
+					    position: relative;
+					    margin: 0;
+					    padding: 0;
+					    list-style-type: none;
+					
+						&:after {
+							content: '';
+							display: inline-block;
+							background: url('../../assets/images/optionArrow.png') no-repeat;
+							background-size: contain;
+							width: 27px;
+						    height: 16px;
+						    position: absolute;
+						    top: -16px;
+						    right: 25px;
+						}
+					}
+				    
+				    li {
+				    //	padding: 8px 15px;
+				    //	text-align: center;
+				    	cursor: pointer;				    	
+				    	color: $secondary-color;
+				    	white-space: nowrap;
+				    	padding-left: 15px;
+				    	
+				    	&:last-child {
+				    		border-bottom: 0;
+				    	}
+				    
+				    	&:hover {
+				    		opacity: .7;
+				    	}
+				    
+				    	.menu {
+				    		 padding: 12px 15px 12px 0;
+				    		 border-bottom: 1px solid #d5d9e4;
+				    	}
+				   	}
+				   		
+				}
+			}
+		}
+	}// end headerBarCls
+
+.profileMenu {
+	
+		li {
+			
+			span {
+				display: inline-block;
+			    width: 18px;
+			    height: 18px;
+			    background-size: contain;
+			    background-repeat: no-repeat;
+			    vertical-align: top;
+			    margin: 0 7px 0 0;
+			}
+			
+		}
+	
+		.myProfileIcon {
+			background-image: url('../../assets/images/iconProfile.png');
+			margin-top: 1px;
+		}
+	
+		.changePasswordIcon {
+			background-image: url('../../assets/images/iconChangePassword.png');
+		}
+		
+		.logoutIcon {
+			background-image: url('../../assets/images/iconLogout.png');
+		}
+	}
+}

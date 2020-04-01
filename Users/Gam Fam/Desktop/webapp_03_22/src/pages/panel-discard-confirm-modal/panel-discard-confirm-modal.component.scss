@@ -1,0 +1,81 @@
+@import '~theme/common';
+
+/********** common classes for Modal *********************/
+
+.modal-title {
+	display: inline-block;
+	text-align: center;
+	@include Roboto-Medium;
+	padding-top: 25px;
+	
+	@media (max-width: 767px) {
+    	font-size: 20px;
+   	}
+}
+
+.modal-header {
+	border-bottom: 0;
+	text-align: center;
+	@include Roboto-Medium;
+	
+	.close {
+	    opacity: 1;
+	    width: 20px;
+	    height: 20px;
+	    background: $light-button-color;
+	    border-radius: 50%;
+	    color: #fff;
+	    font-size: 15px;
+	    
+	    span {
+	    	position: relative;
+    		top: -1px;
+	   	}
+	}
+}
+
+.modalHeaderPaddding {
+	padding-bottom: 0;
+}
+
+.modal-footer {
+	text-align: center;
+	border-top: 0;
+	@include Roboto-Bold;
+	margin-bottom: 15px;
+	
+	.commonBtn {
+		margin: 0;
+		padding: 6px 30px;
+		min-width: 116px;
+    	box-shadow: none;
+    	
+    	@media (max-width: 767px) {
+	    	font-size: 16px;
+	   	}
+		
+		&:first-child {
+			background-color: $light-button-color !important; 
+		}
+	
+		&:last-child {
+			margin: 0 0 0 10px;
+		}
+	}
+}
+
+.modal-body {
+	
+	h4 {
+		@include Roboto-Medium;
+		
+		@media (max-width: 767px) {
+	    	font-size: 16px;
+	   	}
+	}
+	text-align: center;
+}
+
+.modalBodyPaddding {
+	padding-top: 0;
+}

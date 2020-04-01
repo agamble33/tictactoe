@@ -1,0 +1,99 @@
+<div class="modal-header modalHeaderPaddding">
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+   </button>
+   <h3 class="modal-title" *ngIf="!isEditMode">Add New Organization Admin</h3>
+   <h3 class="modal-title" *ngIf="isEditMode">Edit Organization Admin</h3>
+ </div>
+ <div class="modal-body modalBodyPaddding">
+ 	<form #addNewAdminForm="ngForm" name="addNewAdminForm">
+ 		<div class="noDataFound text-center">{{webServiceError}}</div>
+ 	  <div *ngIf="!isProfileBrowse">
+ 		<div class="profileImg textCenter">
+			<img alt="Profile Image"  class="img-circle" [src]="newAdminVo.profileImageUrl" (click)="getCroppedImg()"> 	
+		</div>
+		
+		<div class="form-group">
+			<input type="text"  [ngClass]="{'borderRed': userName.errors && (userName.dirty || userName.touched || formSubmitted)}" 
+			class="form-control" id="userName" [(ngModel)]="newAdminVo.name"
+			#userName="ngModel" name="userName" placeholder="Name" 
+			pattern="^\S*.*\S+$" autocapitalize="off" autocomplete="off" maxlength="50" required>
+			
+			<div class="help-block text-left" *ngIf="userName.errors && (userName.dirty || userName.touched || formSubmitted)">
+                <small [hidden]="!userName.errors.required" class="text-danger">Please enter name</small>			                           
+                <small [hidden]="!userName.errors.pattern" class="text-danger">Please enter valid name</small>		                           
+            </div>
+		</div>
+		
+		<div class="form-group">
+			<input type="email"  [ngClass]="{'borderRed': userEmail.errors && (userEmail.dirty || userEmail.touched || formSubmitted)}" 
+			class="form-control" id="userEmail" [(ngModel)]="newAdminVo.email"
+			#userEmail="ngModel" name="userEmail" placeholder="Email" [disabled]="isEditMode"
+			pattern="^(?!\.)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" autocapitalize="off" autocomplete="off" maxlength="50" required>
+			
+			<div class="help-block text-left" *ngIf="userEmail.errors && (userEmail.dirty || userEmail.touched || formSubmitted)">
+                <small [hidden]="!userEmail.errors.required" class="text-danger">Please enter email</small>			                           
+                <small [hidden]="!userEmail.errors.pattern" class="text-danger">Please enter valid email</small>		                           
+            </div>
+		</div>
+		
+		<div class="form-group phoneNumber clearfix">		    
+	    	<div class="countryCodeContainer">
+	    		<label class="form-control countrySelectLabel">{{newAdminVo.countryCode}}<span class="caret"></span></label>
+		        <select [(ngModel)]="newAdminVo.countryCode" class="form-control countrySelect" name="country">
+		        	<option *ngFor="let country of countryCodesList" [ngValue]="country.code">{{country.code}}</option>
+		        </select>
+	    	</div>
+	    	<div class="numberControl">
+	   			 <input type="number" [ngClass]="{'borderRed': userPhone.errors && (userPhone.dirty || userPhone.touched || formSubmitted)}"
+	   			  class="form-control" pattern="[1-9][0-9]{9,16}" placeholder="Phone Number" name="userPhone"
+				  #userPhone="ngModel" [(ngModel)]="newAdminVo.contactNo" autocapitalize="off" autocomplete="off">
+	    	
+		    	<div class="help-block text-left" *ngIf="userPhone.errors && (userPhone.dirty || userPhone.touched || formSubmitted)">
+	                 <small [hidden]="!userPhone.errors.pattern" class="text-danger">Please enter phone number between 10 to 17 digit.</small>   
+	            </div>
+	            
+	    	</div>		    
+		 </div>
+		 <div class="form-group phoneNumber clearfix">	
+			<div>
+				<ul class="noMargin">
+					<li *ngFor="let qtype of quotationType; trackBy:identify" (click)="selectPanelItem(qtype); isQuoteSelected = true;">
+						<label class="unselectImg" [ngClass]="{'selectImg': qtype.isChecked }"></label> 
+						<span>{{qtype.name}}</span>
+					</li>
+				</ul>
+			</div>
+			<div class="help-block text-left" *ngIf="(!isQuoteSelected && formSubmitted)">
+				<small  class="text-danger">Please select at least one quotation type.</small>	                            
+			</div>
+		</div>
+	   </div> 
+	</form>   <!-- end of form  -->
+ </div>
+ <div *ngIf="!isProfileBrowse" class="modal-footer">
+	   <button type="button" class="btn commonBtn" *ngIf="firstButton" (click)="cancel()">{{firstButton}}</button>
+	   <button type="button" class="btn commonBtn" *ngIf="secondButton" (click)="saveUser(addNewAdminForm)">{{secondButton}}</button>
+ </div>
+ 
+ <!-- loader html -->
+ <div class="inlineLoaderContainer" *ngIf="isLoading">
+ 	<div class="inlineLoaderWrapper">
+		<div class="inlineLoader"></div>
+	</div>
+ </div>
+ 
+  <!-- Cropper Html-->
+	<div *ngIf="isProfileBrowse" class="cropperContent text-center">
+		<img-cropper #cropper [hidden]="!isfileOpen" [image]="croppedImg" [settings]="cropperSettings"></img-cropper> 
+	
+	     <div class="file-upload"  *ngIf="!isfileOpen">
+	       <input id="custom-input" accept="image/*" class="textCenter" type="file" (change)="fileChangeListener($event)">
+	     </div> 
+	      <div class="modal-footer">
+			   <button type="button" class="btn commonBtn" *ngIf="firstButton" (click)="cancelImgCrop()">{{firstButton}}</button>
+			   <button type="button" class="btn commonBtn" *ngIf="secondButton" [disabled]="!isfileOpen" (click)="OkImgCrop(croppedImg.image)">Crop</button>
+		 </div>
+	</div>
+ 
+

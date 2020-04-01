@@ -1,0 +1,305 @@
+@import '~theme/common';
+
+app-draft-quote {
+	
+	/************ common icon classes *******************/
+	.emailIcon{
+		background:url('../../assets/images/icn_email.png') no-repeat;
+	}	
+	 input:-webkit-autofill,
+	 input:-webkit-autofill:hover,
+	 input:-webkit-autofill:focus,
+	 input:-webkit-autofill:active {
+	    -webkit-box-shadow: 0 0 0 30px $light-color inset !important;
+	    border: 1px solid $light-color !important;
+	}//chrome default styling changed
+	
+	.btnDefault {
+	    background-color: transparent;
+        border-color: transparent !important;
+	}
+	.navHeaderCls {
+		background-color: $light-color;
+    	border-color: $stroke-color;
+    	line-height: 69px;
+    	height: 60px;
+	}	
+	.pageContentBg {
+		width: auto;
+		height: auto;
+	    background-color: $content-bg-color;
+	    padding: 0;
+        position: absolute;
+    	top: 68px;
+    	bottom: 0;
+    	right: 0;
+    	left: 250px;
+    	transition: left 0.4s ease 0s;
+    	overflow-y: auto;
+    	
+    	@media (max-width:768px) {    	
+			left: 0;
+			top: 55px;   	
+    	 }    	   			
+	}
+
+
+	.tableContainer {		
+		padding: 15px 30px;
+		overflow: hidden;
+		position: absolute;
+		top: 52px;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		
+		.tableWrapper {			
+			height: 100%;
+			background: #fff;
+			border: 1px solid #ccc;
+			overflow-x: auto;
+			overflow-y: hidden;
+			
+			.checkColumn {
+				width: 35px;
+				text-align: center;
+			}
+		
+			.createdOnColumn {
+				width: 109px;
+			}
+		
+			.amountColumn {
+				width: 105px;
+				text-align: right;
+				
+				span {
+					margin-right: 4px;
+				}
+			}
+		
+			.editColumn {
+				text-align: center;
+				width: 100px;
+				
+				button {
+					border: 0;
+					
+					width: 18px;
+					height: 18px;
+					background-size: contain;
+					background-repeat: no-repeat;
+					background-color: transparent;
+					
+					&:focus {
+					    outline: 0;
+					}
+				}
+				
+				.editQuoteButton {
+					background-image: url('../../assets/images/iconEdit.png');
+				}
+			
+				.deleteButton {
+					background-image: url('../../assets/images/iconDelete.png');
+					margin: 0 0 0 8px;
+				}
+			
+				.shareButton {
+					background-image: url('../../assets/images/iconShare.png');
+				}
+			}
+			
+			.table-bordered {
+				border: 0;
+			}
+			
+			thead {
+				border-bottom-width: 0px;
+				flex: 0 0 auto;
+			    width: calc(100% - 1.2em);
+				@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation:portrait){
+					width: calc(100% - 0em);
+				}
+
+				@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation:landscape){
+					width: calc(100% - 0em);
+				}
+
+				@media (min-width: 481px) and (max-width: 767px) { 
+					width: calc(100% - 0em);
+				} 
+
+				tr {
+					th {
+						border-bottom-width: 0px;
+						background-color: #f3f5fb;
+						color: #0E1A35;
+						@include Roboto-Medium;
+						border-bottom:0px;
+						    
+						&:first-child {
+							border-left: 0;
+						}
+					
+						&:last-child {
+							border-right: 0;
+						}
+					}
+				}
+			}//end of thead
+		
+			tbody {
+				height:500px;
+				background-color: #fff;
+    			border-top: 1px solid #ddd;
+    			flex: 1 1 auto;
+			    display: block;
+			    overflow-y: scroll;
+			    
+				tr {
+					width: 100%;
+					
+					&:first-child td{
+						border-top:0px !important;
+					}
+				
+					td {
+						color: #435780;
+						@include Roboto-Regular;
+						border-bottom:0px;
+						
+						&:first-child {
+							border-left: 0;
+						}
+					
+						&:last-child {
+							border-right: 0;
+						}
+					}
+				
+					&:last-child {
+						border-bottom: 1px solid #ddd;
+					}
+				}
+				tr.no-data-available {
+					border: 0;
+					text-align: center;
+					td {
+						position: relative;
+					}
+				}
+			}//end of tbody
+	
+			table {
+			    display: flex;
+			    flex-flow: column;
+			    height: 100%;
+			    min-width: 870px;
+			    margin-bottom:0px !important;
+				background-color:#f3f5fb;
+				@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation:portrait){
+					min-width: 1000px;
+				}
+
+				@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation:landscape){
+					min-width: 1000px;
+				}
+
+				@media (min-width: 481px) and (max-width: 767px) { 
+					min-width: 1000px;
+				  } 
+			}
+		
+			table thead, table tbody tr {
+			    display: table;
+				table-layout: fixed;
+				&:hover {
+					background: rgba(0,0,0,.05);
+					cursor: pointer;
+				}
+			} //end of tr
+			table tbody tr.no-data-available {
+				&:hover {
+					background: transparent;
+					cursor: default;
+				}
+			}
+		
+		} //end of tableWrapper
+
+	} //end of tableContainer
+
+	.searchContainer {
+		margin: 20px 30px 0 0;
+    	text-align: right;
+    	
+    	.searchButton {
+    		background: $secondary-color;
+		    border: 0;
+		    color: #fff;
+		    height: 27px;
+		    padding:0px 15px;
+		    border-radius: 15px;
+		    min-width: 80px;
+		    margin: 0 0 0 5px;
+		    line-height: normal;
+		    @include Roboto-Regular;
+		    
+		    &:focus {
+			    outline: 0;
+			}
+    	}
+    
+    	.searchInput {
+    		position: relative;
+    		
+    		input {
+    			height: 27px;
+			    padding: 0 10px;
+			    width: 187px;
+			    border-radius: 15px;
+			    border: 1px solid #dde0ea;
+			   	-moz-box-shadow: inset 1px 1px 2px 0px #ccc;
+			    -webkit-box-shadow: inset 1px 1px 2px 0px #ccc;
+			    box-shadow: inset 1px 1px 2px 0px #ccc;
+			    color: #435882;
+    			font-weight: normal;
+			    
+			    &::placeholder {
+				    color: #c2c7d7;
+				    opacity: 1;
+				    font-weight: normal;
+				}
+				
+				&:-ms-input-placeholder {
+				    color: #c2c7d7;
+				    font-weight: normal;
+				}
+				
+				&::-ms-input-placeholder {
+				    color: #c2c7d7;
+				    font-weight: normal;
+				}
+			    
+			    &:focus {
+			    	outline: 0;
+			   	}
+    		}
+    		    
+    		i {
+    			font-family: FontAwesome;
+			    font-style: normal;
+			    font-weight: normal;
+			    text-decoration: inherit;
+			    position: absolute;
+			    top: 3px;
+			    right: 13px;
+			    color: #c2c7d7;
+    		}
+    		
+    	}
+	}
+
+}
+

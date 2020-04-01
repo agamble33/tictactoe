@@ -1,0 +1,65 @@
+<div>       
+    <div id="page-content-wrapper">
+        
+        <div class="page-content inset pageContentBg"> <!-- [style.height]="pageHeight + 'px'" -->
+        <div class="row noMargin">
+        <div class="absoluteCenter isResponsive">					      
+	      <div class="col-sm-12 col-md-12 formDetails">
+	      	<h4 class="pageTitle">{{constants.CREATE_QUOTE_TITLE}} </h4>
+	        <form action="" id="customerForm" autocomplete=off #customerForm="ngForm" (ngSubmit)="onClickNext(customerForm)" novalidate>
+	          <div class="form-group" [ngClass]="{'borderRed': customerName.errors && (customerName.dirty || customerName.touched || formSubmitted)}">
+			    <input type="text" class="form-control" id="customer_name" pattern="^[\w\s']+$" name="customer_name" #customerName="ngModel" [(ngModel)]="customerData.customerName" placeholder="{{constants.CUSTOMER_NAME}}" required>
+			    <i class="customerIcon iconLeft"></i>		    	
+			  </div>
+			   <div class="help-block text-left" *ngIf="customerName.errors && (customerName.dirty || customerName.touched || formSubmitted)">
+						<small [hidden]="!customerName.errors.required" class="text-danger">{{constants.ENTER_CUSTOMER}} </small>	
+						<small [hidden]="!customerName.errors.pattern" class="text-danger">Customer name can not contain special characters</small>		                           
+				</div>
+			  
+			  <div class="form-group" [ngClass]="{'borderRed': projectName.errors && (projectName.dirty || projectName.touched || formSubmitted)}">
+			    <input type="text" class="form-control" pattern="^[\w\s']+$" autocomplete=off id="project_text" name="project_text" #projectName="ngModel" [(ngModel)]="customerData.projectName" placeholder="{{constants.PROJECT_NAME}}" required>
+			    <i class="projectsIcon iconLeft"></i> 
+			  </div>
+			  <div class="help-block text-left" *ngIf="projectName.errors && (projectName.dirty || projectName.touched || formSubmitted)">
+					<small [hidden]="!projectName.errors.required" class="text-danger">{{constants.ENTER_PROJECT}} </small>
+					<small [hidden]="!projectName.errors.pattern" class="text-danger">Project name can not contain special characters</small>			                           
+				</div>
+				
+				<div class="form-group"  [ngClass]="{'borderRed': salesRepresentative.errors && (salesRepresentative.dirty || salesRepresentative.touched || formSubmitted)}">
+					<i class="salesRepIcon iconLeft"></i> 
+					<select class="form-control common-select quoteType" [(ngModel)]="customerData.salesRep" #salesRepresentative="ngModel" name="salesrepresentative" required>
+						<option class="default-opt" value="" disabled selected>Select sales rep</option>
+						<option *ngFor="let salesRep of salesRepList" [ngValue]="salesRep" placeholder="Select sales rep">{{salesRep.name}}</option>
+					</select>
+				</div>
+			  <div class="help-block text-left" *ngIf="salesRepresentative.errors && (salesRepresentative.dirty || salesRepresentative.touched || formSubmitted)">
+						<small [hidden]="!salesRepresentative.errors.required" class="text-danger">{{constants.SELECT_SALES_REP}} </small>
+				</div>
+
+			  <div class="form-group"  [ngClass]="{'borderRed': quotetype.errors && (quotetype.dirty || quotetype.touched || formSubmitted)}">
+					<i class="quoteTypeIcon iconLeft"></i> 
+					<select class="form-control common-select quoteType" [(ngModel)]="customerData.quoteType" #quotetype="ngModel" name="quoteType" required>
+						<option class="default-opt" value="" disabled selected>Select pricing option</option>
+						<option *ngFor="let quote of quoteType" [ngValue]="quote" placeholder="Select pricing option">{{quote.name}}</option>
+						
+					</select>
+				</div>
+			  <div class="help-block text-left" *ngIf="quotetype.errors && (quotetype.dirty || quotetype.touched || formSubmitted)">
+						<small [hidden]="!quotetype.errors.required" class="text-danger">{{constants.SELECT_QUOTE}} </small>
+				</div>
+
+	      <div class="form-group btnWithArrow">
+				 <button type="submit" class="btn commonBtn btn-default">{{constants.NEXT_BTN_TEXT}} </button>
+				 <img src="../../assets/images/icn_enter.png" class="btnArrowIcon">
+			  </div>
+
+	        </form>        
+	      </div>  
+	    </div>                   
+            </div>
+        </div>
+    </div> 
+
+</div>   
+    
+    

@@ -1,0 +1,34 @@
+<div class="modal-header modalHeaderPaddding">
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+   </button>
+   <h3 *ngIf="selectedObj == 'SUPER_USER'" class="modal-title">Edit Super User Settings</h3>
+   <h3 *ngIf="selectedObj == 'ORG_ADMIN'" class="modal-title">Edit Admin Settings</h3>
+   <h3 *ngIf="selectedObj == 'USER'" class="modal-title">Edit User Settings</h3>
+ </div>
+
+ <div class="modal-body modalBodyPaddding">
+   <p *ngIf="selectedObj == 'SUPER_USER'">Set default pricing options for super users.</p>
+   <p *ngIf="selectedObj == 'ORG_ADMIN'">Set default pricing options for admin.</p>
+   <p *ngIf="selectedObj == 'USER'">Set default pricing options for users.</p>
+      <ul class="noMargin">
+        <li *ngFor="let qtype of quotationType; let index = index" (click)="selectPanelItem(qtype); isQuoteSelected = true;">
+            <label class="unselectImg" [ngClass]="{'selectImg': qtype.isChecked }"></label> 
+            <span>{{qtype.name}}</span>
+        </li>
+      </ul>
+      
+    
+</div>
+<div class="modal-footer">
+	   <button type="button" class="btn commonBtn" (click)="cancel()">Cancel</button>
+	   <button type="button" class="btn commonBtn" (click)="setQuotationTypes()">Update</button>
+ </div>
+ 
+ <!-- loader html -->
+ <div class="inlineLoaderContainer" *ngIf="isLoading">
+ 	<div class="inlineLoaderWrapper">
+		<div class="inlineLoader"></div>
+	</div>
+ </div>
+ 

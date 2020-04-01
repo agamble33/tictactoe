@@ -1,0 +1,65 @@
+<div class="modal-header modalheader" [ngClass]="{'modalHeaderPaddding': !saveFlag}">
+	<button *ngIf="!saveFlag" type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+   </button>
+	<h5 class="modal-title text-center modalTitle" [ngClass]="{'h3 titleColor': !saveFlag}">
+   		{{titleText}}
+   	</h5>
+</div>
+<form novalidate *ngIf="saveFlag" id="qutationForm" #quotationForm="ngForm" (ngSubmit)="saveQuotation(quotationForm)">
+	 <div class="modal-body" [ngClass]="{'modalBodyPaddding': !saveFlag}">
+	 	<div class="webServiceError">{{webServiceError}}</div>
+		<!-- <form novalidate *ngIf="saveFlag" id="qutationForm" #quotationForm="ngForm" (ngSubmit)="saveQuotation(quotationForm)"> -->
+		
+			<!-- old password field  -->
+			  <div class="form-group formGroup oldPasswordGroup" [ngClass]="{'borderRed clear-bottom-margin': customerName.errors && (customerName.dirty || customerName.touched || formSubmitted)}">
+			    <input type="{{textInputType}}" #customerName="ngModel" pattern="^[\w\s']+$" [(ngModel)]="quotationData.customerName" class="form-control formControl" autocomplete="off" id="customerName" name="customerName" placeholder="Customer Name" maxlength="50" required>
+			    <i class="customerIcon inputIcon"></i>
+			  </div>
+			  <div class="help-block text-left" *ngIf="customerName.errors && (customerName.dirty || customerName.touched || formSubmitted)">
+	               <small [hidden]="!customerName.errors.required" class="text-danger">Please enter customer name. </small>	
+	               <small [hidden]="!customerName.errors.pattern" class="text-danger">Please enter valid customer name.</small>		                           
+	          </div>
+			  
+			  
+			 <!-- confirm password field  -->
+			  <div class="form-group formGroup" [ngClass]="{'borderRed': projectName.errors && (projectName.dirty || projectName.touched || formSubmitted)}">
+			    <input type="{{textInputType}}" pattern="^[\w\s']+$" #projectName="ngModel" [(ngModel)]="quotationData.projectName" class="form-control formControl" autocomplete="off" id="projectName" name="projectName" placeholder="Project Name" maxlength="50" required>
+			    <i class="projectsIcon inputIcon"></i> 
+			  </div>
+			  <div class="help-block text-left clear-bottom-margin" *ngIf="projectName.errors && (projectName.dirty || projectName.touched || formSubmitted)">
+	              <small [hidden]="!projectName.errors.required" class="text-danger">Please enter project name. </small>
+	              <small [hidden]="!projectName.errors.pattern" class="text-danger">Please enter valid project name.</small>		                           
+	          </div>		  	
+		
+		   
+		<!-- Sales rep field -->
+		<div class="form-group formGroup"  [ngClass]="{'borderRed': salesRepresentative.errors && (salesRepresentative.dirty || salesRepresentative.touched || formSubmitted)}">
+			<i class="salesRepIcon inputIcon"></i> 	
+			<select class="form-control quoteType formControl" [(ngModel)]="quotationData.salesRep" #salesRepresentative="ngModel" name="salesRepresentative" required>
+					<option value="" disabled selected>Select sales representative</option>
+					<option *ngFor="let salesRep of salesRepList" [ngValue]="salesRep" placeholder="Select sales representative">{{salesRep.name}}</option>
+				</select>
+			</div>
+			<div class="help-block text-left" *ngIf="salesRepresentative.errors && (salesRepresentative.dirty || salesRepresentative.touched || formSubmitted)">
+				<small [hidden]="!salesRepresentative.errors.required" class="text-danger">{{constants.SELECT_SALES_REP}} </small>
+			</div>
+	
+			<div class="form-group formGroup"  [ngClass]="{'borderRed': quotetype.errors && (quotetype.dirty || quotetype.touched || formSubmitted)}">
+				<i class="quoteTypeIcon inputIcon"></i> 
+				<select class="form-control quoteType formControl" [(ngModel)]="quotationData.quoteType" #quotetype="ngModel" name="quoteType" required>
+					<option value="" disabled selected>Select pricing option</option>
+					<option *ngFor="let quote of quoteType" [ngValue]="quote" placeholder="Select pricing option">{{quote.name}}</option>
+				</select>
+			</div>
+			<div class="help-block text-left" *ngIf="quotetype.errors && (quotetype.dirty || quotetype.touched || formSubmitted)">
+				<small [hidden]="!quotetype.errors.required" class="text-danger">{{constants.SELECT_QUOTE}} </small>
+			</div>
+		
+	 </div>
+	 <div class="modal-footer">
+		   <button type="button" class="btn commonBtn" (click)="cancel()">{{close}}</button>
+		   <button type="submit" class="btn commonBtn" *ngIf="saveFlag">{{save}}</button>
+	 </div>
+ 
+</form>

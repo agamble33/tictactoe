@@ -1,0 +1,207 @@
+@import '~theme/common';
+
+app-sidebar {
+	#sidebar-wrapper {
+		padding-bottom: 35px;
+	}
+	.sidebarNav {
+		    position: absolute;
+		    top: 68px;
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+	        height: auto;
+		    overflow-y: auto;
+    		bottom: 0;
+    		
+    		@media (max-width:768px) {
+    			top: 123px;
+    		}
+    	
+		.sidebarLink {
+			color: $light-color;
+			padding-right: 0;
+			vertical-align: middle;	
+			border-left: 6px solid transparent;
+			position: relative;
+		//	border-bottom: 1px solid $menu-border-color;
+		  &.active {
+		  background-color: transparent;
+		  border-left: 6px solid $secondary-color;
+		  //margin-left: -5px;
+		}
+		&:active, &:hover, &:focus {
+		  background-color: transparent;
+		  border-left: 6px solid $secondary-color;
+		  outline:none;
+		  //margin-left: -5px;
+		}
+		i {
+			margin-right: 12px;
+			width: 21px;
+    		height: 21px;
+			vertical-align: top;
+			margin-top: 9px;
+		}
+		
+		.badge {
+			width: 30px;
+			height: 30px;
+			background-color: $count-bg-color;
+			color: $count-color;
+			@include borderRadius(50%);
+    		text-align: center;    	
+    		float: right;
+    		padding-top: 9px;
+    		padding-left: 0;
+    		padding-right: 0;
+    		display: inline-block;
+    		text-indent: 0;
+    		margin-top: 0;
+	        position: absolute;
+    		left: initial;
+    		right: 16px;
+    		top: 15px;
+    		bottom: 0;
+		}
+		.newQuoteIcon{
+			background:url('../../assets/images/icn_new_quote.png')no-repeat;
+		}
+		.saveQuoteIcon{
+			background:url('../../assets/images/icn_saved_quote.png')no-repeat;
+		}
+		.draftQuoteIcon{
+			background:url('../../assets/images/icn_draft_quote.png')no-repeat;
+		}
+		.homeIcon{
+			background:url('../../assets/images/home.png')no-repeat;
+		}
+		.manageOrgUserIcon{
+			background:url('../../assets/images/manage_user.png')no-repeat;
+		}
+		.viewQuotesIcon{
+			background:url('../../assets/images/view_quotes.png')no-repeat;
+		}
+		
+	} // end sidebarLink
+	
+		.sidebarLink.isShowMobile {
+			display: none;
+			@media (max-width:768px) {
+				display: block;
+			}
+		
+		}
+	
+		li {
+			a {
+				&:hover {
+					background: $primary-hover-color;
+				}
+				
+				&:focus {
+					outline: 0;
+				}
+			}
+		}
+			
+	} //end sidebarNav
+	.sidebarBrand {
+		background-color: $header-bg-color;
+		border-right: 1px solid $stroke-color;
+		border-bottom: 1px solid $stroke-color;
+		height: 68px;
+    	text-indent: 10px;
+    	position: relative;
+    		@media (max-width:768px) {
+    			border-bottom: 0;
+    		}
+    	.sidebarLogo {
+    		//vertical-align: middle;
+    		//position: absolute;
+		    //top: 50%;
+		    //bottom: initial;
+		    //left: 0;
+		    //right: 0;
+		    //@include commonTransform(translateY(-50%));
+		    height: 100%;
+		    //margin: 0;
+		    padding:5px;
+    	}
+		
+		img {
+			width: auto;
+    		//padding-left: 10px;
+    		max-height: 100%;
+    		border:1px solid $stroke-color;
+    		 display:inline-block;
+		}
+		
+		p{
+			max-width: 150px;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		    color: $dark-color;
+		    @include Roboto-Medium;
+		    font-size:$font14;
+		    display:inline-block;
+		    vertical-align: text-top;
+		}
+	}
+	.profileInfo {
+		display: none;
+		background-color: $light-color;
+		color: $title-color;
+		height: 55px;
+    	text-indent: 10px;
+    	margin-top: -1px;
+		@media (max-width:768px) {
+			display: block;
+			.profileHead {
+			    margin-top: 0;
+			    margin-bottom: 0;
+		        padding: 12px 5px 10px 5px;
+		        color: $title-color;
+		        span{
+		        	color: $title-color;
+		        	padding-left: 8px;
+	        	    text-overflow: ellipsis;
+				    overflow: hidden;
+				    white-space: nowrap;
+				    display: inline-block;
+				    max-width: 70%;
+		        }
+		        .avatarImg {
+					width: 32px;
+    				height: 32px;					
+				}
+			}
+    	 } 		
+	}	//end profileInfo
+
+	.catalog-sidebar {	
+		position: absolute;
+		bottom: 110px;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+
+	.logo-sidebar {	
+		position: absolute;
+		bottom: 50px;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+	
+	.app-version {
+		color: #fff;
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		right: 0;
+		text-align: center;
+	}
+}

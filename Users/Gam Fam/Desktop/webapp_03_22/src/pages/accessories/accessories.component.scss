@@ -1,0 +1,138 @@
+@import '~theme/common';
+
+.tabStructure .tabs-details .tab-content .tab-pane .listView li ul li ul{
+	border-top:0;
+}
+
+.tabStructure .tabs-left > li.active .accordian-arrow{
+	right:4%;
+}
+
+.tabStructure .tabs-left > li.noChild.active .accordian-arrow{
+	right:3%;
+}
+
+.borderBottom{
+	border-bottom:1px solid $stroke-color !important;
+}
+
+app-accessories {
+	.pageContentBg {
+		left: 250px;
+		padding-top:20px;
+		.mobileListView {
+			ul {
+				background: #f8f6f0;
+				li {
+					margin:10px 10px 0px !important;
+					ul {
+						li {
+							margin-top: 0 !important;
+						}
+						.radioContainer, .checkboxContainer{
+							padding: 0;
+							vertical-align: middle;
+							span {
+								padding-left: 26px;
+							}
+						}
+					}
+				}
+				
+			}
+			
+		}
+		.mobileListView>ul {
+			background: transparent;
+		}
+
+		@media (max-width:768px) {   
+			left: 0;
+		 }    			
+
+	}
+
+	.glyphicon-plus-sign,
+	.glyphicon-minus-sign {
+		display: block!important;
+	}
+
+	.optionLabel {
+		display: block;
+	    font-weight: normal;
+	    margin: 0;
+	}
+	
+	.checkboxContainer{
+		input{
+			@include screen-max768{
+				width:100%;
+				height:80%;
+			}
+		}
+	}
+	
+	.tabContent {
+		margin-bottom: 20px;
+	}
+
+	.breadcrumbWrapper{
+		overflow-x: auto;
+		width:100%;
+		.wrapper{
+			width:auto;
+			min-width: auto;
+			white-space: nowrap;
+		}		
+	}
+	.largeDesktop {
+		display: block;
+		@media (max-width:768px) {   
+			display: none;
+		}
+	}
+
+	.itemText {
+		display: inline-block;
+	    width: 85%;
+	    vertical-align: middle;
+	}
+
+	.accessoriesNote {
+		position: relative;		
+		margin-top: -9px;
+		
+		@include screen-max768 {
+		    margin-top: 0;
+		}
+		
+		span {
+			position: absolute;
+		}
+		
+		p {
+			padding-left: 55px;
+		}
+	}
+
+	.tab-pane {
+		.accessoriesNote {
+			padding: 8px 7px 0 7px;
+    		line-height: normal;
+    		margin-top: 0;
+		}
+	}
+
+	.disableItem {
+		pointer-events: none;		
+		color: #bdbdbd !important;
+	    background-color: transparent!important;		
+	}
+
+	.noteText {
+		padding-left: 55px;
+	}
+}
+.minWidthInitial {
+	min-width: 0!important;
+}

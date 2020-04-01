@@ -1,0 +1,115 @@
+@import '~theme/common';
+
+/********** common classes for Modal *********************/
+
+.modalheader {
+	background: #0f1a36;
+	border: 0;
+	
+	h5 {
+		color: #fff;
+	}
+
+	.titleColor {
+		color: #0c1939;
+	}
+}
+
+.modal-footer {
+	text-align: center;
+	border-top: 0;
+	@include Roboto-Medium;
+	margin-bottom: 15px;
+	
+	.commonBtn,
+	.commonBtn:hover, 
+	.commonBtn:focus, 
+	.commonBtn:active {
+		margin: 0;
+		padding: 6px 30px;
+		min-width: 116px;
+    	box-shadow: none;
+    	
+    	@media (max-width: 767px) {
+	    	font-size: 16px;
+	   	}
+		
+		&:first-child {
+			background-color: $light-button-color !important; 
+		}
+	
+		&:last-child {
+			margin: 0 0 0 10px;
+		}
+	}
+}
+
+.modal-body {
+	
+	h4 {
+		@include Roboto-Medium;
+		
+		@media (max-width: 767px) {
+	    	font-size: 16px;
+	   	}
+	}
+	text-align: center;
+}
+
+.formGroup {
+	
+	position: relative;
+    margin-top: 15px;
+    
+    .formControl {
+    	box-shadow: none;
+	    border-radius: 0;
+	    border-top: 0;
+	    border-left: 0;
+	    border-right: 0;
+		//text-indent: 25px;
+		padding: 6px 35px;    
+	}
+	
+	.quoteType{
+		-moz-appearance:none; /* Firefox */
+		-webkit-appearance:none; /* Safari and Chrome */
+		appearance:none;
+		border-radius: 0px;
+		background: url('../../assets/images/dropdown.png')no-repeat;
+		background-position: 100%;
+		&::-ms-expand {
+			display: none;
+		}
+	}
+    
+	.inputIcon {
+		position: absolute;
+	    top: 5px;
+	    bottom: 0;
+	    left: 0;
+	    right: initial;
+	    width: 20px;
+	    height: 20px;
+	    border: 0;
+	    background-size: contain;
+	    padding: 0;	    
+	}
+}
+
+.webServiceError {
+	font-size: 14px;
+	color: red;
+}
+
+.modalHeaderPaddding {
+	padding-bottom: 0;
+	background: transparent;
+	color: #0c1939;
+}
+
+.modalBodyPaddding {
+	padding-top: 0;
+	color: #0c1939;
+}
+

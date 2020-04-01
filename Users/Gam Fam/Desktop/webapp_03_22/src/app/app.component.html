@@ -1,0 +1,12 @@
+<app-sidebar></app-sidebar>
+<!-- <breadcrumb></breadcrumb> -->
+
+<router-outlet>
+	<app-header></app-header>
+	<span [hidden]="!showLoader" class="loading"></span>
+</router-outlet>
+<toaster-container [toasterconfig]="config"></toaster-container>
+
+<!--p><strong>{{idleState}}</strong></p>
+<p *ngIf="lastPing"><small>Last keepalive ping <strong>{{lastPing | amTimeAgo}}</strong></small></p>
+<button (click)="reset()" *ngIf="timedOut">Restart</button-->

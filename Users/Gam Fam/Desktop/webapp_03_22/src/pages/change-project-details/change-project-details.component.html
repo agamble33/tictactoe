@@ -1,0 +1,53 @@
+<div class="modal-header modalHeaderPaddding">
+	<button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+   </button>
+   <h3 class="modal-title">Change Customer/Project Name</h3>
+ </div>
+ <div class="modal-body modalBodyPaddding">
+ 	<form action="" id="customerForm" autocomplete=off #customerForm="ngForm" (ngSubmit)="onClickNext(customerForm)" novalidate>
+        <div class="form-group" [ngClass]="{'borderRed': customerName.errors && (customerName.dirty || customerName.touched || formSubmitted)}">
+		    <input type="text" class="form-control" id="customer_name" pattern="^([^\s])([\sa-zA-Z0-9_\-]*)([^\s])$" name="customer_name" #customerName="ngModel" [(ngModel)]="selectedObj.customerName" placeholder="{{constants.CUSTOMER_NAME}}" required>
+		    <i class="customerIcon"></i>		    	
+	  	</div>
+	   	<div class="help-block text-left" *ngIf="customerName.errors && (customerName.dirty || customerName.touched || formSubmitted)">
+            <small [hidden]="!customerName.errors.required" class="text-danger">{{constants.ENTER_CUSTOMER}} </small>	
+            <small [hidden]="!customerName.errors.pattern" class="text-danger">Please enter valid customer name.</small>		                           
+        </div>
+	  
+	    <div class="form-group" [ngClass]="{'borderRed': projectName.errors && (projectName.dirty || projectName.touched || formSubmitted)}">
+		    <input type="text" class="form-control" pattern="^([^\s])([\sa-zA-Z0-9_\-]*)([^\s])$" autocomplete=off id="project_text" name="project_text" #projectName="ngModel" [(ngModel)]="selectedObj.projectName" placeholder="{{constants.PROJECT_NAME}}" required>
+		    <i class="projectsIcon"></i> 
+	    </div>
+	  	<div class="help-block text-left" *ngIf="projectName.errors && (projectName.dirty || projectName.touched || formSubmitted)">
+             <small [hidden]="!projectName.errors.required" class="text-danger">{{constants.ENTER_PROJECT}} </small>
+             <small [hidden]="!projectName.errors.pattern" class="text-danger">Please enter valid project name.</small>			                           
+		</div>		
+
+			   
+		<!-- Sales rep field -->
+		<div class="form-group"  [ngClass]="{'borderRed': salesRepresentative.errors && (salesRepresentative.dirty || salesRepresentative.touched || formSubmitted)}">
+			<i class="salesRepIcon"></i> 
+			<select class="form-control" [(ngModel)]="selectedObj.salesRep" #salesRepresentative="ngModel" name="salesRepresentative" required>
+				<option value="" disabled selected>Select sales representative</option>
+				<option *ngFor="let salesRep of salesRepList" [ngValue]="salesRep" placeholder="Select sales representative">{{salesRep.name}}</option>
+			</select>
+		</div>
+		<div class="help-block text-left" *ngIf="salesRepresentative.errors && (salesRepresentative.dirty || salesRepresentative.touched || formSubmitted)">
+			<small [hidden]="!salesRepresentative.errors.required" class="text-danger">{{constants.SELECT_SALES_REP}} </small>
+		</div>
+
+    </form>        
+ </div>
+ <div class="modal-footer">
+	   <button type="button" class="btn commonBtn" *ngIf="firstButton" (click)="cancel()">{{firstButton}}</button>
+	   <button type="button" class="btn commonBtn" *ngIf="secondButton" (click)="copyQuote()">{{secondButton}}</button>
+ </div>
+ 
+ <!-- loader html -->
+ <div class="inlineLoaderContainer" *ngIf="isLoading">
+ 	<div class="inlineLoaderWrapper">
+		<div class="inlineLoader"></div>
+	</div>
+ </div>
+ 

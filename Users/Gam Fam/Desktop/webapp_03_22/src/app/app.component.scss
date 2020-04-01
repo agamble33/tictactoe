@@ -1,0 +1,24 @@
+body {
+	padding-left: 0;
+	transition: padding-left 0.4s ease 0s;
+}
+
+.sidebarActive {
+	padding-left: 250px;
+	transition: padding-left 0.4s ease 0s;
+}
+
+breadcrumb{
+	ol{
+		background-color: transparent !important;
+	    padding: 4px;
+	    margin: 70px 0px 0px 250px;
+	    position: absolute;
+	    z-index:9999;
+	    
+	    a{
+	    	background-color: transparent !important;
+	    	text-decoration:none !important;
+	    }
+	}
+}

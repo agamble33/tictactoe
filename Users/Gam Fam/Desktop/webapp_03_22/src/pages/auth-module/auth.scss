@@ -1,0 +1,450 @@
+@import '~theme/common';
+.gradient {
+	background: #010103;
+	background: -moz-linear-gradient(top, #000 0%, #000 14%, #00111d 25%, #06182e 50%, #0f1b33 75%, #121c37 100%); 
+	background: -webkit-linear-gradient(top, #000 0%,#000 14%, #00111d 25%,#06182e 50%,#0f1b33 75%,#121c37 100%);
+	background: linear-gradient(to bottom, #000 0%,#000 14%, #00111d 25%,#06182e 50%,#0f1b33 75%,#121c37 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#010103', endColorstr='#121c37',GradientType=0 );
+}
+
+.bodyBg{
+	background: url("../../assets/images/PanelBuilder_Login-screen_2019-08-22.png") no-repeat;
+	
+	width:100vw;
+	height: 100vh;
+	background-size:contain;
+	background-position: center;
+	overflow: hidden;
+
+	@include screen960 {
+		background: transparent;
+
+		&:before,
+		&:after {
+			background-size: contain;
+			background-repeat: no-repeat;			
+			content: '';
+			display: block;
+		}
+
+		&:before {
+			background-image: url(../../assets/images/H2Tronics_logo.png);
+			width: 204px;
+			height: 72px;
+			margin: 22px 0 0 10px;
+			float: left;
+
+			@media (max-width: 450px) {
+				width: 143px;
+				height: 50px;
+			}
+			@media (max-width: 340px) {
+				width: 117px;
+    			height: 41px;
+			}
+		}
+		&:after {			
+			background-image: url(../../assets/images/Aquaphoenix_logo.png);
+			width: 204px;
+			height: 72px;
+			margin: 15px 10px 0 0;
+			float: right;
+
+			@media (max-width: 450px) {
+				width: 165px;
+				height: 58px;
+			}
+
+			@media (max-width: 340px) {
+				width: 148px;
+				height: 52px;
+			}
+		}
+		
+	}
+}//end of body, bacKground image for body
+
+/********* common color variables **********/
+$header-color:#0e1a35;
+
+/************ common icon classes *******************/
+
+.emailIcon{
+	background:url('../../assets/images/icn_email.png')no-repeat;
+}
+
+.passwordIcon{
+	background:url('../../assets/images/icn_password.png')no-repeat;
+}
+
+ input:-webkit-autofill,
+ input:-webkit-autofill:hover,
+ input:-webkit-autofill:focus,
+ input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $light-color inset !important;
+    border: 1px solid $light-color !important;
+}//chrome default styling changed
+
+.iconLeft{
+	left:0;
+}//used for icon left
+
+.iconRight{
+	right:0;
+}//used for icon right
+
+.commonAuthCls{
+	margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:50%;
+   
+    @include screen940{
+    	width:60%;
+    }
+   
+    @include screen-max768{
+    	width:65%;
+    }
+    
+    @include screen640{
+    	width:100%;
+    }
+   
+    .heading{
+    	background:$primary-color;
+    	padding:0 !important;
+    	
+    	.col-md-12,
+    	.col-lg-12,
+    	.col-md-6,
+    	.col-lg-6{
+    		padding:0 !important;
+    	}//removeing bydefault padding bootstrap classes
+    	
+    	.logo img{
+    		margin:16px 0px 10px 15px;
+			max-width:36%;
+			min-width: 117px;
+			
+			@include screen-max768{
+				margin: 20px 0px 10px 15px;
+   				max-width: 118px;
+			}
+    	}//end of logo image
+    	
+    	.title{
+    		border-bottom:5px solid $secondary-color;
+    		font-size:$font14;
+    		font-weight:500;
+    		color:$light-color;
+    		padding:18px 0px;
+    		text-align:center;
+    		
+    		@include screen-max768{
+   				font-size:$font12;
+   			}
+    	}//end of title
+    
+    }//end of heading
+   
+   .formDetails{
+   		background-color:#fff;   
+		   padding-bottom:20px;
+		   border: 1px solid black;
+   		 
+   		h4{
+   			font-size:24px;
+   			font-weight:500;
+   			margin:20px 0px 20px;
+   			text-align:center;
+   			color:gray;
+   			
+   			@include screen-max768{
+   				font-size:$font22;
+   			}
+   		}//end of h4
+   	
+   		.errorMsg,
+   		.successMsg{
+   			font-size:$font14;
+   			@extend .textCenter;
+   			margin-bottom:20px !important;
+   		}//common styling for error and success message
+   	
+   		.errorMsg{
+   			color:red;
+   		}//end of errorMsg
+   	
+   		.successMsg{
+   			color:$secondary-color;
+   		}//end of successMsg
+   	
+    	.note{
+    		font-size:$font16;
+   			font-weight:500;
+   			margin: 25px 0 20px 0;
+   			text-align:center;
+   			color:gray;
+   			
+   			@include screen1024{
+   				margin:30px 43px;
+   			}
+   			
+   			@include screen-max768{
+   				margin: 30px 0px;
+   				font-size:$font14;
+   			}
+    	}//end of note
+    
+		form{
+			
+			i{
+				 position: absolute;
+			     top: 18%;
+			     padding: 2px 10px 2px 10px;
+			     height:20px;
+				 background-size:100%;
+			}//end of i ,common style for all i
+		
+			.form-group{
+				 position: relative;
+				 border-bottom:1px solid #dedede;
+				 
+				 &:nth-child(2){
+				 	margin-bottom:10px;
+				 }
+				
+				 a{
+				 	cursor:pointer;
+				 	
+				 	&:last-child{
+				 		color:$secondary-color;
+				 	}
+				 }//end of anchor tag
+			
+				input,
+				input:hover,
+				input:active,
+				input:focus{
+					border:none;
+					box-shadow:none;
+					padding:10px 10px 10px 30px;
+				} // end of input tag
+				
+			}//end of form-group
+			
+			 .link{
+				  margin: 7px 0 0 0;
+			 	  font-size:$font12 !important;
+			 	a{			 		
+			 		text-decoration:none;
+			 		color: $secondary-color;
+			 		cursor:pointer;
+			 		  
+			 	}
+			 }  //end of link, used for forgot passwrod of send otp links
+			
+		}//end of form
+		.errorMsgCls {
+			min-height: 250px;
+			.errorMsgText {
+			    margin: 0 auto;
+			    position: absolute;
+			    top: 50%;
+			    @include commonTransform(translateY(-50%));
+			    text-align: center;
+			    width: 95%;
+			}
+		}
+	
+	}//end of formDetails
+
+}//end of loginCls
+
+.loginContainer {
+	left: auto;
+ //   top: 125px;
+	 top: 50%;
+	 -webkit-transform: translate(0, -60%);
+    transform: translate(0, -60%);    
+    right: 8%;
+    width: 33%;
+	min-width: 420px;
+	opacity: 0;
+	-webkit-animation: .5s ease 0s normal forwards 1 fadein;
+    animation: .5s ease 0s normal forwards 1 fadein;
+	
+	@include screen960 {
+		-webkit-transform: translate(50%, -50%);
+		transform: translate(50%, -50%);
+		right: 50%;
+	}
+	
+	@include screen440 {
+		-webkit-transform: translate(0, -50%);
+    	transform: translate(0, -50%);
+		left: 0;		
+		right: 0;
+		width: 100%;
+		min-width: 0;
+	}
+}
+
+@keyframes fadein{
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+
+@-webkit-keyframes fadein{
+    0% { opacity:0; }
+    100% { opacity:1; }
+}
+
+.borderRed{
+	border-bottom:1px solid red !important;
+	margin-bottom:0 !important;
+}// used for input validation on error msg border red
+
+app-forgot-password{
+	.formDetails{
+		text-align:center;
+	}
+}
+
+app-reset-password{
+	.formDetails{
+	    position: relative;
+	}
+}
+
+
+.SignupBtn{
+	margin-left: 20%;
+	color:$light-color;
+	white-space: normal;
+	padding: 6px 20px;
+	cursor: pointer;
+	@include Roboto-Bold;
+	opacity: 1; 
+	height: auto;
+	border-radius: 6px;
+	background-color:$secondary-color;
+	border: none !important;
+	font-size: 15px;
+	margin: 20px 0 0;
+	text-transform: capitalize;
+	@media (max-width:767px) {
+	  padding: 5px 50px;
+	  font-size: 15px;
+	  padding: 5px 50px;
+	  font-size: 15px;
+	  margin:10px 0px 10px;
+	}
+}
+.SignupBtn,
+.SignupBtn:hover, 
+.SignupBtn:focus, 
+.SignupBtn:active{
+  background-color:$secondary-color !important;
+  color:$light-color !important;
+  border-radius:20px;
+  padding:6px 20px;
+  outline:none !important;
+  border:1px solid transparent !important;
+} //end of btn
+
+.loginBtn{
+	
+	color:$secondary-color;
+	white-space: normal;
+	padding: 6px 40px;
+	cursor: pointer;
+	@include Roboto-Bold;
+	opacity: 5; 
+	height: auto;
+	border-radius: 6px;
+	//background-color:$secondary-color;
+	//border: none !important;
+	font-size: 15px;
+	margin: 20px 0 0;
+	text-transform: capitalize;
+	@media (max-width:767px) {
+	  padding: 5px 40px;
+	  font-size: 15px;
+	  padding: 5px 50px;
+	  font-size: 15px;
+	  margin:10px 0px 10px;
+	  border: 1px solid;
+	  border-color: $secondary-color ;
+	}
+}
+.loginBtn,
+.loginBtn:hover, 
+.loginBtn:focus, 
+.loginBtn:active{
+  //background-color:$secondary-color !important;
+  color:$secondary-color;
+  border-radius:20px;
+  padding:6px 60px;
+  outline:none !important;
+  border:1px solid;
+  border-color: $secondary-color ;
+} //end of btn
+
+
+.ErrorMessageBoxCls{
+	 //padding: 20px;
+     margin-bottom: 3px;
+	transform: translate(-50%, -50%);
+
+	
+	
+	
+   
+    @include screen940{
+    	width:60%;
+    }
+   
+    @include screen-max768{
+    	width:65%;
+    }
+    
+    @include screen640{
+    	width:50%;
+	}
+
+}
+	
+	.errorMessageContainer {
+		border: solid 2px blue($color: #000000);
+		 -webkit-transform: translate(0, -10%);
+		transform: translate(1, -10%);    
+		  //margin-left: 15px;
+		
+		  //float: right;
+		 
+		  transition: 0.3s;
+		-webkit-animation: .5s ease 0s normal forwards 1 fadein;
+		animation: .5s ease 0s normal forwards 1 fadein;
+		
+		@include screen960 {
+			-webkit-transform: translate(50%, -50%);
+			transform: translate(3%, -20%);
+			right: 10%;
+		}
+		
+		@include screen440 {
+			-webkit-transform: translate(0, -50%);
+			transform: translate(0, -10%);
+			left: 0;		
+			right: 0;
+			width: 70%;
+			min-width: 0;
+		
+	}
+
+
+}

@@ -1,0 +1,102 @@
+	<div id="page-content-wrapper">
+		<div class="page-content inset pageContentBg">
+			<div class="profilePage">
+				<div class="profile">
+					<h5 class="profileHeader">My Profile</h5>
+					<div class="profileContainer">
+						<div class="profileWrapper">
+						
+						<!-- Profile Form -->
+							<form #profileForm="ngForm" name="profileForm">								
+								<div class="userProfileContent">
+									<div class="profileImg profileImgData">
+										<label for="profileImage">
+											<img alt="Profile Image"  *ngIf="!editProfileFlag"  class="img-circle" [src]="profileData.profileImageUrl"> 
+											
+											<!-- Profile Image -->
+											<img alt="Profile Image"  *ngIf="editProfileFlag"  class="img-circle" [src]="profileEditData.profileImageUrl"> 											
+										
+											<span class="cameraIcon" *ngIf="editProfileFlag">
+												 <input #profileImage id="profileImage" class="profileImageUpload" (click)="getCroppedImg()"/>
+											</span>
+											
+										</label>
+									</div>
+									
+									<!-- Profile Name -->					
+									<h3 class="userName" [ngClass]="{'editUserName':editProfileFlag}">
+										<span *ngIf="!editProfileFlag">{{profileData.name}}</span>
+									</h3>
+
+									<!-- Profile Edit Button -->
+									<button class="editButton" (click)="editProfile()" *ngIf="!editProfileFlag"></button>
+									
+									<div class="userProfileInfo">
+									
+											<!-- Profile Name Input -->
+										  <div class="form-group profileFormGroup emailGroup" *ngIf="editProfileFlag">
+										    <label class="controlLabel">Name</label>										    
+										    <input type="text" [ngClass]="{'borderRed': profileUserName.invalid}" class="form-control formControl" id="form-userName" 			   		 
+										    	[(ngModel)]="profileEditData.name" name="userName" pattern="^\S.*\S$"
+													#profileUserName="ngModel" autocapitalize="off" autocomplete="off" maxlength="50" required>
+										  
+										  	<div class="help-block text-center" *ngIf="profileUserName.invalid">
+								                <small class="text-danger">Please enter name.</small>			                           
+								            </div>
+										  </div>
+									
+										<!-- Profile Email Input -->
+										  <div class="form-group profileFormGroup emailGroup" *ngIf="!editProfileFlag">
+ 										    <label class="controlLabel">Email</label>										    				
+										    <span class="controlValue">{{profileData.email}}</span>
+										  </div>
+										  
+										  
+										  <!-- Profile Phone Input -->
+										  <div class="form-group profileFormGroup emailGroup">
+										    <label class="controlLabel">Phone No.</label>
+										    
+										    <div class="phoneNumberContainer clearfix" *ngIf="editProfileFlag">
+										    	<div class="countryCodeContainer">
+											        <label class="form-control countrySelectLabel">{{profileEditData.countryCode}}<span class="caret"></span></label>
+											        <select [(ngModel)]="profileEditData.countryCode" class="form-control countrySelect" name="country">
+											        	<option *ngFor="let country of countryCodes" [ngValue]="country.code">{{country.code}}</option>
+											        </select>
+										    	</div>
+										    	<div class="profilePhoneInfo">
+										   			 <input type="number" [ngClass]="{'borderRed': profilePhone.invalid}" class="formPhoneControl" id="form-tel" 			   		 
+												    	pattern="[1-9][0-9]{9,16}" placeholder="Please Enter Phone" [(ngModel)]="profileEditData.contactNo" name="phone"
+															#profilePhone="ngModel" autocapitalize="off" autocomplete="off" minlength="10" maxlength="17" required appNotAllowCopyPaste>
+										    	
+											    	<div class="help-block text-center" *ngIf="profilePhone.invalid">
+										                <small [hidden]="!profilePhone.errors.required" class="text-danger">Please enter phone number.</small>	
+										                <small [hidden]="!profilePhone.errors.pattern" class="text-danger">Please enter phone number between 10 to 17 digit.</small>		                           
+										            </div>
+										            
+										    	</div>
+										    </div>
+										    
+										    <span class="controlValue" *ngIf="!editProfileFlag">{{profileEditData.countryCode}} {{profileData.contactNo}}</span>
+										  </div>
+										  
+										  <!-- Profile Organization Name Input -->
+										  <div class="form-group profileFormGroup emailGroup" *ngIf="!editProfileFlag && userData.role != 'SUPER_ADMIN'">
+										    <label class="controlLabel">Organization Name</label>
+										    <span class="controlValue">{{profileData.organizationName}}</span>
+										  </div>
+										  
+										  <div class="text-center">
+										  	  <!-- Profile Cancel andSave button -->
+											  <button class="commonBtn" *ngIf="editProfileFlag" (click)="cancel()">Cancel</button>
+											  <button class="commonBtn" *ngIf="editProfileFlag" (click)="save(profileForm)">Save</button>
+										  </div>
+										  
+									</div>
+								</div>
+								</form>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

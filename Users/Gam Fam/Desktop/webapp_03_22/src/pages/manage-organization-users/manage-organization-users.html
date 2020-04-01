@@ -1,0 +1,196 @@
+<div class="page-content inset pageContentBg manageOrgUserCls" #controllerSensorView>
+	<div class="panel" *ngIf="!isVisibleQuotes">
+    <!-------------- Admin list ------------------>	
+		<div class="panelSection">
+			<div class="panelHeader">
+				<p>Organization Admins
+					<i *ngIf="!isSuperUserRole" class="dropdown-toggle menuIcon displayInlineBlock" data-toggle="dropdown" (click)="setRoleWiseQuoteTypes('ORG_ADMIN')"  role="button" aria-haspopup="true" aria-expanded="true"></i>
+				</p>
+				<div class="searchBox">
+					<input type="text" placeholder="Search"  [(ngModel)]="orgAdminVo.searchText" (ngModelChange)="onOrgAdminSearch(orgAdminVo.searchText)">
+					<i class="searchIcon"></i>
+				</div>
+			</div>
+			
+			<div class="panelItemList">
+				<div class="searchResults" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="loadMoreAdmins()">
+					<ul>
+						<li *ngFor="let orgAdmin of orgAdminVo.data">							
+							<div class="userPic">
+								<img *ngIf="orgAdmin.profileImageUrl" [src]="orgAdmin.profileImageUrl"  />
+								<img *ngIf="!orgAdmin.profileImageUrl" src="../../assets/images/profilePlaceholder.png" />
+							</div>
+							<div class="heading">
+								<h4>{{orgAdmin.name}}</h4>
+							</div>
+							
+							<i *ngIf="!isSuperUserRole" class="dropdown-toggle menuIcon displayInlineBlock" data-toggle="dropdown" id="orgAdmin.id" role="button" aria-haspopup="true" aria-expanded="true"></i>
+							<div *ngIf="!isSuperUserRole" class="dropdown-menu crudMenu" [attr.aria-labelledby]="orgAdmin.id">
+						   	 	<ul>
+							     <li (click)="editAdmin(orgAdmin)"><div class="menu"><span class="editIcon"></span>Edit</div></li>
+								 <li (click)="deleteAdmin(orgAdmin)"><div class="menu"><span class="deleteIcon"></span>Delete</div></li>	
+							   </ul>
+						   	 </div>
+						</li>
+						<li class="noDataErrorMsg" *ngIf="!orgAdminVo.isLoading && (orgAdminVo.data && orgAdminVo.data.length == 0) && !orgAdminVo.isLoadFailed">No data found</li>
+						<li class="itemList noDataErrorMsg loadToFailedData" *ngIf="orgAdminVo.isLoadFailed && !orgAdminVo.isLoading">Failed to load data. Please try again
+							<button class="commonBtn" (click)="loadAdminsOfOrg(false)">Retry</button>
+						</li>						
+					</ul>
+					<!-- loader html -->
+					<div *ngIf="orgAdminVo.isLoading" class="inlineLoader"></div>
+				</div>
+			</div>
+			<div *ngIf="!isSuperUserRole" class="panelFooter" (click)="addNewAdmin()">
+			  <p>  <span class="glyphicon glyphicon-plus"></span> Add New Admin</p>
+			</div>
+		</div>
+	<!-------------- Super User list ------------------>	
+		 <div class="panelSection">
+			<div class="panelHeader">
+				<p>Organization Super Users
+					<i *ngIf="!isSuperUserRole" class="dropdown-toggle menuIcon displayInlineBlock" (click)="setRoleWiseQuoteTypes('SUPER_USER')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"></i>
+				</p>
+				<div class="searchBox">
+					<input type="text" placeholder="Search"  [(ngModel)]="orgSuperUsersVo.searchText" (ngModelChange)="onOrgSuperUserSearch(orgSuperUsersVo.searchText)">
+					<i class="searchIcon"></i>
+				</div>
+			</div>
+			
+			<div class="panelItemList">
+				<div class="searchResults" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="loadMoreSuperUsers()">
+					<ul>
+						<li *ngFor="let orgSuperUser of orgSuperUsersVo.data">							
+							<div class="userPic">
+								<img *ngIf="orgSuperUser.profileImageUrl" [src]="orgSuperUser.profileImageUrl"  />
+								<img *ngIf="!orgSuperUser.profileImageUrl" src="../../assets/images/profilePlaceholder.png" />
+							</div>
+							<div class="heading">
+								<h4>{{orgSuperUser.name}}</h4>
+							</div>
+							
+							<i *ngIf="!isSuperUserRole" class="dropdown-toggle menuIcon displayInlineBlock" data-toggle="dropdown" id="orgSuperUser.id" role="button" aria-haspopup="true" aria-expanded="true"></i>
+							<div *ngIf="!isSuperUserRole" class="dropdown-menu crudMenu" [attr.aria-labelledby]="orgSuperUser.id">
+						   	 	<ul>
+							     <li (click)="editSuperUser(orgSuperUser)"><div class="menu"><span class="editIcon"></span>Edit</div></li>
+								 <li (click)="visibleQuote(orgSuperUser, 'superUser')"><div class="menu"><span class="visbleQuotesIcon"></span>Visible Quotes</div></li>
+								 <li (click)="deleteSuperUser(orgSuperUser)"><div class="menu"><span class="deleteIcon"></span>Delete</div></li>	
+							   </ul>
+						   	 </div>
+						</li>
+						<li class="noDataErrorMsg" *ngIf="!orgSuperUsersVo.isLoading && (orgSuperUsersVo.data && orgSuperUsersVo.data.length == 0) && !orgSuperUsersVo.isLoadFailed">No data found</li>
+						<li class="itemList noDataErrorMsg loadToFailedData" *ngIf="orgSuperUsersVo.isLoadFailed && !orgSuperUsersVo.isLoading">Failed to load data. Please try again
+							<button class="commonBtn" (click)="loadSuperUsersOfOrg(false)">Retry</button>
+						</li>						
+					</ul>
+					
+					<div *ngIf="orgSuperUsersVo.isLoading" class="inlineLoader"></div>
+				</div>
+			</div>
+			<div *ngIf="!isSuperUserRole" class="panelFooter" (click)="addNewSuperUser()">
+			  <p>  <span class="glyphicon glyphicon-plus"></span> Add New Super User</p>
+			</div>
+		</div>
+	<!-------------- User list ------------------>	
+		<div class="panelSection">
+			<div class="panelHeader">
+				<p>Organization Users
+					<i *ngIf="!isSuperUserRole" class="dropdown-toggle menuIcon displayInlineBlock" (click)="setRoleWiseQuoteTypes('USER')" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"></i>
+				</p>
+				<div class="searchBox">
+					<input type="text" placeholder="Search" [(ngModel)]="orgUsersVo.searchText" (ngModelChange)="onUserSearch(orgUsersVo.searchText)">
+					<i class="searchIcon"></i>
+				</div>
+			</div>
+			<div class="panelItemList">
+				<div class="searchResults" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="loadMoreUsers()">
+					<ul>
+						<li *ngFor="let userVo of orgUsersVo.data" >
+							<div class="userPic">
+								<img *ngIf="userVo.profileImageUrl" [src]="userVo.profileImageUrl"  />
+								<img *ngIf="!userVo.profileImageUrl" src="../../assets/images/profilePlaceholder.png" />
+							</div>
+							<div class="heading">
+								<h4>{{userVo.name}}</h4>
+							</div>
+							<i *ngIf="!isSuperUserRole" class="dropdown-toggle menuIcon displayInlineBlock" data-toggle="dropdown" id="userVo.id" role="button" aria-haspopup="true" aria-expanded="true"></i>
+							<div *ngIf="!isSuperUserRole" class="dropdown-menu crudMenu" [attr.aria-labelledby]="userVo.id">
+						   	 	<ul>
+								 <li (click)="editUser(userVo)"><div class="menu"><span class="editIcon"></span>Edit</div></li>
+								 <li (click)="visibleQuote(userVo, 'user')"><div class="menu"><span class="visbleQuotesIcon"></span>Visible Quotes</div></li>
+							     <li (click)="deleteUser(userVo)"><div class="menu"><span class="deleteIcon"></span>Delete</div></li>	
+							   </ul>
+						   	 </div>
+						</li>
+						<li class="noDataErrorMsg" *ngIf="!orgUsersVo.isLoading && (orgUsersVo.data && orgUsersVo.data.length == 0) && !orgUsersVo.isLoadFailed">No data found</li>
+						<li class="itemList noDataErrorMsg loadToFailedData" *ngIf="orgUsersVo.isLoadFailed && !orgUsersVo.isLoading">Failed to load data. Please try again
+							<button class="commonBtn" (click)="loadUsersOfOrg(false)">Retry</button>
+						</li>
+					</ul>
+					<!-- loader html -->
+					<div *ngIf="orgUsersVo.isLoading" class="inlineLoader"></div>
+				</div>
+			</div>
+			
+			<div *ngIf="!isSuperUserRole" class="panelFooter" (click)="addNewUser()">
+			  <p>  <span class="glyphicon glyphicon-plus"></span> Add New User</p>
+			</div>
+		</div>
+		
+	</div>
+
+<!--*********************************************** Visible Quotes UI ********************************************-->
+	<div  *ngIf="isVisibleQuotes" class="quoteHeader">
+		<p class="heading">Manage {{ownerOfQuotes.name}}'s Visible Quotes</p>
+		<p class="vqNote">Allow this user to access quotes assigned to any of the following Sales Reps:</p>
+   </div>	
+	<div class="panel vqPanel" *ngIf="isVisibleQuotes">
+		<!-------------- User list ------------------>	
+			<div class="panelSection">
+				<div class="panelHeader vqPanelHeader" (click)="selectAll('user')">
+					<p>
+						<label class="checkboxContainer">
+							<input type="checkbox" class="checkboxControl" [ngModel]="selectedAllUser">
+							<span></span>
+						</label>Organization Users
+				    </p>
+				</div>
+				<div class="panelItemList vqPanelItemList">
+					<div class="searchResults" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="loadMoreUsers()">
+						<ul>
+							<li *ngIf="this.ownerOfQuotes.isSuperUser" [ngClass]="{'disabledUser': ownerOfQuotes.isDisabled}" (click)="selectUser( ownerOfQuotes, 'user' )">
+								<label class="checkboxContainer">
+									<input type="checkbox" [ngModel]="ownerOfQuotes.isSelected" class="checkboxControl">	
+									<span></span>
+								</label>		
+								<div class="heading">
+									<h4>{{ownerOfQuotes.name}}</h4>
+								</div>
+							</li>
+								
+							<li *ngFor="let userVo of orgUsersVo.data" [ngClass]="{'disabledUser': userVo.isDisabled}" (click)="selectUser( userVo, 'user' )">
+								<label class="checkboxContainer">
+									<input type="checkbox" [ngModel]="userVo.isSelected" class="checkboxControl">	
+									<span></span>
+								</label>		
+								<div class="heading">
+									<h4>{{userVo.name}}</h4>
+								</div>
+							</li>
+							<li class="noDataErrorMsg" *ngIf="!orgUsersVo.isLoading && (orgUsersVo.data && orgUsersVo.data.length == 0) && !orgUsersVo.isLoadFailed">No data found</li>
+							<li class="itemList noDataErrorMsg loadToFailedData" *ngIf="orgUsersVo.isLoadFailed && !orgUsersVo.isLoading">Failed to load data. Please try again
+								<button class="commonBtn" (click)="loadUsersOfOrg(false)">Retry</button>
+							</li>
+						</ul>
+						<!-- loader html -->
+						<div *ngIf="orgUsersVo.isLoading" class="inlineLoader"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="vqBtns text-center">
+				<button type="button" class="btn commonBtn" (click)="cancel()">Cancel</button>
+				<button type="button" class="btn commonBtn" (click)="updateVisibleQuote()">Update</button>
+			</div>
+		</div>
+</div>

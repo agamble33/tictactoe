@@ -1,0 +1,156 @@
+<div id="page-content-wrapper">
+  <div class="page-content inset pageContentBg">
+    <div class="searchContainer">
+      <div class="date-range">
+        <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12" name="viweQuoteForm" (ngSubmit)="onSubmit(viweQuoteForm)" #viweQuoteForm="ngForm" novalidate>
+          <!-- <label class="date-label">Date Range : <input type="date" name="from"
+              (ngModelChange)="dateRange.from = $event" [ngModel]="dateRange.from | date:'yyyy-MM-dd'" #from="ngModel"
+              required></label>
+          <label class="date-label"><span class="to">to</span><input class="to-field" name="to"
+              (ngModelChange)="dateRange.to = $event"  ngbDatepicker #d2="ngbDatepicker" [ngModel]="dateRange.to | date:'yyyy-MM-dd'" #to="ngModel"
+              required></label>
+          <label class="date-button"><input type="submit" value="Submit" class="date-submit"></label>
+          <label class="error" *ngIf="errorMsg">{{errorMsg}}</label> -->
+
+          <div class="form-group date-label">
+              <label class="date-label">Date Range : </label>
+              <div class="input-group">
+                  <input class="form-control fromDateField" 
+                      name="from"
+                      #fromDate="ngModel" [(ngModel)]="dateRange.from" 
+                      ngbDatepicker
+                      #from="ngbDatepicker" required readonly>
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar-btn" #fromDatepicker
+                          (click)="from.toggle();$event.stopPropagation();" type="button"></button>
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group date-label">
+              <span class="to">to</span>
+              <div class="input-group to-field">
+                  <input class="form-control toDateField" 
+                      name="to"
+                      #toDate="ngModel" [(ngModel)]="dateRange.to" 
+                      ngbDatepicker
+                      #to="ngbDatepicker" required readonly>
+                  <div class="input-group-append">
+                      <button class="btn btn-outline-secondary calendar-btn" #toDatepicker
+                          (click)="to.toggle();$event.stopPropagation();" type="button"></button>
+                  </div>
+              </div>
+          </div>
+          <label class="error" *ngIf="errorMsg">{{errorMsg}}</label>
+          <label class="date-button"><input type="submit" value="Submit" class="date-submit"></label>
+        </form>
+      </div>
+      <div class="clearfix search-options">
+        <div class="searchInput">
+          <div class="searchInputContainer">
+            <input type="text" placeholder="Search" (keyup)="searchTable()" [(ngModel)]="search">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="searchSelect">
+              <select name="searchSelect" [(ngModel)]="searchField" (change)="seachField()">
+              <option value="all" selected>All</option>
+              <option value="customer_name">Customer</option>
+              <option value="project_name">Project Name</option>
+              <option value="SalesMan">Sales Rep.</option>
+              <option value="Identity">Prepared By</option>
+              <option value="status">Status</option>
+              </select>
+          </div>
+        </div>
+        <label class="display-quotes-for">
+          Display quotes for :
+          <select name="quotesUser" [(ngModel)]="quotesUser" (change)="displayQuotesFor()">
+            <option value="0">All Users</option>>
+            <option *ngFor="let salesUser of salesUserslist" [ngValue]="salesUser.id">{{salesUser.User.name}}</option>
+          </select>
+        </label>
+      </div>
+    </div> <!-- end of searchContainer -->
+
+    <div class="tableContainer">
+      <div class="tableWrapper table-responsive">
+        <table class="scroll table table-bordered">
+          <thead>
+            <tr>
+              <th (click)="sortTable('id')">Quote #
+                  <span *ngIf="path[0] == 'id'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('updated_at')">Last Saved
+                  <span *ngIf="path[0] == 'updated_at'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('customer_name')">Customer
+                  <span *ngIf="path[0] == 'customer_name'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('project_name')">Project Name
+                  <span *ngIf="path[0] == 'project_name'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('SalesMan.User.name')">Sales Rep.
+                  <span *ngIf="path[0] == 'SalesMan'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('Identity.User.name')">Prepared By
+                  <span *ngIf="path[0] == 'Identity'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('status')" class="statusColumn">Status
+                  <span *ngIf="path[0] == 'status'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th (click)="sortTable('total_price')" class="amountColumn">Amount
+                  <span *ngIf="path[0] == 'total_price'" [ngClass]="order == 1?'arrow-down':'arrow-up'" class="pull-left"></span>
+              </th>
+              <th class="editColumn">Action</th>
+            </tr>
+          </thead>
+          <tbody class="searchResults">
+
+            <tr *ngFor="let quoteItem of viewQuoteList; let i = index">
+              <td (click)="editQuote(quoteItem, true)">{{quoteItem.quote_no}}</td>
+              <td (click)="editQuote(quoteItem, true)">{{quoteItem.updated_at}}</td>
+              <td (click)="editQuote(quoteItem, true)">{{quoteItem.customer_name}}</td>
+              <td (click)="editQuote(quoteItem, true)">{{quoteItem.project_name}}</td>
+              <td (click)="editQuote(quoteItem, true)">{{quoteItem.SalesMan?.User?.name}}</td>
+              <td (click)="editQuote(quoteItem, true)">{{quoteItem.Identity?.User?.name}}</td>
+              <td class="statusColumn" (click)="editQuote(quoteItem, true)">
+                  {{quoteItem.status}}
+                <!-- <span *ngIf="quoteItem.is_draft">Draft</span>
+                <span *ngIf="!quoteItem.is_draft">Final</span> -->
+              </td>
+              <td class="amountColumn clearfix" (click)="editQuote(quoteItem, true)"><span>$</span>{{ quoteItem.total_price | number : '1.2-2'}}</td>
+              <td class="editColumn">
+                <button class="editBtn" (click)="editQuote(quoteItem, false)" data-toggle="tooltip" title="Edit Quote"></button>
+                <button class="shareButton" (click)="shareQuote(quoteItem)" data-toggle="tooltip" title="Share Quote"></button>
+                <button *ngIf="loginUserObj.role == 'ORG_ADMIN'" class="deleteButton" data-toggle="tooltip" title="Delete Quote" (click)="deleteQuote(quoteItem)"></button>
+              </td>
+            </tr>
+            <tr *ngIf="viewQuoteList && viewQuoteList.length == 0">
+              <td colspan="9" class="no-data-available">Quote data not available</td>              
+            </tr>
+          </tbody>
+        </table> <!-- end of table -->
+      </div> <!-- end of tableWrapper -->
+    </div> <!-- end of tableContainer -->
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <ul *ngIf="pager.pages && pager.pages.length" class="clearfix pagination">
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <button (click)="setPage(1)">First</button>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === 1}">
+          <button (click)="setPage(pager.currentPage - 1)">Previous</button>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <button (click)="setPage(page)">{{page}}</button>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <button (click)="setPage(pager.currentPage + 1)">Next</button>
+        </li>
+        <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+          <button (click)="setPage(pager.totalPages)">Last</button>
+        </li>
+      </ul>
+    </div>
+  </div> <!-- end of page-content -->
+</div> end of page-content-wrapper

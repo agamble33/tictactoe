@@ -1,0 +1,296 @@
+@import '~theme/common';
+
+app-controller-series {
+	
+	.navHeaderCls {
+		background-color: $light-color;
+    	border-color: $stroke-color;
+    	line-height: 69px;
+    	height: 60px;
+	}
+	
+	.pageContentBg {
+		width: auto;
+		height: auto;
+	    background-color: $content-bg-color;
+	    padding: 0;
+        position: absolute;
+    	top: 68px;
+    	bottom: 0;
+    	right: 0;
+    	left: 250px;
+    	transition: left 0.4s ease 0s;
+    	overflow-y: auto;
+    	
+    	@media (max-width:768px) {    	
+			left: 0;
+			top: 105px;
+			//bottom: 54px;
+    	 }
+    	.panelBodyCls {
+    		width: 100%;
+    		height: 100%;
+    		padding: 16px 20px;
+    		 @media (max-width:767px) {
+	    		    padding: 16px 12px;
+		      }
+    		.panelHeading {
+			    padding: 0 10px;
+			     @media (max-width:767px) {
+	    		    padding: 0;
+		         }
+    			.panelTitle {
+    				@include Roboto-Regular;
+    				color: $primary-color;
+    				@media (max-width:767px) {
+		    		    margin: 0;
+			        }
+    			}
+    		}
+    		.panelBody {
+			    padding-top: 15px;
+			    
+			    #desktopView {
+			    	padding: 0;
+			    	display: -ms-flex !important;
+				    display: -webkit-flex!important;
+				    display: flex!important;
+				    padding-bottom: 15px;
+				    
+				     @media (max-width: 768px) {
+		   	  	 	    display: none !important;
+			   	  	 }
+				    
+			    	.noData {
+			    		@include Roboto-Medium;
+						padding-left: 12px;
+			    	}
+				    .tabs-heading {
+				    	padding: 0 !important;
+				    	.tabs-left {
+			    		    border-bottom: none;
+				    		li {
+			    			    margin-bottom: 0;
+			    			    margin-left: 12px;
+		    			        //margin: 5px 10px 0px 12px;
+					    		a {
+				    			    padding: 10px 15px;
+				    			    text-overflow: ellipsis;
+				    			    overflow: hidden;
+			    			        margin-left: 15px;
+		    			            margin-right: 0;
+		    			            text-align:center;
+		    			            span {
+		    			            	img {
+										//	width: 60%;
+											max-width: 140px;
+	    			            		    height: 40px;
+		    			            	}
+		    			            }		    			            
+					    		}
+				    		}
+				    		.active>a,
+							.active>a:hover,
+							.active>a:focus {
+								margin-bottom: -5px;
+								margin-left: 0;
+							}
+				    	}
+				    } //end tabs-heading
+				   .tabs-details {
+				   	  padding-top: 35px;
+				   	  .tab-content {
+				   	  	  .tab-pane {
+						   	  button{
+						   	  	margin:15px 0;
+						   	  }
+						   	  .noDataText {
+						   	  	@include Roboto-Medium;
+						   	  	text-align: center;
+						   	  	padding: 10px;
+						   	  }
+							 .listView {
+							 	li {
+						 		    border: 1px solid $stroke-color;
+						 		    background-color: $header-bg-color;
+						 		    margin-top: 10px !important;
+						 		    color: $list-header-color;
+						 		    @include Roboto-Medium;
+										
+										p{
+											padding:0px !important;
+										}
+														 		    
+							 		    .radioContainer{
+											margin-right:10px !important;
+											vertical-align: middle;
+										    //padding-left: 0;
+										    display: inherit;
+										    padding:10px;
+											width: 100%;
+								    		overflow: hidden;
+    										text-overflow: ellipsis;
+    										white-space: nowrap;
+    										margin: 0;
+											height: 100%;
+											font-weight: normal;
+											.radioControl {
+											    appearance: none;
+											    -webkit-appearance: none;
+											    -moz-appearance: none;
+											    -ms-appearance: none;
+											}
+											span {
+												vertical-align: middle;
+												margin-right: 8px;
+											}
+										}
+										.checkbox > span{
+											margin-left:15px;
+										}
+							 	}
+							 }
+						 }
+					 }
+				   }// end tabs-details
+				  
+				  .flexFirstItem {
+						flex: 1;
+						flex-basis: 25%;
+						min-width: 250px;
+					}
+				
+					.flexSecondItem {
+						flex: 1;
+						flex-basis: 75%;
+						min-width: 350px;
+						
+						.tab-content {
+							height: 100%;	
+						}
+					}
+			   }
+			   .mobileListView  {
+			   	  .noData {
+			    		@include Roboto-Medium;
+						padding-left: 5px;
+			    	}
+			   	  ul {
+			   	  	 @media (max-width: 768px) {
+		   	  	 	    padding-bottom: 0;
+			   	  	 }
+			   	  	 li {
+			   	  	 	background-color: $accordian-headerBg-color;
+			   	  	 	margin: 5px 0px;
+			   	  	 	width:100%;
+			   	  	 		p {
+				 		    	background-color: $accordian-headerBg-color;
+				 		    	.radioContainer{
+								    display: inherit;
+									width: 65%;
+						    		overflow: hidden;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									margin: 0;
+									height: 100%;
+									font-weight: normal;
+									span {
+										vertical-align: middle;
+										margin-right: 8px;
+									}
+								}
+							
+								.mobileViewSubOptions {
+									width: 100%;
+								}
+				 		    }
+			   	  	 	.accordianImg {
+			   	  	 		    margin-left: 0;
+    							margin-right: 0;
+    							padding: 5px 5px 5px 0;
+    							right: 0;
+    							top: 0;
+    							width: 35%;   							    
+								height: 100%;
+								text-align: right;
+    							
+    						img {
+							//	width: 100%;
+								max-width: 140px;
+    							height: 30px;
+    						}
+			   	  	 	}	
+			   	  	 }
+			   	  	ul {
+			   	  		background-color: $header-bg-color;
+			   	  		border-top: 1px solid $stroke-color;
+			   	  		li {
+						 	background-color: $header-bg-color;						 	
+						 	p {
+						 		background-color: $header-bg-color;
+						 	}
+						 	&:last-child {
+						 		border-bottom: 0;
+						 		margin-bottom: 0;
+						 		p {
+						 			border-bottom: 0;
+						 		}
+						 	}
+			   	  		}
+			   	  	}
+			   	  }
+			   	 
+			   	 .labelWrapper {
+			   	 	display: block;
+				    margin: 0;
+				    font-weight: normal;
+			   	 }
+			   }				    		    
+			} // end panelBody
+			.btnGroupCls {
+				display: none;
+				@media (max-width: 768px) {  
+					display: block; 					
+					position: fixed;
+	    			left: 0;
+	    			bottom: 0;
+	    			width: 100%;
+	    			background-color: $light-color;
+	    			border-top: 1px solid $stroke-color;
+	    			color: white;
+	    			text-align: center;
+	    			padding: 0 15px;
+				    top: initial;
+	    			right: 0;
+	    				.commonBtn {
+	    					width: 45%;
+	    					margin: 10px 0 10px 0 !important;	
+	    					padding: 5px 20px;
+    					    text-overflow: ellipsis;
+    						overflow: hidden;
+    						white-space: nowrap;
+    						position: relative !important; 
+    						.btnArrowIcon {
+							    margin-top: 5px;
+							    position: absolute; 
+							    margin-top: 0;
+							    margin-left: 0;
+							    position: absolute;
+							    right: 10px;
+							    top: 50%;
+							    bottom: 0;
+							    left: initial;
+							    @include commonTransform(translateY(-50%));
+							}  					
+	    				}
+	    		}
+			}
+		
+		.commingSoon a {
+			pointer-events: none;
+		}
+
+		} //end panelBodyCls		
+		
+	}
+}

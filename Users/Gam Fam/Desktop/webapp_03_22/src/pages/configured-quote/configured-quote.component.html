@@ -1,0 +1,529 @@
+<div class="tabStructure">
+	<div id="page-content-wrapper">
+		<div #resultsControlContainer [ngClass]="{'disableBredCrumb' : fromViewQuoteOnlyView}">
+			<div class="breadcrumbWrapper noMargin largeDesktop" #configureBtn>
+				<div class="wrapper clearfix minWidthInitial">
+					<div class="btnContainer desktopBtnView configureButtons">
+						<button type="submit" [disabled]="!quoteData"
+							class="btn secondaryBtn commonBtn displayInlineBlock"
+							(click)="save( true, '/configuredQuote', false ); saveDarftBtnClicked()">Save
+							as Draft</button>
+						<button type="submit" [disabled]="!quoteData"
+							class="btn secondaryBtn commonBtn displayInlineBlock"
+							(click)="save( false, '/configuredQuote', false);saveAsFinalBtnClicked()">Save
+							as Final</button>
+						<div class="dropdown displayInlineBlock">
+							<div data-target="#" class="dropdown-toggle " data-toggle="dropdown" id="dropdownMenu1"
+								role="button" aria-haspopup="true" aria-expanded="false">
+								<div><button type="button" class="btn secondaryBtn commonBtn profileName "
+										>Share<span
+											class="divder"></span><span class="caret"></span></button></div>
+							</div>
+							<div class="dropdown-menu profileMenu" aria-labelledby="dropdownMenu1">
+								<ul>
+									<li (click)="save( true, '/configuredQuote', false ); saveDarftBtnClicked(); emailQuote(false)">
+										<div class="menu"><span class="sendToCustomer"></span>Share with Recipients
+										</div>
+									</li>
+									<li [ngClass]="{'disabled': isSpecificOrganization}" (click)="save( true, '/configuredQuote', false ); saveDarftBtnClicked(); emailH2Quote(false)" >
+										<div class="menu"><span class="sendToH2"></span>Share with H2trOnics</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- <share-button [theme]="'modern-dark'" [button]="'email'" [url]="emailText" [title]="'Configured Quote Pdf'">Share
+							[ngClass]="{'disabled': !isSpecificOrganization}"
+							  [attr.disabled]="isSpecificOrganization ? true: null"
+							     [disabled] = "!isSpecificOrganization"
+						</share-button> -->
+					</div>
+
+				</div>
+			</div>
+			<div class="breadcrumbWrapper" #configureBreadcrumbList>
+				<div class="wrapper clearfix breadcrumbList" *ngIf='!isCreateNewAccessory'>
+					<div class="breadcrumbView pull-left">
+						<ul>
+							<li [routerLink]="'/dashboard'" routerLinkActive="active">{{selectedControllerTitle}}<span
+									class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/controllerSeries'" routerLinkActive="active">
+								{{selectedControllerSeries.name}}<span class="glyphicon glyphicon-menu-right"></span>
+							</li>
+							<li [routerLink]="'/controllerSensorSelection'" routerLinkActive="active">Controller Sensor
+								& I/O <span class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/panelOptions'" routerLinkActive="active">Panel Options <span
+									class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/flowDirection'" routerLinkActive="active">Panel Size & Direction<span
+									class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/accessories'" routerLinkActive="active">Accessories(optional) <span
+									class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/configuredQuote'" routerLinkActive="active">Configured Quote</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="wrapper clearfix breadcrumbList" *ngIf='isCreateNewAccessory'>
+					<div class="breadcrumbView pull-left">
+						<ul>
+							<li [routerLink]="'/dashboard'" routerLinkActive="active">dashboard<span
+									class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/accessories'" routerLinkActive="active">Accessories<span
+									class="glyphicon glyphicon-menu-right"></span></li>
+							<li [routerLink]="'/configuredQuote'" routerLinkActive="active">Configured Quote</li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="page-content inset pageContentBg" *ngIf='!isCreateNewAccessory'
+				[style.top.px]="topSectionHeight">
+				<div [hidden]="!isOldQuote" class="oldQuoteNote">Please update previous quotes, discount has been
+					changed</div>
+				<div class="quotaInfoContainer clearfix">
+					<div class="pull-left text-left quoteData">
+						<label class="displayBlock noMargin">Prepared By: </label>
+						<span *ngIf="quoteData && quoteData.userName">{{quoteData.userName}}</span>
+					</div>
+					<div class="pull-right quoteData">
+						<label class="displayBlock noMargin">Quotation No:</label>
+						<span *ngIf="quoteData && quoteData.quoteNo">{{quoteData.quoteNo}}</span>
+					</div>
+				</div>
+				<div class="tableContainer desktopView">
+					<div class="tableHeader">
+						<ul class="nav nav-tabs clearfix navTabs">
+							<li class="configuredPanel configuredPanelRadius active"><a class="configuredPanelRadius"
+									data-toggle="tab" href="#home">Configured
+									Controller & Panel Quote</a></li>
+							<li class="digramPanel" (click)="drawPanelDigram()"><a data-toggle="tab" href="#menu1">Panel
+									Model Diagram</a></li>
+							<li class="digramPanel digramPanelRadius"><a class="digramPanelRadius" data-toggle="tab"
+									href="#menu2">Datasheet</a></li>
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div id="home" class="tab-pane fade in active">
+							<div *ngIf="''; else configureQuoteTable"> </div>
+						</div>
+						<div id="menu1" class="tab-pane fade">
+							<div *ngIf="''; else panelModelDiagram"></div>
+						</div>
+						<div id="menu2" class="tab-pane fade">
+							<div *ngIf="''; else datasheet"></div>
+						</div>
+					</div>
+				</div>
+				<div class="tableContainer mobileView">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+										Configured Controller & Panel Quote<span
+											class="glyphicon panelArrow"></span></a>
+								</h4>
+							</div>
+							<div id="collapse1" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div *ngIf="''; else configureQuoteTable"></div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default" *ngIf='!isCreateNewAccessory'>
+							<div class="panel-heading">
+								<h4 class="panel-title" (click)="drawPanelDigram()">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+										Panel Model Diagram<span class="glyphicon panelArrow"></span></a>
+								</h4>
+							</div>
+							<div id="collapse2" class="panel-collapse collapse">
+								<div class="panel-body text-center">
+									<img *ngIf="panelUrl" src="{{panelUrl}}">
+									<!-- loader html -->
+									<div *ngIf="!panelUrl" class="inlineLoaderWrapper">
+										<div class="inlineLoader"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+										Datasheet <span class="glyphicon panelArrow"></span></a>
+								</h4>
+							</div>
+							<div id="collapse3" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div *ngIf="''; else datasheet"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--start  -->
+			<div class="page-content inset pageContentBg" *ngIf='isCreateNewAccessory'
+				[style.top.px]="topSectionHeight">
+				<div [hidden]="!isOldQuote" class="oldQuoteNote"> Please update previous quotes, discount has been
+					changed</div>
+				<div class="quotaInfoContainer clearfix">
+					<div class="pull-left text-left quoteData">
+						<label class="displayBlock noMargin">Prepared By:</label>
+						<span *ngIf="quoteData && quoteData.userName">{{this.quoteData.userName}}</span>
+					</div>
+					<div class="pull-right quoteData">
+						<label class="displayBlock noMargin">Quotation No:</label>
+						<span *ngIf="quoteData && quoteData.quoteNo">{{this.quoteData.quoteNo}}</span>
+					</div>
+				</div>
+				<div class="tableContainer desktopView">
+					<div class="tableHeader">
+						<ul class="nav nav-tabs clearfix navTabs">
+							<li class="configuredPanel configuredPanelRadius active"><a class="configuredPanelRadius"
+									data-toggle="tab" href="#home">Configured
+									Controller & Panel Quote</a></li>
+							<li class="digramPanel" *ngIf='!isCreateNewAccessory'><a data-toggle="tab"
+									href="#menu1">Panel Model Diagram
+								</a></li>
+							<li class="digramPanel digramPanelRadius"><a class="digramPanelRadius" data-toggle="tab"
+									href="#menu2">Datasheet</a></li>
+						</ul>
+					</div>
+					<div class="tab-content">
+						<div id="home" class="tab-pane fade in active">
+							<div *ngIf="''; else configureQuoteTable"> </div>
+						</div>
+						<div id="menu1" class="tab-pane fade">
+							<div *ngIf="''; else panelModelDiagram"></div>
+						</div>
+						<div id="menu2" class="tab-pane fade">
+							<div *ngIf="''; else datasheet"></div>
+						</div>
+					</div>
+				</div>
+				<div class="tableContainer mobileView">
+					<div class="panel-group" id="accordion">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+										Configured Controller & Panel Quote<span
+											class="glyphicon panelArrow"></span></a>
+								</h4>
+							</div>
+							<div id="collapse1" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div *ngIf="''; else configureQuoteTable"></div>
+								</div>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title" (click)="drawPanelDigram()">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+										Panel Model Diagram<span class="glyphicon panelArrow"></span></a>
+								</h4>
+							</div>
+							<div id="collapse2" class="panel-collapse collapse">
+								<div class="panel-body text-center">
+									<img *ngIf="panelUrl" src="{{panelUrl}}">
+									<!-- loader html -->
+									<div *ngIf="!panelUrl" class="inlineLoaderWrapper">
+										<div class="inlineLoader"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+										Datasheet <span class="glyphicon panelArrow"></span></a>
+								</h4>
+							</div>
+							<div id="collapse3" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div *ngIf="''; else datasheet"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end  -->
+
+			<!-- end of page-content -->
+			<div class="configureQuoteMobileView configureButtons">
+				<div class="text-center">
+					<button type="submit" class="btn secondaryBtn commonBtn displayInlineBlock"
+						[routerLink]="'/createQuote'">Save as Draft</button>
+					<button type="submit" class="btn secondaryBtn commonBtn displayInlineBlock">Save as Final</button>
+
+					<div class="dropdown displayInlineBlock">
+						<div data-target="#" class="dropdown-toggle " data-toggle="dropdown" id="dropdownMenu1"
+							role="button" aria-haspopup="true" aria-expanded="false">
+							<div>
+								<button type="button" class="btn secondaryBtn commonBtn"
+									>Share&nbsp;&nbsp;<span
+										class="divder" style="border-left: 1px solid white"></span><span
+										class="caret"></span></button>
+							</div>
+						</div>
+						<div class="dropdown-menu profileMenu" aria-labelledby="dropdownMenu1">
+							<ul>
+								<li (click)="save( true, '/configuredQuote', false ); saveDarftBtnClicked(); emailQuote(false)">
+									<div class="menu"><span class="sendToCustomer"    ></span>Share with Receipients</div>
+								</li>
+								<li [ngClass]="{'disabled': isSpecificOrganization}" (click)="save( true, '/configuredQuote', false ); saveDarftBtnClicked(); emailH2Quote(false)">
+									<div class="menu"><span class="sendToH2"></span>Share with H2trOnics</div>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- end of page-content-wrapper -->
+	</div>
+	<!-- Start Configure Quote Table -->
+	<ng-template #configureQuoteTable>
+		<div class="tableWrapper table-responsive">
+			<div class="overflow-x-scroll">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th class="checkColumn">
+								Item
+							</th>
+							<th class="checkColumn">
+								Qty
+							</th>
+							<th>Part No.</th>
+							<th>Description</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && quoteData.QuotationType.type != 'q3' && (quoteData.QuotationType.type !== 'q4' && quoteData.QuotationType.type !== 'q5' && quoteData.QuotationType.type != 'q6')">
+								Unit Price</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && quoteData.QuotationType.type != 'q3' && (quoteData.QuotationType.type !== 'q4' && quoteData.QuotationType.type !== 'q5' && quoteData.QuotationType.type != 'q6')">
+								Ext. Price</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								Unit Net Price</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								Ext. Net Price</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+								Unit Price</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+								Ext. Unit Price</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+								Territory Cost</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+								Ext. Territory Cost</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q6'">
+								Unit Net</th>
+							<th class="amountColumn"
+								*ngIf="quoteData && quoteData.QuotationType && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q6'">
+								Ext. Net</th>
+						</tr>
+					</thead>
+					<tbody *ngIf="quoteData">
+						<tr *ngFor="let part of quoteData.parts; let index = index; trackBy: trackByFn">
+							<td class="checkColumn">
+								{{index + 1}}
+							</td>
+							<td>
+								<div class="toltalSet">
+									<button *ngIf="part.price" class="btn commonBtn decrementBtn"
+										(click)="decrementSet(part)"
+										[disabled]="part.quantity == 1 || fromViewQuoteOnlyView"></button>
+									<input type="number" class="noOfSetsInput"
+										[ngClass]="{'singleQuantity':!part.price}" name="noOfSets"
+										[(ngModel)]="part.quantity" disabled />
+									<button *ngIf="part.price" class="btn commonBtn incrementBtn"
+										(click)="incrementSet(part)" [disabled]="fromViewQuoteOnlyView"></button>
+								</div>
+							</td>
+							<td *ngIf="part.partNo">{{part.partNo}}</td>
+							
+							<td *ngIf="part.description">{{part.description}}</td>
+							<td *ngIf="!part.partNo">-</td>
+							<td *ngIf="!part.description">-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.price && quoteData.QuotationType  && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>{{ part.price | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.price && quoteData.QuotationType  && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>{{ part.noOfSetsPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.price && quoteData.QuotationType && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.price && quoteData.QuotationType && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>-</td>
+
+							<td class="amountColumn clearfix"
+								*ngIf="part.unitNetPrice && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q3'">
+								<span>$</span>{{part.unitNetPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.unitNetPrice && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q3'">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.extNetPrice  && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q3'">
+								<span>$</span>{{part.extNetPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.extNetPrice  && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q3'">
+								<span>$</span>-</td>
+
+							<!--for territory quote-->
+							<td class="amountColumn clearfix"
+								*ngIf="part.price && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+								<span>$</span>{{ part.unitTerritoryPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.price && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+								<span>$</span>{{ part.extUnitTerritoryPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.price && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5')">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.price && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5')">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.territoryCost  && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5') && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>{{part.territoryCost | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.territoryCost  && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5') && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.extTerritoryCost  && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5') && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>{{part.extTerritoryCost | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.extTerritoryCost  && quoteData.QuotationType && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5') && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.unitNetTerritoryPrice  && quoteData.QuotationType && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>{{part.unitNetTerritoryPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.unitNetTerritoryPrice  && quoteData.QuotationType && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>-</td>
+							<td class="amountColumn clearfix"
+								*ngIf="part.extUnitNetTerritoryPrice && quoteData.QuotationType && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>{{part.extUnitNetTerritoryPrice | number : '1.2-2'}}</td>
+							<td class="amountColumn clearfix"
+								*ngIf="!part.extUnitNetTerritoryPrice && quoteData.QuotationType && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q6'">
+								<span>$</span>-</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="quoteCost clearfix" *ngIf="quoteData">
+				<ul class="quoteTotalCost pull-right list-unstyled">
+					<li
+						*ngIf="quoteData && (quoteData.QuotationType.type !== 'q4' && quoteData.QuotationType.type !== 'q5' &&  quoteData.QuotationType.type !== 'q6')">
+						Total List Price: <span *ngIf="totalListPrice">$ {{ totalListPrice | number : '1.2-2'}}</span>
+					</li>
+					<li *ngIf="totalNetCost && quoteData.QuotationType && quoteData.QuotationType.type == 'q2' && quoteData.QuotationType.type != 'q6'">Total
+						Net Cost: <span>$ {{ totalNetCost | number : '1.2-2'}}</span></li>
+					<li
+						*ngIf="totalUnitTerritoryPrice &&  (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+						Total Unit Cost: <span>$ {{ totalUnitTerritoryPrice | number : '1.2-2'}}</span></li>
+					<li
+						*ngIf="totalTerritoryCost && (quoteData.QuotationType.type == 'q4' || quoteData.QuotationType.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+						Total Territory Cost: <span>$ {{ totalTerritoryCost | number : '1.2-2'}}</span></li>
+					<li *ngIf="totalUnitNetTerritoryPrice && quoteData.QuotationType.type == 'q4' && quoteData.QuotationType.type != 'q6'">Total Net Cost:
+						<span>$ {{ totalUnitNetTerritoryPrice | number : '1.2-2'}}</span></li>
+				</ul>
+			</div>
+			<div class="discounts" [ngClass]="{'no-data-error': !quoteData}"
+				[hidden]="loggedinUserData.role !== 'ORG_ADMIN'">
+				<ul class="list-unstyled">
+					<li
+						*ngIf="quoteData && quoteData.QuotationType && quoteData?.QuotationType.type != 'q1'  && quoteData.QuotationType.type != 'q2' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && !isSpecificOrganization && quoteData.QuotationType.type != 'q6'">
+						<div>
+							<span class="discountText">(Based on Controller Manufacturer
+								{{controllerDiscountRate}}%)</span> Controller Discount: <span>$
+								{{ controllerDiscount | number : '1.2-2'}}</span>
+						</div>
+					</li>
+					<li
+						*ngIf="quoteData && quoteData.QuotationType && quoteData?.QuotationType.type != 'q1'   && quoteData.QuotationType.type != 'q2' && quoteData.QuotationType.type != 'q3' && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && !isSpecificOrganization && quoteData.QuotationType.type != 'q6'">
+						<div>
+							<span class="discountText">(Based on H2tronics discount {{panelDiscountRate}}%)</span> Panel
+							Discount: <span>$ {{ panelDiscount | number : '1.2-2'}}</span>
+						</div>
+					</li>
+					<li
+						*ngIf="quoteData && quoteData.QuotationType && quoteData?.QuotationType.type != 'q1'  && quoteData.QuotationType.type != 'q2' && quoteData.QuotationType.type != 'q3'  && quoteData.QuotationType.type != 'q4' && quoteData.QuotationType.type != 'q5' && !isSpecificOrganization && quoteData.QuotationType.type != 'q6'">
+						<div>
+							Accessories Discount: <span>$ {{ accessoriesDiscount | number : '1.2-2'}}</span>
+						</div>
+					</li>
+					<li class="text-left" *ngIf="quoteData">
+						<div class="textNote">
+							Note:
+						</div>
+						<textarea placeholder="Add notes(optional)" [disabled]="fromViewQuoteOnlyView" name="note"
+							[(ngModel)]="disclaimerAndNotes.note"></textarea>
+					</li>
+					<li class="text-left" *ngIf="quoteData">
+						<div class="textDiscliamer">
+							Disclaimer:
+						</div>
+						<textarea placeholder="Disclaimer (optional)" [disabled]="fromViewQuoteOnlyView"
+							name="disclaimer" [(ngModel)]="disclaimerAndNotes.disclaimer"></textarea>
+					</li>
+				</ul>
+			</div>
+			<div class="notFoundError text-center" *ngIf="!isLoading && isLoadFailed">
+				<p>Failed to load Configured Quote, please try again.</p>
+				<button class="commonBtn noMargin" (click)="configureQuote()">Retry</button>
+			</div>
+			<div class="text-right finalCost">
+				<!-- As per client requirment we have removed following items form quote -->
+				<!-- <p *ngIf="quoteData && quoteData?.QuotationType.type == 'q1' && quoteData?.QuotationType.type != 'q4' && !isSpecificOrganization">Final Cost: <span *ngIf="finalCost">$ {{ this.finalCost | number : '1.2-2'}}</span></p> -->
+				<!-- <p *ngIf="quoteData && quoteData?.QuotationType.type !== 'q1' && quoteData?.QuotationType.type != 'q4' && !isSpecificOrganization">Final Cost: <span *ngIf="finalCost">$ {{ this.finalCost | number : '1.2-2'}}</span></p> -->
+				<p *ngIf="false && finalNetCost && quoteData.QuotationType?.type == 'q2' && quoteData.QuotationType.type != 'q6'">Final Net Cost: <span>$
+						{{ this.finalNetCost | number : '1.2-2'}}</span></p>
+				<p
+					*ngIf="false && finalTerritoryCost && (quoteData.QuotationType?.type == 'q4' || quoteData.QuotationType?.type == 'q5' && quoteData.QuotationType.type != 'q6')">
+					Final Territory Cost: <span>$ {{ this.finalTerritoryCost | number : '1.2-2'}}</span></p>
+			</div>
+		</div>
+	</ng-template>
+	<!-- End Configure Quote Table -->
+
+	<!-- Start Panel Model Diagram -->
+	<ng-template #panelModelDiagram>
+		<div class="text-center diagramWrapper canvas" [ngClass]="{'showCanvas': panelCanvas}">
+			<canvas #myCanvas width="400" height="573"></canvas>
+			<div class="showRackNote">
+				<p>*Please note 4-Pass image will be the same as the 2-Pass, etc</p></div>
+		
+		</div>
+	</ng-template>
+	<!-- End Panel Model Diagram -->
+
+	<!-- Start Datasheet -->
+	<ng-template #datasheet>
+		<div class="tableWrapper table-responsive datasheetWrapper">
+			<h2>Datasheet List</h2>
+			<ul>
+				<li *ngFor="let datasheet of datasheetList">
+					<a [href]="datasheet.url" target="_blank">{{datasheet.name}}</a>
+				</li>
+				<li *ngIf="!datasheetList || (datasheetList && datasheetList.length==0)">Datasheet not available</li>
+			</ul>
+		</div>
+	</ng-template>
+	<!-------------- End Datasheet ------------->
