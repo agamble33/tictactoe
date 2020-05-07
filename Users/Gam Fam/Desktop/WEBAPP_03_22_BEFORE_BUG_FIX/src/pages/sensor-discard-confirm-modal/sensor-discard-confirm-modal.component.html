@@ -1,0 +1,16 @@
+<div class="modal-header modalHeaderPaddding">
+	<button type="button" class="close" aria-label="Close" (click)="crossBtnClick()">
+     <span aria-hidden="true">&times;</span>
+   </button>
+   <h3 *ngIf="title" class="modal-title">
+   		{{title}}
+   	</h3>
+   
+ </div>
+ <div class="modal-body modalBodyPaddding">
+   <h4>{{message}}</h4>
+ </div>
+ <div class="modal-footer">
+	   <button type="button" class="btn commonBtn" *ngIf="firstButton" (click)="cancel()">{{firstButton}}</button>
+	   <button type="button" class="btn commonBtn" *ngIf="secondButton" (click)="ok()">{{secondButton}}</button>
+ </div>

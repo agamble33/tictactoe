@@ -1,0 +1,92 @@
+<div class="modal-header modalHeaderPaddding">
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h3 class="modal-title">Email Quote</h3>
+</div>
+<div class="modal-body modalBodyPaddding">
+  <form #shareForm="ngForm" name="shareForm">
+    <div class="noDataFound share-quote-error text-center">{{this.webServiceError}}</div>
+
+    <!-- <div class="form-group formControl">
+      <label class="controlLabel">From:</label>
+      <input type="text" class="form-control" id="fromEmail" [(ngModel)]="email.from" #userName="ngModel" name="fromEmail" placeholder="From"
+        pattern="^(?!\.)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" autocapitalize="off" autocomplete="off" maxlength="50"
+        required disabled>
+    </div> -->
+
+
+    <div class="form-group formControl">
+      <label class="controlLabel">Pricing Option:</label>
+      <select class="form-control" [(ngModel)]="email.quoteType" name="quoteType" #quote="ngModel"
+        (change)="onQuoteSelect($event)">
+        <option value="" [selected]>(Select)</option>
+        <option *ngFor="let quote of quoteType" [ngValue]="quote" placeholder="Select pricing option" >{{quote.name}}
+        </option>
+      </select>
+    </div>
+    <br>
+
+    <br>
+
+    <div class="form-group formControl">
+      <label class="controlLabel tagInputLabel">To:</label>
+      <tag-input [onAdding]="validateToEmail()"
+        [ngClass]="{'borderRed': toEmail.errors && (toEmail.dirty || toEmail.touched || formSubmitted)}"
+        [separatorKeyCodes]="[32,188]" blinkIfDupe="true" addOnBlur="true" secondaryPlaceholder="To" [editable]='false'
+        class="tagInput" id="toEmail" [(ngModel)]="email.to" #toEmail="ngModel" name="toEmail" placeholder="To"
+        required></tag-input>
+      <div class="help-block text-left" *ngIf="toEmail.errors && (toEmail.dirty || toEmail.touched || formSubmitted)">
+        <small [hidden]="!toEmail.errors.required" class="text-danger">Please enter recipient email address</small>
+      </div>
+      <div class="help-block text-left" *ngIf="!toEmail.errors && emailErrorCount>0">
+        <small class="text-danger">Please enter valid email address</small>
+      </div>
+    </div>
+
+    <div class="form-group formControl">
+      <label class="controlLabel tagInputLabel">Cc:</label>
+      <tag-input [onAdding]="validateCCEmail()" [separatorKeyCodes]="[32,188]" blinkIfDupe="true" addOnBlur="true"
+        secondaryPlaceholder="Cc" [editable]='true' class="tagInput" id="ccEmail" [(ngModel)]="email.cc"
+        #ccEmail="ngModel" name="ccEmail" placeholder="Cc"></tag-input>
+      <div class="help-block text-left" *ngIf="ccEmailErrorCount>0">
+        <small class="text-danger">Please enter valid email address</small>
+      </div>
+    </div>
+
+    <div class="form-group formControl">
+      <label class="controlLabel">Subject:</label>
+      <input type="text"
+        [ngClass]="{'borderRed': subject.errors && (subject.dirty || subject.touched || formSubmitted)}"
+        class="form-control" id="subject" [(ngModel)]="email.subject" #subject="ngModel" name="subject"
+        placeholder="Subject" autocapitalize="off" autocomplete="off" maxlength="50" required>
+      <div class="help-block text-left" *ngIf="subject.errors && (subject.dirty || subject.touched || formSubmitted)">
+        <small [hidden]="!subject.errors.required" class="text-danger">Please enter subject</small>
+      </div>
+    </div>
+
+    <div class="form-group formControl">
+      <label class="controlLabel">Message:</label>
+      <textarea [ngClass]="{'borderRed': message.errors && (message.dirty || message.touched || formSubmitted)}"
+        class="form-control" id="message" [(ngModel)]="email.body" #message="ngModel" name="message"
+        placeholder="Message" autocapitalize="off" autocomplete="off" required></textarea>
+      <div class="help-block text-left" *ngIf="message.errors && (message.dirty || message.touched || formSubmitted)">
+        <small [hidden]="!message.errors.required" class="text-danger">Please enter message</small>
+      </div>
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn commonBtn" *ngIf="secondButton" [disabled]="!isQuoteGenerated"
+    (click)="sendEmail(shareForm)">{{secondButton}}</button>
+  <button type="button" class="btn commonBtn" *ngIf="firstButton" (click)="cancel()">{{firstButton}}</button>
+
+</div>
+
+<!-- loader html -->
+<div class="inlineLoaderContainer" *ngIf="isLoading">
+  <div class="inlineLoaderWrapper">
+    <div class="inlineLoader"></div>
+  </div>
+</div>

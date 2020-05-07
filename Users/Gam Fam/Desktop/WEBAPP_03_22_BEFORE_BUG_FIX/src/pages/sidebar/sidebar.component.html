@@ -1,0 +1,132 @@
+<div id="wrapper">
+  <div class="sidebarBody" id="sideWrap" (click)="hideMenu()"></div>
+  <div id="sidebar-wrapper" *ngIf="sidebar.visible">
+    <div class="sidebar-brand sidebarBrand">
+      <div class="sidebarLogo">
+        <img
+          *ngIf="userProfileData.orgLogoUrl"
+          [src]="userProfileData.orgLogoUrl"
+        />
+        <img
+          *ngIf="!userProfileData.orgLogoUrl"
+          src="assets/images/logo_here.png"
+          alt=""
+        />
+        <p *ngIf="userProfileData.organizationName">
+          {{ userProfileData.organizationName }}
+        </p>
+      </div>
+    </div>
+    <div class="profileInfo">
+      <h5 class="profileHead">
+        <img
+          class="avatarImg img-circle"
+          [src]="userProfileData.profileImageUrl"
+          alt=""
+        />
+        <span *ngIf="userProfileData">{{ userProfileData.name }}</span>
+      </h5>
+    </div>
+    <ul class="sidebar-nav sidebarNav">
+      <li class="sidebarLink" routerLinkActive="active" (click)="hideMenu()">
+        <a [routerLink]="'/home'">
+          <i class="fa homeIcon"></i>
+          <span class="linkItem">Home </span>
+          <span class=""></span>
+        </a>
+      </li>
+      <li
+        class="sidebarLink"
+        [ngClass]="{ active: isCreateQuote }"
+        (click)="hideMenu()"
+      >
+        <a [routerLink]="'/createQuote'">
+          <i class="fa newQuoteIcon"></i>
+          <span class="linkItem">Create New Quote </span>
+          <span class=""></span>
+        </a>
+      </li>
+      <li class="sidebarLink" routerLinkActive="active" (click)="hideMenu()">
+        <a [routerLink]="'/saveQuote'">
+          <i class="fa saveQuoteIcon"></i>
+          <span class="linkItem">My Saved Quote </span>
+          <span class="badge" *ngIf="this.userProfileData.savedQuoteCount">{{
+            this.userProfileData.savedQuoteCount
+          }}</span>
+        </a>
+      </li>
+      <li class="sidebarLink" routerLinkActive="active" (click)="hideMenu()">
+        <a [routerLink]="'/draftQuote'">
+          <i class="fa draftQuoteIcon"></i>
+          <span class="linkItem">My Draft Quote </span>
+          <span class="badge" *ngIf="this.userProfileData.draftQuoteCount">{{
+            this.userProfileData.draftQuoteCount
+          }}</span>
+        </a>
+      </li>
+      <li
+        class="sidebarLink"
+        [hidden]="
+          userProfileData.role == 'SUPER_ADMIN' ||
+          userProfileData.role == 'USER'
+        "
+        routerLinkActive="active"
+        (click)="hideMenu()"
+      >
+        <a [routerLink]="'/manageOrganizationUsers'" class="noPaddingRight">
+          <i class="fa manageOrgUserIcon"></i>
+          <span class="linkItem">Manage Organization/Users</span>
+        </a>
+      </li>
+      <li
+        class="sidebarLink"
+        routerLinkActive="active"
+        (click)="hideMenu(true)"
+      >
+        <a [routerLink]="'/viewQuotes'" class="noPaddingRight">
+          <i class="fa viewQuotesIcon"></i>
+          <span class="linkItem">View Quotes</span>
+        </a>
+      </li>
+
+      <li
+        class="sidebarLink isShowMobile"
+        routerLinkActive="active"
+        (click)="hideMenu()"
+      >
+        <a [routerLink]="'/myProfile'">
+          <i class="fa myProfileIcon"></i>
+          <span class="linkItem">My Profile </span>
+          <span class=""></span>
+        </a>
+      </li>
+      <li class="sidebarLink isShowMobile" (click)="hideMenu()">
+        <a (click)="changePassword()">
+          <i class="fa changePasswordIcon"></i>
+          <span class="linkItem">Change Password </span>
+          <span class=""></span>
+        </a>
+      </li>
+      <li class="sidebarLink isShowMobile" (click)="hideMenu()">
+        <a (click)="logout()">
+          <i class="fa logoutIcon"></i>
+          <span class="linkItem">Logout </span>
+          <span class=""></span>
+        </a>
+      </li>
+    </ul>
+    <small class="catalog-sidebar"
+      ><a
+        href="https://info.aquaphoenixsci.com/2020-industrial-catalog"
+        target="_blank">
+        <img
+          src="../assets/images/catalog_download_icon.png"
+           class="expand"/></a
+    ></small>
+
+    <small class="logo-sidebar"
+      ><img src="../assets/images/Panel-Builder-Logo-White-Blue.png" class="expand"
+    /></small>
+    <small class="app-version">{{ constants.WEB_APP_VERSION }}</small>
+  </div>
+</div>

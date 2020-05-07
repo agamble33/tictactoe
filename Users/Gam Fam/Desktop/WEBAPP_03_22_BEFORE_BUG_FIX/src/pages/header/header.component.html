@@ -1,0 +1,84 @@
+<div class="content-header headerBarCls row" *ngIf="sidebar.customHeader">
+    <h3 *ngIf="isWelcomeHeader" class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+        <button type="button" (click)="toggleMenu()" id="menu-toggle" class="btn btn-default btnDefault"><i class="glyphicon glyphicon-align-justify"></i></button>
+        Welcome to Panel Builder
+    </h3>
+    
+    <div *ngIf="!isWelcomeHeader" class="col-xs-12 col-sm-10 col-md-10 col-lg-10 headerContent headerWebView">
+       	
+       	<button type="button" id="menu-toggle" (click)="toggleMenu()" class="btn btn-default btnDefault"><i class="glyphicon glyphicon-align-justify"></i></button>
+                
+        <div class="headerInfoCls row clearfix">
+
+		      	<span class="editBtnCls col-xs-2 col-sm-1 col-md-1 col-lg-1" *ngIf="!isdisableEditOnViewQuote">
+		       	  	<a class="btn editBtn" (click)="onEditQuotation()"><img src="../../assets/images/iconEdit.png" alt="" /></a>
+		       	</span>
+		       	<ul class="nav navbar-nav desktopHeader headerInfo col-xs-11 col-sm-11 col-md-11 col-lg-11">
+					<li *ngIf="customerData && customerData.customerName" class="quoteInfo col-xs-3 col-sm-3 col-md-3">
+						<p>Customer Name:</p>
+						<span>{{customerData.customerName}}</span>
+					</li>
+					<li *ngIf="customerData && customerData.projectName" class="quoteInfo col-xs-3 col-sm-3 col-md-3">
+						<p>Project Name:</p>
+						<span>{{customerData.projectName}}</span>
+					</li> 
+					<li class="quoteInfo col-xs-3 col-sm-3 col-md-3">
+						<p>Sales Rep:</p> 
+						<!-- <span *ngIf="customerData && !customerData.salesRep && !customerData.salesRep.name" >&nbsp;</span> -->
+						<span *ngIf="customerData && customerData.salesRep && customerData.salesRep.name" >{{customerData.salesRep.name}}</span>
+					</li>
+					<li *ngIf="customerData && customerData.quoteType && customerData.quoteType.name" class="quoteInfo col-xs-3 col-sm-3 col-md-3">
+						<p>Pricing Option:</p> 
+						<span>{{customerData.quoteType.name}}</span>
+					</li> 
+				</ul>               
+		</div>		
+    </div>    
+    <div *ngIf="!isWelcomeHeader" class="col-xs-12 col-sm-12 col-lg-12 headerContent headerMobileView">
+       	    <button type="button" id="menu-toggle" (click)="toggleMenu()" class="btn btn-default btnDefault"><i class="glyphicon glyphicon-align-justify"></i></button>
+	        <h3 class="col-xs-12 col-sm-8 col-lg-8">
+		        Welcome to Panel Builder
+		    </h3>
+	        <div class="headerInfoCls row clearfix">
+	
+			      	 <span class="editBtnCls col-xs-2 col-sm-2 col-md-2">
+			       	  	 <a class="btn editBtn" (click)="onEditQuotation()"><img src="../../assets/images/iconEdit.png" alt="" /></a>
+			       	  </span>
+			       	  <ul class="nav navbar-nav headerInfo col-xs-10 col-sm-10 col-md-10" >
+					 <li *ngIf="customerData && customerData.customerName" class="col-xs-3 col-sm-3 col-md-3">Customer: 
+					   	<span>{{customerData.customerName}}</span>
+					 </li>
+					 <li *ngIf="customerData && customerData.projectName" class="col-xs-3 col-sm-3 col-md-3">Project Name: 
+					   	<span>{{customerData.projectName}}</span>
+					 </li> 
+					 <li *ngIf="customerData && customerData.salesRep && customerData.salesRep.name" class="col-xs-3 col-sm-3 col-md-3">Sales Rep: 
+						<span>{{customerData.salesRep.name}}</span>
+					 </li>
+					 <li *ngIf="customerData && customerData.quoteType && customerData.quoteType.name" class="col-xs-3 col-sm-3 col-md-3">Pricing Option: 
+							<span>{{customerData.quoteType.name}}</span>
+					 </li> 
+				  </ul>               
+			</div>
+	    </div>  
+    	
+   	<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 text-center headerRight">
+   		<div class="dropdown displayInlineBlock">
+		   	<div data-target="#" class="dropdown-toggle displayInlineBlock" data-toggle="dropdown" id="dropdownMenu1" role="button" aria-haspopup="true" aria-expanded="true">
+		   		<div>
+		   			<img class="avatarImg img-circle" [src]="userProfileData.profileImageUrl" alt="" />
+		   		</div>
+		   		<div class="profileName" *ngIf="userProfileData">{{userProfileData.name}}<span class="caret"></span>
+		   	 	</div>
+		   	 </div>
+		   	 <div class="dropdown-menu profileMenu" aria-labelledby="dropdownMenu1">
+		   	 	<ul>
+			     <!-- <li><a href="">Profile</a></li> -->
+			     <li [routerLink]="'/myProfile'"><div class="menu"><span class="myProfileIcon"></span>My Profile</div></li>
+			     <li (click)="changePassword()"><div class="menu"><span class="changePasswordIcon"></span>Change Password</div></li>	
+			     <li (click)="logout()"><div class="menu"><span class="logoutIcon"></span>Logout</div></li>				             
+			   </ul>
+		   	 </div>
+			   
+		 </div>
+   	</div>
+</div>

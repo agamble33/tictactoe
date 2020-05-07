@@ -1,0 +1,67 @@
+<div id="page-content-wrapper">
+	<div class="page-content inset pageContentBg">
+
+	  	<div class="searchContainer">                	  
+			<label class="searchInput">	
+				<input type="text" placeholder="Search" name="search"  [(ngModel)]="savedQuoteData.searchText" (ngModelChange)="onSavedQuoteSearch(savedQuoteData.searchText)">			      	
+				<i class="fas fa-search"></i>
+			</label>
+			<button type="button" class="searchButton" [hidden]="IdArr.length < 2" (click)="deleteMultipleSavedQuote()">Delete Selected</button>
+		</div> <!-- end of searchContainer -->
+			
+	    <div class="tableContainer"> 
+	    	<div class="tableWrapper table-responsive">  
+				<table class="scroll table table-bordered">
+					<thead>
+						<tr>
+							<th class="checkColumn">
+								<label class="checkboxContainer">
+									<input type="checkbox" class="checkboxControl" [ngModel]="selectedAll" (change)="selectAll()">
+									<span></span>
+								</label>
+							</th>
+							<th>Customer</th>
+							<th>Project Name</th>
+							<th>Sales Rep</th>
+							<th>Quotation No.</th>
+							<th class="amountColumn">Amount</th>
+							<th class="createdOnColumn">Created On</th>
+							<th class="editColumn">Action</th>
+						</tr>
+					</thead>
+					<tbody  class="searchResults"  infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="loadMoreSavedQuote()">
+						<tr *ngFor="let savedQuote of savedQuoteData.data">
+							<td class="checkColumn">
+								<label class="checkboxContainer">
+									<input type="checkbox" [ngModel]="savedQuote.isSelected" class="checkboxControl" (change)="selectQuote( savedQuote )">	
+									<span></span>
+								</label>
+							</td>
+							<td (click)="editSavedQuote(savedQuote)">{{savedQuote.customer_name}}</td>
+							<td (click)="editSavedQuote(savedQuote)">{{savedQuote.project_name}}</td>
+							<td *ngIf="savedQuote && savedQuote.input && savedQuote.input.salesRep && savedQuote.input.salesRep.name" (click)="editSavedQuote(savedQuote)">{{savedQuote.input.salesRep.name}}</td>
+							<td *ngIf="savedQuote && savedQuote.input && !savedQuote.input.salesRep" (click)="editSavedQuote(savedQuote)">&nbsp; </td>
+							<td (click)="editSavedQuote(savedQuote)">{{savedQuote.quote_no}}</td>
+							<td class="amountColumn clearfix"><span>$</span>{{savedQuote.total_price | number : '1.2-2'}}</td>
+							<td class="createdOnColumn">{{savedQuote.updated_at | date: 'MMM dd, yyyy'}}</td>
+							<td class="editColumn">
+								<button class="copyQuoteButton" data-toggle="tooltip" title="Copy Quote" (click)="changeProjectDetails(savedQuote.input)"></button>
+								<button class="deleteButton" data-toggle="tooltip" title="Delete Quote" (click)="deleteSavedQuote(savedQuote)"></button>
+							</td>							
+						</tr>
+						<tr class="no-data-available" *ngIf="!savedQuoteData.isLoading && savedQuoteData.data && savedQuoteData.data.length == 0">
+							<td colspan="7">Data not available</td>
+						</tr>
+					</tbody>
+					<!-- loader html -->
+					<span *ngIf="savedQuoteData.isLoading" class="loading"></span>
+				</table>  <!-- end of table -->
+			
+			</div>  <!-- end of tableWrapper -->
+  		</div>   <!-- end of tableContainer -->
+		
+    </div>  <!-- end of page-content -->
+</div> <!-- end of page-content-wrapper -->
+
+    
+    

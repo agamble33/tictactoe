@@ -1,0 +1,113 @@
+@import '~theme/common';
+
+app-dashboard {
+
+
+	
+	.navHeaderCls {
+		background-color: $light-color;
+    	border-color: $stroke-color;
+    	line-height: 69px;
+    	height: 60px;
+	}
+	
+	.pageContentBg {
+		width: auto;
+		height: auto;
+	    background-color: $content-bg-color;
+	    padding: 0;
+        position: absolute;
+    	top: 68px;
+    	bottom: 0;
+    	right: 0;
+    	left: 250px;
+    	transition: left 0.4s ease 0s;
+    	overflow-y: auto;
+    	
+    	@media (max-width:768px) {    	
+			left: 0;
+			top: 105px;   	
+    	 }
+    	.panelBodyCls {
+    		width: 100%;
+    		height: 100%;
+    		padding: 16px 20px;
+    		  @media (max-width:767px) {
+	    		    padding: 16px 12px;
+		      }
+				.panelHeading {
+					padding: 0 10px;
+					.panelTitle {
+						font-size:22px !important;
+						@include Roboto-Medium;
+						color: $primary-color;
+						padding: 15px;
+						border-bottom: 3px solid black;
+					}
+					.panelAccessories {
+						padding: 0 10px;
+						.panelTitle {
+							font-size:22px !important;
+							@include Roboto-Medium;
+							color: $primary-color;
+							padding: 15px;
+							border-bottom: 3px solid black;
+						}
+					.panelTitleButton {
+						padding: 6px 10px;
+						color: red;
+						float: right;
+						font-size: 15px;
+						cursor: pointer;
+						
+					}
+					.divider {
+						border-bottom: 3px solid black;
+					}
+
+					}
+
+					
+				}
+    		.noData {
+	    		@include Roboto-Medium;
+				padding-left: 15px;
+	    	}
+    		.panelBody {
+			    padding-top: 15px;
+			    .column {
+			    	@media (max-width:450px) {
+		    		    width: 100%;
+			    	}
+			    }
+	    		.featureBox {
+				    //background-color: rgba(255,255,255,0.7);
+				    //border: 1px solid $stroke-color;
+				    @include borderRadius(0);
+				    margin-bottom: 15px;
+				    padding: 25px 20px;
+				    text-align: center;
+				    cursor:pointer;
+				    .featureImg {
+				    	margin: 0 auto;
+				    	img {
+				    		height: 250px;
+				    	}
+				    }
+				    h5 {
+				   		@include Roboto-Bold;
+				   		color: $card-title;
+				   		margin-top:15px !important;
+				   		margin-bottom:0px !important;
+				   		overflow: hidden;
+    					text-overflow: ellipsis;
+    					white-space: nowrap;
+				   	}
+				} 
+			}   		
+    	} //end panelBodyCls		
+		
+	}
+	
+}
+

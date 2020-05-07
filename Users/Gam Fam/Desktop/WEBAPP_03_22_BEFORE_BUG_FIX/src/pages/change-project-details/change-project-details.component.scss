@@ -1,0 +1,31 @@
+@import '~theme/common';
+
+/********** common classes for Modal *********************/
+	.modal-body{
+		form{
+			.form-group{
+				position:relative;
+				
+				.form-control{
+					padding:6px 27px;
+				}
+			}
+			
+			i{
+				width: 20px;
+			    height: 20px;
+			    /* background-size: 100%; */
+			    display: block;
+			    position: absolute;
+			    top: 7px;
+			}
+		
+			.customerIcon{
+				background:url('../../assets/images/icn_customer.png') no-repeat;
+			}
+		
+			.projectsIcon{
+				background:url('../../assets/images/icn_projects.png') no-repeat;
+			}
+		}
+	}	

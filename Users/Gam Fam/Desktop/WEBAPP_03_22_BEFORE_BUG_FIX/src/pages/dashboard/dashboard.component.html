@@ -1,0 +1,65 @@
+<div>       
+        <div id="page-content-wrapper">
+            <div class="page-content inset pageContentBg">
+			      <div class="panelBodyCls">
+			      	  <div class="panelHeading">
+							<h4 class="panelTitle">{{constants.CONTRL_MANUFACT_TITLE}} 
+								<span class= "divider"></span>
+							</h4>
+						</div>
+                      <div class="panelBody" *ngIf="!isLoading">
+			      	  		<div class="row noMargin clearfix">
+	                             <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 column" *ngFor="let controller of controllerList; let controllerIndex = index">
+	                                 <div class="featureBox" (click)="onControllerSelection(controller)">
+	                                     <div class="featureImg">
+	                                     	<img src="{{controller.url}}" alt="" />
+	                                     	<img src="assets/images/default_manufacturer_logo.png" *ngIf="!controller.url" alt="" />
+										 </div>
+	                                     <!--h5>{{controller.name}} </h5-->
+	                                 </div>
+	                             </div>	                             	                             
+	                         </div>
+					  </div>
+					  <div class="panelHeading">
+						<h4 class="panelTitle">{{constants.ACCESS_TITLE}} 
+								<span class= "divider"></span>
+						</h4>
+					</div>
+					<div class="panelBody" *ngIf="!isLoading">
+							<div class="row noMargin clearfix">
+							 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 column" >
+								 <div class="featureBox"  [hidden] = "isShow" (click)="gotoAccessories()" >
+									 <div class="featureImg">
+										 <img src="../../assets/images/accessories_b_2.png" alt="" />
+									
+									 </div>
+								 </div>
+							 </div>	                             	                             
+							<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 column" >
+								<div class="featureBox"  [hidden] = "isShow" (click)="gotoQuickShip()">
+									<div class="featureImg">
+										
+									   <img src= "../../assets/images\quickship_panels_button.png" alt=""/>
+									</div>
+								</div>
+							</div>	                             	                             
+						</div>
+					<!--div class="panelAccessories" (click)="gotoAccessories()">
+						<img src="../../assets/images/accessories_b_2.png" alt="" /></div-->
+					  
+
+	                  <div class="noData" *ngIf="!isLoading && controllerList && controllerList.length == 0">{{constants.NO_MANUFACT_LIST}}</div>
+	                  
+	                  <!-- Failed to load data message container -->
+	                  <div class="fullHeight relativePosition" *ngIf="!isLoading && isLoadFailed">
+					 	 <div class="notFoundError text-center">
+					 		<p>Failed to controller manufacturer list, please try again.</p>
+					 		<button class="commonBtn noMargin" (click)="getControllerList()">Retry</button>
+					 	 </div>
+					  </div>      
+			      </div>  
+            </div>
+        </div> 
+
+</div>  
+

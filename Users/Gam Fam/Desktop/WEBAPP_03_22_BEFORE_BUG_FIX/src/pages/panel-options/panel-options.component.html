@@ -1,0 +1,517 @@
+<div class="tabStructure">
+  <div id="page-content-wrapper">
+    <div class="breadcrumbWrapper noMargin largeDesktop" #panelBtn>
+      <div class="wrapper clearfix minWidthInitial">
+        <div class="btnContainer desktopBtnView">
+          <button
+            type="submit"
+            [disabled]="!isLoading && isLoadFailed"
+            class="btn secondaryBtn commonBtn displayInlineBlock"
+            (click)="
+              saveAsDraft(true, '/panelOptions', false); saveDraftBtnClicked()
+            "
+          >
+            Save as Draft
+          </button>
+          <button
+            type="submit"
+            [disabled]="!isLoading && isLoadFailed"
+            class="btn secondaryBtn commonBtn displayInlineBlock"
+            (click)="onNext()"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="breadcrumbWrapper" #panelBreadcrumbList>
+      <div class="wrapper clearfix breadcrumbList">
+        <div class="breadcrumbView pull-left">
+          <ul>
+            <li [routerLink]="'/dashboard'" routerLinkActive="active">
+              {{ selectedControllerTitle
+              }}<span class="glyphicon glyphicon-menu-right"></span>
+            </li>
+            <li [routerLink]="'/controllerSeries'" routerLinkActive="active">
+              {{ selectedControllerSeries.name
+              }}<span class="glyphicon glyphicon-menu-right"></span>
+            </li>
+            <li
+              [routerLink]="'/controllerSensorSelection'"
+              routerLinkActive="active"
+            >
+              Controller Sensor & I/O
+              <span class="glyphicon glyphicon-menu-right"></span>
+            </li>
+            <li [routerLink]="'/panelOptions'" routerLinkActive="active">
+              Panel Options
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--------- Error messages -------->
+
+    <div
+      class="page-content inset pageContentBg"
+      #panelDesktopView
+      [style.top.px]="topSectionHeight"
+    >
+      <!---------------- tabs structure ------------>
+      <div class="row noMargin fullHeight">
+        <div
+          id="desktopViewPanel"
+          class="col-sm-12 col-md-12 col-lg-12"
+          *ngIf="!isLoading && panelList && panelList.length > 0"
+        >
+          <div class="col-xs-3 col-sm-6 col-md-6 col-lg-6 tabs-heading">
+            <ul class="nav nav-tabs tabs-left">
+              <li
+                *ngFor="let item of panelList"
+                (click)="selectPanelItem(item)"
+                [ngClass]="{
+                  noChild:
+                    (item.childs && item.childs.length == 0) || !item.isChecked,
+                  hide: item.tag == 'FLSW' || item.tag == 'SAPO'
+                }"
+              >
+                <a data-toggle="tab">
+                  <label
+                    class="unselectImg"
+                    [ngClass]="{ selectImg: item.isChecked || item.disabled }"
+                  ></label>
+                  <span>{{ item.name }}</span>
+                  <small class="red" *ngIf="item.tag == 'PM' && !item.isChecked"
+                    >(Required)</small
+                  >
+                  <span
+                    class="accordian-arrow"
+                    *ngIf="item.childs && item.childs.length > 0"
+                  >
+                    <i
+                      class="glyphicon glyphicon-minus-sign"
+                      *ngIf="!item.hide"
+                      aria-hidden="true"
+                    ></i>
+                    <i
+                      class="glyphicon glyphicon-plus-sign"
+                      *ngIf="item.hide"
+                      aria-hidden="true"
+                    ></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!--------- end of tabs-heading ----->
+
+          <div
+            class="col-xs-9 col-sm-6 col-md-6 col-lg-6 tabs-details"
+            *ngIf="isTabSelected && list.length > 0"
+          >
+            <!------- Tab panes ------->
+            <div
+              class="tab-content tabContent"
+              [style.minHeight]="panelHeight + 'px'"
+            >
+              <div class="tab-pane active">
+                <ul class="listView">
+                  <ng-template #recursiveList let-list>
+                    <div *ngIf="!isShowRadio">
+                      <li
+                        *ngFor="let listItem of list; let first = first"
+                        [ngClass]="{
+                          firstElement:
+                            first &&
+                            listItem.isChecked &&
+                            listItem.childs &&
+                            listItem.childs.length > 0
+                        }"
+                      >
+                        <label class="listItemRadioContainer">
+                          <p>
+                            <label class="checkboxContainer">
+                              <input
+                                type="checkbox"
+                                id="{{ listItem.id }}"
+                                (click)="onItemSelect(listItem)"
+                                class="checkboxControl"
+                                [(ngModel)]="listItem.isChecked"
+                              />
+
+                              <span>{{ listItem.name }}</span>
+
+                              <span
+                                class="accordian-arrow"
+                                *ngIf="
+                                  listItem.childs && listItem.childs.length > 0
+                                "
+                              >
+                                <i
+                                  class="glyphicon glyphicon-minus-sign"
+                                  *ngIf="
+                                    listItem.isChecked &&
+                                    listItem.childs &&
+                                    listItem.childs.length > 0
+                                  "
+                                  aria-hidden="true"
+                                ></i>
+                                <i
+                                  class="glyphicon glyphicon-plus-sign"
+                                  *ngIf="
+                                    !listItem.isChecked &&
+                                    listItem.childs &&
+                                    listItem.childs.length > 0
+                                  "
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                            </label>
+                          </p>
+                        </label>
+                        <ul
+                          *ngIf="
+                            listItem.childs &&
+                            listItem.childs.length > 0 &&
+                            listItem.isChecked
+                          "
+                        >
+                          <ng-container
+                            *ngTemplateOutlet="
+                              recursiveList;
+                              context: { $implicit: listItem.childs }
+                            "
+                          ></ng-container>
+                        </ul>
+                      </li>
+                    </div>
+
+                    <div *ngIf="isShowRadio">
+                      <li
+                        *ngFor="let listItem of list; let first = first"
+                        [ngClass]="{
+                          firstElement:
+                            first &&
+                            listItem.isChecked &&
+                            listItem.childs &&
+                            listItem.childs.length > 0
+                        }"
+                      >
+                        <label class="radioSelection">
+                          <p>
+                            <label class="radioContainer">
+                              <input
+                                type="{{ listItem.childType }}"
+                                [ngClass]="{ checked: listItem.isChecked }"
+                                id="{{ listItem.id }}"
+                                [disabled]="listItem.disabled"
+                                name="radio"
+                                class="{{ listItem.typeClass }}"
+                                [checked]="listItem.isChecked"
+                                [(ngModel)]="listItem.isChecked"
+                                (click)="radioSelection(listItem, list)"
+                              />
+
+                              <span>{{ listItem.name }}</span>
+
+                              <span
+                                class="accordian-arrow"
+                                *ngIf="
+                                  listItem.childs && listItem.childs.length > 0
+                                "
+                              >
+                                <i
+                                  class="glyphicon glyphicon-minus-sign"
+                                  *ngIf="
+                                    listItem.isChecked &&
+                                    listItem.childs &&
+                                    listItem.childs.length > 0
+                                  "
+                                  aria-hidden="true"
+                                ></i>
+                                <i
+                                  class="glyphicon glyphicon-plus-sign"
+                                  *ngIf="
+                                    !listItem.isChecked &&
+                                    listItem.childs &&
+                                    listItem.childs.length > 0
+                                  "
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                            </label>
+                          </p>
+                        </label>
+                        <ul
+                          *ngIf="
+                            listItem.childs &&
+                            listItem.childs.length > 0 &&
+                            listItem.isChecked
+                          "
+                        >
+                          <ng-container
+                            *ngTemplateOutlet="
+                              recursiveList;
+                              context: { $implicit: listItem.childs }
+                            "
+                          ></ng-container>
+                        </ul>
+                      </li>
+                    </div>
+                  </ng-template>
+                  <ng-container
+                    *ngTemplateOutlet="
+                      recursiveList;
+                      context: { $implicit: list }
+                    "
+                  ></ng-container>
+                </ul>
+              </div>
+              <!------- end of home tab ------->
+            </div>
+            <!------------ end of tab-content  ----------->
+          </div>
+          <!------------ end of  tabs-details  ----------->
+          <div class="clearfix"></div>
+        </div>
+        <!------------ end of col ----------->
+
+        <div
+          class="fullHeight relativePosition"
+          *ngIf="
+            !isLoading && !isLoadFailed && panelList && panelList.length == 0
+          "
+        >
+          <div class="notFoundError text-center">
+            <p>
+              There are no panel options available for the selected controller
+              manufacturer series.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="fullHeight relativePosition"
+          *ngIf="!isLoading && isLoadFailed"
+        >
+          <div class="notFoundError text-center">
+            <p>Failed to load panel options, please try again.</p>
+            <button class="commonBtn noMargin" (click)="getPanelList()">
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--******************************** Mobile view ********************************************-->
+    <div
+      id="mobileViewPanel"
+      class="page-content inset pageContentBg"
+      [style.top.px]="topSectionHeight"
+    >
+      <!---------------- tabs structure ------------>
+      <div class="row noMargin fullHeight">
+        <div class="col-sm-12 col-md-12 col-lg-12 mobileListView">
+          <ul>
+            <ng-template #recursiveList let-panelList>
+              <li
+                *ngFor="
+                  let option of panelList;
+                  let first = first;
+                  let index = index
+                "
+                [ngClass]="{
+                  noChild:
+                    (option.childs && option.childs.length == 0) ||
+                    !option.isChecked,
+                  firstElement:
+                    option.isChecked &&
+                    option.childs &&
+                    option.childs.length > 0,
+                  hide: option.tag == 'FLSW' || option.tag == 'SAPO'
+                }"
+              >
+                <label class="optionLabel" *ngIf="option.is_checkBox">
+                  <!-- <p>
+					                	<label class="checkboxContainer" (click)="selectPanelItem(option)">
+											<input type="checkbox" (click)="selectPanelItem(option)" class="checkboxControl" [(ngModel)]="option.isChecked">
+											<span>{{option.name}} <small class="red" *ngIf="(option.tag == 'PM') && !option.isChecked">(Required)</small></span>
+											
+						                 	<span class="accordian-arrow" *ngIf="option.childs && option.childs.length > 0">
+												<i class="glyphicon glyphicon-minus-sign" *ngIf="option.isChecked && option.childs && option.childs.length > 0" aria-hidden="true"></i>
+												<i class="glyphicon glyphicon-plus-sign" *ngIf="!option.isChecked && option.childs && option.childs.length > 0" aria-hidden="true"></i>
+											</span> 
+										</label>
+									</p> -->
+                  <p>
+                    <label
+                      class="checkboxContainer"
+                      (click)="selectPanelItem(option)"
+                    >
+                      <!-- <input type="checkbox" (click)="selectPanelItem(option)" class="checkboxControl" [(ngModel)]="option.isChecked"> -->
+                      <label
+                        class="unselectImg"
+                        [ngClass]="{
+                          selectImg: option.isChecked || option.disabled
+                        }"
+                      ></label>
+                      <span
+                        >{{ option.name }}
+                        <small
+                          class="red"
+                          *ngIf="option.tag == 'PM' && !option.isChecked"
+                          >(Required)</small
+                        ></span
+                      >
+
+                      <span
+                        class="accordian-arrow"
+                        *ngIf="option.childs && option.childs.length > 0"
+                      >
+                        <i
+                          class="glyphicon glyphicon-minus-sign"
+                          *ngIf="
+                            option.isChecked &&
+                            option.childs &&
+                            option.childs.length > 0
+                          "
+                          aria-hidden="true"
+                        ></i>
+                        <i
+                          class="glyphicon glyphicon-plus-sign"
+                          *ngIf="
+                            !option.isChecked &&
+                            option.childs &&
+                            option.childs.length > 0
+                          "
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                    </label>
+                  </p>
+                </label>
+
+                <label class="optionLabel" *ngIf="!option.is_checkBox">
+                  <p>
+                    <label class="checkboxContainer">
+                      <input
+                        type="{{ option.childType }}"
+                        id="{{ option.id }}"
+                        [ngClass]="{ checked: option.isChecked }"
+                        [disabled]="option.disabled"
+                        name="radio"
+                        class="{{ option.typeClass }}"
+                        [checked]="option.isChecked"
+                        [(ngModel)]="option.isChecked"
+                        (click)="radioSelection(option, panelList)"
+                      />
+
+                      <span>{{ option.name }}</span>
+
+                      <span
+                        class="accordian-arrow"
+                        *ngIf="option.childs && option.childs.length > 0"
+                      >
+                        <i
+                          class="glyphicon glyphicon-minus-sign"
+                          *ngIf="
+                            option.isChecked &&
+                            option.childs &&
+                            option.childs.length > 0
+                          "
+                          aria-hidden="true"
+                        ></i>
+                        <i
+                          class="glyphicon glyphicon-plus-sign"
+                          *ngIf="
+                            !option.isChecked &&
+                            option.childs &&
+                            option.childs.length > 0
+                          "
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                    </label>
+                  </p>
+                </label>
+
+                <ul
+                  *ngIf="
+                    option.childs &&
+                    option.childs.length > 0 &&
+                    option.isChecked
+                  "
+                >
+                  <ng-container
+                    *ngTemplateOutlet="
+                      recursiveList;
+                      context: { $implicit: option.childs }
+                    "
+                    [ngClass]="{
+                      borderBottomActive:
+                        option.childs && option.childs.length == 0
+                    }"
+                  ></ng-container>
+                </ul>
+              </li>
+            </ng-template>
+            <ng-container
+              *ngTemplateOutlet="
+                recursiveList;
+                context: { $implicit: panelList }
+              "
+            ></ng-container>
+          </ul>
+        </div>
+
+        <div
+          class="fullHeight relativePosition"
+          *ngIf="
+            !isLoading && !isLoadFailed && panelList && panelList.length == 0
+          "
+        >
+          <div class="notFoundError text-center">
+            <p>
+              There are no panel options available for the selected controller
+              manufacturer series.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="fullHeight relativePosition"
+          *ngIf="!isLoading && isLoadFailed"
+        >
+          <div class="notFoundError text-center">
+            <p>Failed to load panel options, please try again.</p>
+            <button class="commonBtn noMargin" (click)="getPanelList()">
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- end of row -->
+    </div>
+    <div class="btnContainer bottomPanel col-xs-12 col-sm-12">
+      <button
+        type="submit"
+        class="btn secondaryBtn commonBtn displayInlineBlock"
+        (click)="
+          saveAsDraft(true, '/panelOptions', false); saveDraftBtnClicked()
+        "
+      >
+        Save as Draft
+      </button>
+      <button
+        type="submit"
+        class="btn secondaryBtn commonBtn displayInlineBlock"
+        (click)="onNext()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+  <!-- end of page-content -->
+</div>
+<!-- end of page-content-wrapper -->

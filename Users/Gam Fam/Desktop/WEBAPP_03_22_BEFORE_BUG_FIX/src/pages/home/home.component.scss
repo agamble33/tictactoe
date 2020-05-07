@@ -1,0 +1,26 @@
+@import '~theme/common';
+
+app-home{
+    .pageContentBg {
+        width: auto;
+        height: auto;
+        background-color: $content-bg-color;
+        padding: 0;
+        position: absolute;
+        top: 68px;
+        bottom: 0;
+        right: 0;
+        left: 250px;
+        transition: left 0.4s ease 0s;
+        overflow-y: auto;
+        
+        @media (max-width:768px) {    	
+            left: 0;
+            top: 55px;   	
+         }
+    }
+
+    iframe body{
+        text-align: center;
+    }
+}

@@ -1,0 +1,340 @@
+@import '~theme/common';
+
+.tabStructure .tabs-details .tab-content .tab-pane .listView li ul li ul{
+	border-top:0;
+}
+
+.tabStructure .tabs-left > li.active .accordian-arrow{
+	right:4%;
+}
+
+.tabStructure .tabs-left > li.noChild.active .accordian-arrow{
+	right:3%;
+}
+
+.tabStructure .pageContentBg .tabs-left li .flowDirectionCheckbox {
+	margin: 0!important;
+	position: static!important;
+	
+	span {
+		margin-left: 0;
+	}
+}
+.tabStructure .pageContentBg .tabs-left li a .panelNote,
+.tabStructure .pageContentBg li p .panelNote {
+	font-size: 12px;
+    color: #a94442;
+    margin-left: 0;
+    font-style: italic;
+	font-family: 'Roboto-Medium', arial, sans-serif;
+	letter-spacing: -0.05px;
+	// position: absolute;
+    // top: 50%;
+    // left: 120px;
+    // right: 45px;
+    // margin: 0!important;
+    // padding: 0;
+    // white-space: normal;
+	// -webkit-transform: translateY(-50%);
+	// -moz-transform: translateY(-50%);
+	// -ms-transform: translateY(-50%);
+	// transform: translateY(-50%);
+	@include screen-max514 {
+		white-space: nowrap;
+		margin: 0px 0px 10px !important;
+	    width: 150px;
+	}
+}
+.borderBottom{
+	border-bottom:1px solid $stroke-color !important;
+}
+
+app-flow-direction {
+	.tabStructure .mobileListView {
+		
+		.optionLabel, .listItemRadioContainer {
+			display: block;
+		    font-weight: normal;
+		    margin: 0;
+		    p{
+		    	padding: 0px !important;
+		    }
+		}
+	
+		ul li{
+			
+			.panelNote{
+				margin:0px 15px 10px;
+				display:inline-block;
+			}
+		
+			.accordian-arrow{
+				top:9px;
+			}
+		
+		} 
+		
+	}
+
+	.mobileListView  {
+		.noData {
+		   @include Roboto-Medium;
+		   padding-left: 5px;
+	   }
+		ul {
+			 @media (max-width: 768px) {
+				 padding-bottom: 0;
+			 }
+			 li {
+				 background-color: $accordian-headerBg-color;
+				 margin: 5px 0px;
+				 width:100%;
+					 p {
+					background-color: $accordian-headerBg-color;
+					.radioContainer{
+					   display: inherit;
+					   width: 65%;
+					   overflow: hidden;
+					   text-overflow: ellipsis;
+					   white-space: nowrap;
+					   margin: 0;
+					   height: 100%;
+					   font-weight: normal;
+					   span {
+						   vertical-align: middle;
+						   margin-right: 8px;
+					   }
+				   }
+			   
+				   .mobileViewSubOptions {
+					   width: 100%;
+				   }
+				}
+				 .accordianImg {
+					margin-left: 0;
+				   margin-right: 0;
+				   padding: 5px 5px 5px 0;
+				   right: 0;
+				   top: 0;
+				   width: 35%;   							    
+				   height: 100%;
+				   text-align: right;
+				   
+			   img {
+			   //	width: 100%;
+				   max-width: 140px;
+				   height: 30px;
+			   }
+				 }	
+			 }
+			ul {
+				background-color: $header-bg-color;
+				border-top: 1px solid $stroke-color;
+				li {
+				background-color: $header-bg-color;						 	
+				p {
+					background-color: $header-bg-color;
+				}
+				&:last-child {
+					border-bottom: 0;
+					margin-bottom: 0;
+					p {
+						border-bottom: 0;
+					}
+				}
+				}
+			}
+		}
+	   
+	   .labelWrapper {
+		   display: block;
+	   		margin: 0;
+	   		font-weight: normal;
+	   }
+  }
+
+	.pageContentBg {
+		left: 250px;
+		
+		.mobileListView ul li{
+			margin:10px 10px 0px !important;
+		}
+	
+		#desktopViewFlow {
+			padding-top: 20px;
+		}
+  	
+		@media (max-width:768px) {   	
+		//	top: 151px;
+			left: 0;
+			
+			#mobileViewFlow {
+			//	padding-top: 20px;
+			}
+		 }    					
+	}
+
+	.glyphicon-plus-sign,
+	.glyphicon-minus-sign {
+		display: block!important;
+	}
+
+	.radioContainer, .checkboxContainer{
+		margin-right:10px !important;
+		vertical-align: middle;
+	    //padding-left: 0;
+	    display: inherit;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		margin: 0;
+		height: 100%;
+		min-height:40px;
+		font-weight: normal;
+		
+		.radioControl {
+		    appearance: none;
+		    -webkit-appearance: none;
+		    -moz-appearance: none;
+		    -ms-appearance: none;
+		}
+		span {
+			vertical-align: initial;
+			margin-right: 8px;
+			width: auto;
+		    margin-top: 10px !important;
+		    padding-left: 26px;
+		    margin-left: 13px;
+		}
+		.panelNote {
+			padding-left: 18px;
+			margin: 0px !important;
+		}
+		.panelP4Note {
+			span {
+				padding-left: 4px;
+				margin: 0px !important;
+			}			
+		}
+	
+		.accordian-arrow {
+			 margin-top: 13px !important;
+			 @media (max-width:768px) {   
+				margin-top: 3px !important;
+			}
+		}
+		
+		.checkboxControl{
+			display: block;
+		    width: 100%;
+		    height: 100%;
+		    min-height: 40px;
+		}
+	
+		input{
+			@include screen-max768{
+				width:100%;
+				height:80%;
+			}
+		}
+		
+		
+	}
+	
+	.tabContent {
+		margin-bottom: 20px;
+	}
+
+	.breadcrumbWrapper{
+		overflow-x:auto;
+		width:100%;
+		 .wrapper{
+			width:auto;
+			min-width: auto;
+			white-space: nowrap;
+		 }
+	}
+
+	.largeDesktop {
+		display: block;
+		@media (max-width:768px) {   
+			display: none;
+		}
+	}
+
+	.tabStructure .tabs-left li a {
+		padding: 0 40px 0 15px !important;		
+	    border-radius: 0;
+	    color: #435780;
+	    display: block;
+	    background-color: #fff;
+	    border: 1px solid #d4d9e3;
+	    margin-right: 5px;
+	    position: relative;
+	}
+
+	.tabStructure {
+		.listView li{
+			.listItemRadioContainer {
+				display: block;
+			    font-weight: normal;
+			    margin: 0;
+			    
+			    p{
+			    	padding:0px !important;
+			    }
+			}
+		}
+		.panelListType {
+			border: 1px solid #d4d9e3;
+			background: #fff;
+			.tabs-left {
+				li {
+					margin: 10px 10px 0;
+				    border: 1px solid #d4d9e3;
+				    background-color: #f6f7fb;
+					a {
+						// border: 1px solid #d4d9e3;
+						border: 0;
+					}
+				
+					&:last-child {
+						margin-bottom: 10px;
+					}
+				}
+			}
+		}		
+	}
+	
+	.disabledTab {
+		pointer-events: none;		
+		a {
+			color: #777 !important;
+	    	background-color: rgba(0,0,0,0.05) !important;
+		}
+	
+		@media (max-width:768px) {   
+			p {
+				color: #777 !important;
+    			background-color: rgba(0,0,0,0.05) !important;
+			}
+		}
+	}
+
+	.bgTransparent {
+		background: transparent!important;
+		li {
+			background: transparent!important;
+			p {
+				background: transparent!important;
+			}
+		}
+		
+	}
+	
+}
+
+.minWidthInitial {
+	min-width: 0!important;
+}

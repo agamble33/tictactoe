@@ -1,0 +1,356 @@
+@import '~theme/primary-theme';
+app-my-profile{
+	.pageContentBg {	
+		top: 68px;
+		left: 0;
+	
+		#desktopView {
+			padding-top: 48px;
+		}
+		
+		@media (max-width:768px) {   	
+			top: 54px !important; 
+			
+			#mobileView {
+				padding-top: 17px;
+			}
+		 }    					
+	}
+		
+	.profilePage {
+		width: auto;
+	    height: auto;
+	    position: absolute;
+	    top: 0;
+	    left: 250px;
+	    right: 0;
+	    bottom: 0;
+	    
+	    
+	    @media (max-width: 768px) {
+	    	left: 0;
+	    	top: 0;
+	    }
+	    
+	    .profileContainer {
+		    
+		    @media (max-width: 1399px) {
+		    	position: absolute;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			    top: 46px;
+	    		overflow: auto;
+			}
+			
+			.profileWrapper {
+				width: 50%;		   
+			    -webkit-box-shadow: 0 0 7px 1px rgba(0, 0, 0, .2);
+			    box-shadow: 0 0 7px 1px rgba(0, 0, 0, .2);		    
+			    position: relative;
+			    margin: 100px auto 23px auto;
+			    
+			    @media (min-width: 1400px) {
+			    	position: absolute;
+				    left: 50%;
+				    top: 50%;
+				    transform: translate(-50%, -50%);
+				    margin: 46px 0 0 0;
+			    }
+			    
+			    
+			    
+			    @media (max-width: 1200px) and (min-width: 1023px) {
+			    	width: 70%;
+			    }
+			   
+			    @media (max-width: 1024px) {
+			    	width: 90%;
+			    }
+			    
+			    .userProfileContent {
+			    	background: #f6f7fb;
+			    	
+			    	.userProfileInfo {
+			    		margin: 0;
+			    		padding-bottom: 35px;
+			    		
+			    		@media (min-width: 1400px) {
+					    	margin: 0 0 35px 0;
+					    	padding-bottom: 0;
+					    }
+			    		
+			    		.emailGroup {
+			    			margin: 0;
+	    					text-align: center;	
+	    					
+	    					.controlLabel {
+	    						display: block;
+	    						margin: 0;
+	    						color: #121935;
+	    					}
+	    				
+	    					.controlValue {
+	    						color: #445782;
+	    						min-height: 20px;
+	    						display: block;
+	    					}
+			    		}
+			    	
+			    		.profileFormGroup {
+			    			margin: 18px 0 0 0;		    			
+			    			
+			    			.formControl,
+			    			.phoneNumberContainer {
+			    				width: 60%;
+							    margin: 0 auto;
+							    text-align: center;
+							    border-radius: 0;
+							    box-shadow: none;
+							    border-top: 0;
+							    border-left: 0;
+							    border-right: 0;
+							    background: transparent;
+							    border-bottom: 1px solid #ccc;
+							    color: #445782;
+			    				
+			    				&:focus {
+			    					outline: 0;
+			    				}
+							   
+							    @media (max-width: 1200px) {
+							    	width: 45%;
+							    }
+							   
+							   @media (max-width: 550px) {
+							    	width: 80%;
+							    }
+			    			}
+			    		
+				    		.phoneNumberContainer {
+				    			border-bottom: 0;
+				    			
+				    			.profilePhoneInfo {
+				    				padding: 0 0 0 12px;
+				    				width: 70%;
+	    							float: left;
+				    			}
+				    		}
+			    		
+				    		.formPhoneControl {
+								margin: 0 auto;
+								width: 100%;
+							    text-align: center;
+							    border-radius: 0;
+							    -webkit-box-shadow: none;
+							    box-shadow: none;
+							    border-top: 0;
+							    border-left: 0;
+							    border-right: 0;
+							    background: transparent;
+							    border-bottom: 1px solid #ccc;
+							    color: #445782;
+							    display: block;
+							    height: 34px;
+							  //  padding: 0 12px;
+							    font-size: 14px;
+							    line-height: 1.42857143;
+							    background-color: transparent;
+							    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+							    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+							    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+							    
+							    &:focus {
+							    	outline: 0
+							    }
+							}
+						
+							.countryCodeContainer {
+								position: relative;
+							    display: inline-block;
+							    vertical-align: top;
+							    border-bottom: 1px solid #ccc;
+							    margin: -1px 0 0 0;
+							    float: left;
+							    width: 30%;
+								
+								.countrySelectLabel {
+									margin: 0;
+								    border-radius: 0;
+								    box-shadow: none;
+								    border-top: 0;
+								    border-left: 0;
+								    border-right: 0;
+								    background: transparent;
+								    color: #445782;
+	    							font-weight: normal;
+	    							border: 0;
+	    							padding-left: 0;
+	    							padding-right: 0;
+								    
+								    .caret {
+								    	border-top: 6px dashed;
+									    border-top: 6px solid\9;
+									    border-right: 6px solid transparent;
+									    border-left: 6px solid transparent;
+									    position: absolute;
+									    right: 0;
+									    top: 14px;
+								    }
+								}
+							
+								.countrySelect {
+									position: absolute;
+								    top: 0;
+								    bottom: 0;
+								    left: 0;
+								    right: 0;
+								    opacity: 0;
+								    cursor: pointer;
+								}
+							}
+							
+			    		}
+			    			
+			    	}
+			    
+			    	.userName {
+			    		padding: 60px 10px 15px 10px;
+	    				text-align: center;
+	    				color: $secondary-color;
+	    				border-bottom: 1px solid #d5d9e4; 
+	    				overflow: hidden;
+						text-overflow: ellipsis;
+						font-size: 20px;
+	    			//	white-space: no-wrap;	
+			    	}
+			    
+			    	.editUserName {
+			    		padding: 30px 0 20px 0;
+	    				border: 0;
+			    	}
+			    }
+			    
+			    .userProfileImageContainer {
+			    	position: relative;
+			    	
+			    }
+			
+				.profileImgOverlay,
+				.profileImg {
+					width: 100px;
+				    position: absolute;
+				    top: 0;
+				    left: 50%;
+				    -webkit-transform: translate(-50%,-50%);
+				    transform: translate(-50%,-50%);
+				    display: block;
+				    overflow: hidden;			    
+				}
+			
+				.profileImgOverlay {
+					padding: 0;
+					box-shadow: 0 0 7px 1px rgba(0, 0, 0, .3);
+					z-index: -1;				
+					img {
+						opacity: 0;
+					}
+					
+				}
+			
+				.profileImg {
+				    
+				    img {
+			    	    width: 100px;
+						height: 100px;
+				    }
+				}
+			
+				.profileImgData {
+					
+					border-radius: 50% 50% 22px 50%;
+	    			
+	    			img {
+	    				border: 2px solid $secondary-color;
+	    				cursor: pointer;
+	    			}
+	    			
+	    			.profileImageUpload {
+	    				position: absolute;
+					    z-index: -9;
+					    top: -100%;
+					    left: 0;
+	    			}
+	    		
+				}
+			    
+			}
+		}
+	
+		.cameraIcon {
+			position: absolute;
+			background: url('../../assets/images/iconCamera.png') no-repeat;
+			background-size: contain;
+			width: 28px;
+		    height: 28px;
+		    bottom: 3px;
+		    right: 3px;
+		    cursor: pointer;
+		    
+		    input{
+		    height:1px;
+		    width:1px;
+		    }
+	    }
+	
+		.profileHeader {
+			background: #f1f2f7;
+		    margin: 0;
+		    padding: 15px;
+		    border-bottom: 1px solid #d5d9e4;
+		    color: $secondary-color;
+		    
+		    @media (max-width: 767px) {
+		    	padding: 18px 20px;
+		    }
+		}
+	
+		.profile {
+			 height: 100%;
+	    	position: relative;
+		}
+	
+		.commonBtn {
+			
+			margin-bottom: 0;
+			
+			&:first-child {
+				background-color: $light-button-color !important; 
+			}
+			@media (max-width: 450px) {
+				padding: 5px 30px;
+			}	
+		}
+		
+	}
+	
+	.editButton {
+		background: url('../../assets/images/iconEdit.png') no-repeat;
+		background-size: contain;
+		width: 20px;
+	    height: 20px;
+	    border: 0;
+	    padding: 0;
+	    position: absolute;
+	    top: 20px;
+	    right: 25px;
+	    
+	    &:focus {
+	    	outline: 0;
+	    }
+	   
+	    &:active {
+	    	opacity: 0.8;
+	    }
+	}	
+}

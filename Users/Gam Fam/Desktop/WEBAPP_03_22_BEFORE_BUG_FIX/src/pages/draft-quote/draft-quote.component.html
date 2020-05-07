@@ -1,0 +1,69 @@
+<div id="page-content-wrapper">
+	<div class="page-content inset pageContentBg">
+
+	  	<div class="searchContainer">                	  
+			<label class="searchInput">	
+				<input type="text" placeholder="Search" name="search"  [(ngModel)]="draftData.searchText" (ngModelChange)="onDraftQuoteSearch(draftData.searchText)">			      	
+				<i class="fas fa-search"></i>
+			</label>
+			<button type="submit" class="searchButton hide">Search</button>				      
+			<button type="button" class="searchButton" [hidden]="IdArr.length < 2" (click)="deleteMultipleDraftQuote()">Delete Selected</button>
+		</div> <!-- end of searchContainer -->
+			
+	    <div class="tableContainer"> 
+	    	<div class="tableWrapper table-responsive">  
+				<table class="scroll table table-bordered">
+					<thead>
+						<tr>
+							<th class="checkColumn">
+								<label class="checkboxContainer">
+									<input type="checkbox" class="checkboxControl" [ngModel]="selectedAll" (change)="selectAll()">
+									<span></span>
+								</label>
+							</th>
+							<th>Customer</th>
+							<th>Project Name</th>
+							<th>Sales Rep</th>
+							<th>Quotation No.</th>
+							<th class="amountColumn">Amount</th>
+							<th class="createdOnColumn">Last Saved On</th>
+							<th class="editColumn">Action</th>
+						</tr>
+					</thead>
+					<tbody class="searchResults"  infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50" [scrollWindow]="false" (scrolled)="loadMoreDraftQuote()">
+						<tr *ngFor="let draft of draftData.data">
+							<td class="checkColumn">
+								<label class="checkboxContainer">
+									<input type="checkbox" [ngModel]="draft.isSelected" class="checkboxControl" (change)="selectQuote( draft )">	
+									<span></span>
+								</label>
+							</td>
+							<td (click)="editDraftQuote(draft)">{{draft.customer_name}}</td>
+							<td (click)="editDraftQuote(draft)">{{draft.project_name}}</td>
+							<td *ngIf="draft && draft.input && draft.input.salesRep && draft.input.salesRep.name" (click)="editDraftQuote(draft)">{{draft.input.salesRep.name}}</td>
+							<td *ngIf="draft && draft.input && !draft.input.salesRep" (click)="editDraftQuote(draft)">&nbsp; </td>
+							<td (click)="editDraftQuote(draft)">{{draft.quote_no}}</td>
+							<td class="amountColumn clearfix"><span>$</span>{{draft.total_price | number : '1.2-2'}}</td>
+							<td class="createdOnColumn">{{draft.updated_at | date: 'MMM dd, yyyy'}}</td>
+							<td class="editColumn">
+								<button class="deleteButton" data-toggle="tooltip" title="Delete Quote" (click)="deleteDraftQuote(draft)"></button>
+							</td>
+							
+						</tr>
+						<!-- Show when filter data is empty -->
+						<tr *ngIf="!draftData.isLoading && draftData && draftData.data && draftData.data.length == 0" class="no-data-available">
+							<td colspan="7">Data not available</td>
+						</tr>
+					</tbody>
+					<!-- loader html -->
+					<span *ngIf="draftData.isLoading" class="loading"></span>
+				</table>  <!-- end of table -->
+			
+			</div>  <!-- end of tableWrapper -->
+  		</div>   <!-- end of tableContainer -->
+		
+    </div>  <!-- end of page-content -->
+</div> <!-- end of page-content-wrapper -->
+
+    
+    

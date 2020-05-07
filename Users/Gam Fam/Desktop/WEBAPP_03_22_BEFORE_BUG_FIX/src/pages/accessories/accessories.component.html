@@ -1,0 +1,321 @@
+<div class="tabStructure">
+<div id="page-content-wrapper">
+	<div class="breadcrumbWrapper noMargin largeDesktop" #accessoryBtn>
+		<div class="wrapper clearfix minWidthInitial">
+		<div class="btnContainer desktopBtnView">
+			<button type="submit" [disabled]="!isLoading && isLoadFailed" class="btn secondaryBtn commonBtn displayInlineBlock" (click)="saveDraft( true,'/accessories', false ); saveDarftBtnClicked()">Save as Draft</button>
+		    <button type="submit" [disabled]="!isLoading && isLoadFailed" class="btn secondaryBtn commonBtn displayInlineBlock" (click)="onNext()">Next </button>
+		</div>
+		</div>
+	</div>
+	<div class="breadcrumbWrapper" #accessoryBreadcrumbList >
+		<div class="wrapper clearfix breadcrumbList" *ngIf='!isCreateNewAccessory'>
+			<div class="breadcrumbView pull-left">
+				<ul>
+					<li [routerLink]="'/dashboard'" routerLinkActive="active">{{selectedControllerTitle}}<span class="glyphicon glyphicon-menu-right"></span></li>
+					<li [routerLink]="'/controllerSeries'" routerLinkActive="active">{{selectedControllerSeries.name}}<span class="glyphicon glyphicon-menu-right"></span></li>
+					<li [routerLink]="'/controllerSensorSelection'" routerLinkActive="active">Controller Sensor  & I/O <span class="glyphicon glyphicon-menu-right"></span></li>
+					<li [routerLink]="'/panelOptions'" routerLinkActive="active">Panel Options<span class="glyphicon glyphicon-menu-right"></span></li>
+					<li [routerLink]="'/flowDirection'" routerLinkActive="active">Panel Size & Direction<span class="glyphicon glyphicon-menu-right"></span></li>
+					<li [routerLink]="'/accessories'" routerLinkActive="active">Accessories(optional)</li>
+				</ul>
+			</div>
+		</div>
+		<div class="wrapper clearfix breadcrumbList" *ngIf='isCreateNewAccessory'>
+			<div class="breadcrumbView pull-left">
+				<ul>
+					<li [routerLink]="'/dashboard'" routerLinkActive="active">dashboard<span class="glyphicon glyphicon-menu-right"></span></li>
+					<li [routerLink]="'/accessories'" routerLinkActive="active">Accessories</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--------- Error messages -------->
+	<!--start  -->
+	<div  *ngIf='isCreateNewAccessory'>
+		<div class="page-content inset pageContentBg" #accessoryDesktopView [style.top.px]="topSectionHeight">
+				<!---------------- tabs structure ------------>
+				<div class="row noMargin fullHeight">
+					<div id="desktopViewAccessory" class="col-sm-12 col-md-12 col-lg-12" *ngIf="!isLoading && accessoriesList && accessoriesList.length > 0">
+						<!-- <div class="note accessoriesNote" *ngIf="selectedSeries900 =='WCT900P'">
+							<span>NOTE -</span>
+							<p>Selection of Accessories depends on available Analog/Digital I/O. 
+							The W900 comes standard with 12 Digital inputs. Available Analog Inputs 
+							will be determined by Sensor selection and Additional I/O selections.</p>
+						</div> -->
+						<div class="col-xs-3 col-sm-6 col-md-6 col-lg-6 tabs-heading" [hidden]>
+							<ul class="nav nav-tabs tabs-left">
+								<li *ngFor="let accessoryitem of accessoriesList" (click)="selectAccessoriesItem(accessoryitem)" [ngClass]="{'noChild': (accessoryitem.childs && accessoryitem.childs.length == 0) || !accessoryitem.isChecked, 'hide': accessoryitem.tag == 'AN-SEN-TANK' && (selectedControllerSeries.tag=='WCT600P' || selectedControllerSeries.tag=='WCT600H') }">
+									<a data-toggle="tab">
+										<label class="unselectImg" [ngClass]="{'selectImg': accessoryitem.isChecked}"></label> 
+										<span >{{accessoryitem.name}}</span>
+										<span class="accordian-arrow" *ngIf="accessoryitem.childs && accessoryitem.childs.length > 0">
+											<i class="glyphicon glyphicon-minus-sign" *ngIf="!accessoryitem.hide" aria-hidden="true"></i>
+											<i class="glyphicon glyphicon-plus-sign" *ngIf="accessoryitem.hide" aria-hidden="true"></i>
+										</span> 
+									</a>
+								</li>
+							</ul>
+						</div> 
+					<!--------- end of tabs-heading ----->
+							
+						<div class="col-xs-9 col-sm-6 col-md-6 col-lg-6 tabs-details" *ngIf="isTabSelected && (list.length > 0)">
+							<!------- Tab panes ------->
+							<div class="tab-content tabContent" [style.minHeight]="accessoryHeight + 'px'">
+								<div class="tab-pane active">
+										<div class="note accessoriesNote" *ngIf="isLevelSensor">
+											<span>NOTE -</span>
+											<p>The BTA-100 is a Bluetooth option for the LS-202 so you would only select the BTA-100 
+												if you had already selected the LS-202</p>
+										</div>
+										<ul class="listView">
+											<ng-template #recursiveList let-list>							        	
+												<li *ngFor="let listItem of list | orderby : 'name': false; let first = first;" [ngClass]="{'firstElement': first && listItem.isChecked && listItem.childs && listItem.childs.length > 0}">
+													<p (click)="onItemSelect(listItem, list)" [ngClass]="(!enableAccessories && listItem.tag=='LS-6')?'disableItem':''">
+														<label class="checkboxContainer">
+															<input type="checkbox" class="checkboxControl" [(ngModel)]="listItem.isChecked">
+															<span></span>
+														</label>
+														<span class="itemText">{{listItem.name}}</span>
+														<span class="accordian-arrow" *ngIf="listItem.childs && listItem.childs.length > 0">
+															<i class="glyphicon glyphicon-minus-sign" *ngIf="listItem.isChecked && listItem.childs && listItem.childs.length > 0" aria-hidden="true"></i>
+															<i class="glyphicon glyphicon-plus-sign" *ngIf="!listItem.isChecked && listItem.childs && listItem.childs.length > 0" aria-hidden="true"></i>
+														</span> 
+													</p>
+													<ul *ngIf="listItem.childs && listItem.childs.length > 0 && listItem.isChecked"> 
+														<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: listItem.childs }"></ng-container>
+													</ul>
+												</li>
+												
+											</ng-template>
+											<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list }"></ng-container>
+										</ul>	
+								</div> <!------- end of home tab ------->
+							</div>	<!------------ end of tab-content  ----------->
+						</div>   <!------------ end of  tabs-details  ----------->
+				<div class="clearfix"></div>
+			</div> <!------------ end of col ----------->
+			
+			<div class="fullHeight relativePosition" *ngIf="!isLoading && !isLoadFailed && accessoriesList && accessoriesList.length == 0">
+				<div class="notFoundError text-center">
+					<p>Selected controller manufacturer series don't have any controller sensor & I/O options.</p>
+				</div>
+			</div>
+			
+			<div class="fullHeight relativePosition" *ngIf="!isLoading && isLoadFailed">
+				<div class="notFoundError text-center">
+					<p>Failed to load accessories items, please try again.</p>
+					<button class="commonBtn noMargin" (click)="getAccessoriesList()">Retry</button>
+				</div>
+			</div>
+			</div>
+		</div> 
+	</div>	
+	<!--end  -->
+
+	<div  *ngIf='!isCreateNewAccessory'>	
+	<div class="page-content inset pageContentBg" #accessoryDesktopView [style.top.px]="topSectionHeight">
+		<!---------------- tabs structure ------------>
+ 		<div class="row noMargin fullHeight">
+	        <div id="desktopViewAccessory" class="col-sm-12 col-md-12 col-lg-12" *ngIf="!isLoading && accessoriesList && accessoriesList.length > 0">
+		     	<div class="note accessoriesNote" *ngIf="selectedSeries900 =='WCT900P'">
+		     		<span>NOTE -</span>
+		     		<p>Selection of Accessories depends on available Analog/Digital I/O. 
+		     		The W900 comes standard with 12 Digital inputs. Available Analog Inputs 
+		     		will be determined by Sensor selection and Additional I/O selections.</p>
+		     	</div>
+		     	<div class="col-xs-3 col-sm-6 col-md-6 col-lg-6 tabs-heading">
+			         <ul class="nav nav-tabs tabs-left">
+			             <li *ngFor="let accessoryitem of accessoriesList" (click)="selectAccessoriesItem(accessoryitem)" [ngClass]="{'noChild': (accessoryitem.childs && accessoryitem.childs.length == 0) || !accessoryitem.isChecked, 'hide': accessoryitem.tag == 'AN-SEN-TANK' && (selectedControllerSeries.tag =='WCT600P' || selectedControllerSeries.tag =='WCT600H') }">
+				             <a data-toggle="tab">
+				             	<label class="unselectImg" [ngClass]="{'selectImg': accessoryitem.isChecked}"></label> 
+								<span>{{accessoryitem.name}}</span>
+					             <span class="accordian-arrow" *ngIf="accessoryitem.childs && accessoryitem.childs.length > 0">
+									<i class="glyphicon glyphicon-minus-sign" *ngIf="!accessoryitem.hide" aria-hidden="true"></i>
+									<i class="glyphicon glyphicon-plus-sign" *ngIf="accessoryitem.hide" aria-hidden="true"></i>
+								</span> 
+					         </a>
+				         </li>
+			         </ul>
+		     	</div> <!--------- end of tabs-heading ----->
+			     	
+			     <div class="col-xs-9 col-sm-6 col-md-6 col-lg-6 tabs-details" *ngIf="isTabSelected && (list.length > 0)">
+			        <!------- Tab panes ------->
+			         <div class="tab-content tabContent" [style.minHeight]="accessoryHeight + 'px'">
+				        <div class="tab-pane active">
+				        		<div class="note accessoriesNote" *ngIf="isLevelSensor">
+						     		<span>NOTE -</span>
+						     		<p>The BTA-100 is a Bluetooth option for the LS-202 so you would only select the BTA-100 
+						     		   if you had already selected the LS-202</p>
+						     	</div>
+								<ul class="listView">
+							        <ng-template #recursiveList let-list>							        	
+							            <li *ngFor="let listItem of list | orderby : 'name': false; let first = first;" [ngClass]="{'firstElement': first && listItem.isChecked && listItem.childs && listItem.childs.length > 0}">
+							                <p (click)="onItemSelect(listItem, list)" [ngClass]="(!enableAccessories && listItem.tag=='LS-6')?'disableItem':''">
+							                	 <label class="checkboxContainer">
+													<input type="checkbox" class="checkboxControl" [(ngModel)]="listItem.isChecked">
+													<span></span>
+												</label>
+							                 	<span class="itemText">{{listItem.name}}</span>
+							                 	 <span class="accordian-arrow" *ngIf="listItem.childs && listItem.childs.length > 0">
+													<i class="glyphicon glyphicon-minus-sign" *ngIf="listItem.isChecked && listItem.childs && listItem.childs.length > 0" aria-hidden="true"></i>
+													<i class="glyphicon glyphicon-plus-sign" *ngIf="!listItem.isChecked && listItem.childs && listItem.childs.length > 0" aria-hidden="true"></i>
+												</span> 
+							                 </p>
+							                <ul *ngIf="listItem.childs && listItem.childs.length > 0 && listItem.isChecked"> 
+							                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: listItem.childs }"></ng-container>
+							                </ul>
+							            </li>
+							             
+							        </ng-template>
+							        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: list }"></ng-container>
+							    </ul>	
+					 	</div> <!------- end of home tab ------->
+					 </div>	<!------------ end of tab-content  ----------->
+				</div>   <!------------ end of  tabs-details  ----------->
+		   <div class="clearfix"></div>
+	 </div> <!------------ end of col ----------->
+	 
+	 <div class="fullHeight relativePosition" *ngIf="!isLoading && !isLoadFailed && accessoriesList && accessoriesList.length == 0">
+	 	<div class="notFoundError text-center">
+	 		<p>Selected controller manufacturer series don't have any controller sensor & I/O options.</p>
+	 	</div>
+	 </div>
+	 
+	 <div class="fullHeight relativePosition" *ngIf="!isLoading && isLoadFailed">
+	 	<div class="notFoundError text-center">
+	 		<p>Failed to load accessories items, please try again.</p>
+	 		<button class="commonBtn noMargin" (click)="getAccessoriesList()">Retry</button>
+	 	</div>
+	 </div>
+	</div>
+  </div> 
+</div>
+<!--******************************** Mobile view ********************************************-->	
+	<!-- start -->
+  	<div  *ngIf='isCreateNewAccessory'>
+	<div id="mobileViewAccessory" class="page-content inset pageContentBg" #accessoryMobileView [style.top.px]="topSectionHeight">
+			<!---------------- tabs structure ------------>
+			 <div class="row noMargin fullHeight">		 
+					<div class="col-sm-12 col-md-12 col-lg-12 mobileListView">
+					<!-- <div class="note accessoriesNote" *ngIf="selectedSeries900 =='WCT900P'">
+						 <span>NOTE -</span>
+						 <p>Selection of Accessories depends on available Analog/Digital I/O. 
+						 The W900 comes standard with 12 Digital inputs. Available Analog Inputs 
+						 will be determined by Sensor selection and Additional I/O selections.</p>
+					 </div>		     		 -->
+						 <ul>
+							<ng-template #recursiveList let-accessoriesList>
+							   <li *ngFor="let option of accessoriesList | orderby : 'name': false; let first = first;" [ngClass]="{'firstElement': option.childs && option.isChecked && option.childs.length > 0}">
+									<label class="optionLabel" (click)="onItemSelect(option, accessoriesList)">
+										<p [ngClass]="(!enableAccessories && option.tag=='LS-6')?'disableItem':''"> 
+											<label class="checkboxContainer">
+												<label class="unselectImg" [ngClass]="{'selectImg': option.isChecked}"></label>
+												<!-- <input type="checkbox" class="checkboxControl" [(ngModel)]="option.isChecked"> -->
+												<span></span>
+											</label>					                 	
+											 <span class="itemText">{{option.name}}</span>					                 
+											  <span class="accordian-arrow" *ngIf="option.childs && option.childs.length > 0">
+												<i class="glyphicon glyphicon-minus-sign" *ngIf="option.isChecked && option.childs && option.childs.length > 0" aria-hidden="true"></i>
+												<i class="glyphicon glyphicon-plus-sign" *ngIf="!option.isChecked && option.childs && option.childs.length > 0" aria-hidden="true"></i>
+											</span> 
+										</p>
+									</label>
+									<div class="note accessoriesNote" *ngIf="option.tag=='LSN' && option.isChecked">
+										 <span>NOTE -</span>
+										 <div class="noteText">The BTA-100 is a Bluetooth option for the LS-202 so you would only select the BTA-100 
+											if you had already selected the LS-202</div>
+									 </div>				
+									<ul *ngIf="option.childs && option.childs.length > 0 && option.isChecked">
+										<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: option.childs }" [ngClass]="{borderBottomActive : option.childs && option.childs.length == 0}"></ng-container>
+									</ul> 
+								</li>
+							</ng-template>
+							<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: accessoriesList }"></ng-container>
+						</ul>
+	
+					</div>
+					
+					<div class="fullHeight relativePosition" *ngIf="!isLoading && !isLoadFailed && accessoriesList && accessoriesList.length == 0">
+						 <div class="notFoundError text-center">
+							 <p>Selected controller manufacturer series don't have any accessories items.</p>
+						 </div>
+					 </div>
+					
+					<div class="fullHeight relativePosition" *ngIf="!isLoading && isLoadFailed">
+						 <div class="notFoundError text-center">
+							 <p>Failed to load acceessories item, please try again.</p>
+							 <button class="commonBtn noMargin" (click)="getAccessoriesList()">Retry</button>
+						 </div>
+					 </div>
+					
+			</div> <!------------ end of row ----------->
+		</div>
+	</div>	
+
+	<!-- end -->
+
+	<div  *ngIf='!isCreateNewAccessory'>
+	<div id="mobileViewAccessory" class="page-content inset pageContentBg" #accessoryMobileView [style.top.px]="topSectionHeight">
+		<!---------------- tabs structure ------------>
+ 		<div class="row noMargin fullHeight">		 
+				<div class="col-sm-12 col-md-12 col-lg-12 mobileListView">
+				<div class="note accessoriesNote" *ngIf="selectedSeries900 =='WCT900P'">
+		     		<span>NOTE -</span>
+		     		<p>Selection of Accessories depends on available Analog/Digital I/O. 
+		     		The W900 comes standard with 12 Digital inputs. Available Analog Inputs 
+		     		will be determined by Sensor selection and Additional I/O selections.</p>
+		     	</div>		     		
+					 <ul>
+				        <ng-template #recursiveList let-accessoriesList>
+				           <li *ngFor="let option of accessoriesList | orderby : 'name': false; let first = first;" [ngClass]="{'firstElement': option.childs && option.isChecked && option.childs.length > 0}">
+				                <label class="optionLabel" (click)="onItemSelect(option, accessoriesList)">
+					                <p [ngClass]="(!enableAccessories && option.tag=='LS-6')?'disableItem':''"> 
+					                	<label class="checkboxContainer">
+											<label class="unselectImg" [ngClass]="{'selectImg': option.isChecked}"></label>
+											<!-- <input type="checkbox" class="checkboxControl" [(ngModel)]="option.isChecked"> -->
+											<span></span>
+										</label>					                 	
+					                 	<span class="itemText">{{option.name}}</span>					                 
+					                 	 <span class="accordian-arrow" *ngIf="option.childs && option.childs.length > 0">
+											<i class="glyphicon glyphicon-minus-sign" *ngIf="option.isChecked && option.childs && option.childs.length > 0" aria-hidden="true"></i>
+											<i class="glyphicon glyphicon-plus-sign" *ngIf="!option.isChecked && option.childs && option.childs.length > 0" aria-hidden="true"></i>
+										</span> 
+					                </p>
+				                </label>
+				                <div class="note accessoriesNote" *ngIf="option.tag=='LSN' && option.isChecked">
+						     		<span>NOTE -</span>
+						     		<div class="noteText">The BTA-100 is a Bluetooth option for the LS-202 so you would only select the BTA-100 
+						     		   if you had already selected the LS-202</div>
+						     	</div>				
+				                <ul *ngIf="option.childs && option.childs.length > 0 && option.isChecked">
+				                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: option.childs }" [ngClass]="{borderBottomActive : option.childs && option.childs.length == 0}"></ng-container>
+				                </ul> 
+				            </li>
+				        </ng-template>
+				        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: accessoriesList }"></ng-container>
+			    	</ul>
+
+				</div>
+				
+				<div class="fullHeight relativePosition" *ngIf="!isLoading && !isLoadFailed && accessoriesList && accessoriesList.length == 0">
+				 	<div class="notFoundError text-center">
+				 		<p>Selected controller manufacturer series don't have any accessories items.</p>
+				 	</div>
+				 </div>
+				
+				<div class="fullHeight relativePosition" *ngIf="!isLoading && isLoadFailed">
+				 	<div class="notFoundError text-center">
+				 		<p>Failed to load acceessories item, please try again.</p>
+				 		<button class="commonBtn noMargin" (click)="getAccessoriesList()">Retry</button>
+				 	</div>
+				 </div>
+			</div>	
+	    </div> <!------------ end of row ----------->
+	</div>
+		<div class="btnContainer bottomPanel col-xs-12 col-sm-12">
+			<button type="submit" class="btn secondaryBtn commonBtn displayInlineBlock" (click)="saveDraft( true,'/accessories', false ); saveDarftBtnClicked()">Save as Draft</button>
+      		<button type="submit" class="btn secondaryBtn commonBtn displayInlineBlock" (click)="onNext()">Next </button>
+		</div>	
+	</div> <!-------------- end of page-content ------------->
+</div> <!-------------- end of page-content-wrapper ------------->
